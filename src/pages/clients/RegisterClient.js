@@ -1,0 +1,243 @@
+import React, { Component } from 'react';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TextInput,
+  Button,
+  TouchableHighlight,
+  Image,
+  Alert,Switch, ToastAndroid,BackHandler,Picker,
+} from 'react-native';
+import { Actions } from 'react-native-router-flux';
+import { Icon,Avatar,Badge,withBadge   } from 'react-native-elements'
+import { createStackNavigator } from 'react-navigation';
+import RNPickerSelect from 'react-native-picker-select';
+
+export default class RegisterClientView extends Component
+{
+
+  constructor(props) {
+    super(props);
+     this.toggleSwitch = this.toggleSwitch.bind(this);
+      this.state = {
+         showPassword: true,
+          icon: 'visibility-off',
+           favColor: undefined,
+            items: [
+                {
+                    label: 'Aragua',
+                    value: 'red',
+                },
+                {
+                    label: 'Distrito Capital',
+                    value: 'orange',
+                },
+                {
+                    label: 'Miranda',
+                    value: 'blue',
+                },
+            ],
+      }
+    state = {
+      name : '',
+      last_name: '',
+      email   : '',
+      phone : '',
+      password: '',
+      password_confirm: '',
+      estado: ''
+
+
+    }
+
+  }
+
+   toggleSwitch() {
+    this.setState(prevState => ({
+      icon: prevState.icon === 'visibility-off' ? 'visibility' : 'visibility-off',
+      showPassword: !this.state.showPassword
+
+      }));
+  }
+
+
+
+  Verification = (viewId) => {
+
+  	  Actions.verifyClient()
+  }
+
+
+  render() {
+
+    return (
+      <View style={styles.container}>
+	        <View>
+	          <Text style={styles.loginTitle}  h1>Registro</Text>
+	        </View>
+	         <View>
+	            <Text style={styles.loginSubTitle}  h3>Registrate para poder empezar</Text>
+	          </View>
+	         <View style={styles.inputContainer}>
+		          <TextInput style={styles.inputs}
+		              placeholder="Nombre"
+		              keyboardType="default"
+		              underlineColorAndroid='transparent'
+		              onChangeText={(name) => this.setState({name})}
+		              />
+	        </View>
+	        <View style={styles.inputContainer}>
+		          <TextInput style={styles.inputs}
+		              placeholder="Apellido"
+		              keyboardType="default"
+		              underlineColorAndroid='transparent'
+		              onChangeText={(last_name) => this.setState({last_name})}
+		              />
+	        </View>
+
+	        <View style={styles.inputContainer}>
+		          <TextInput style={styles.inputs}
+		              placeholder="Teléfono"
+		              keyboardType="phone-pad"
+		              underlineColorAndroid='transparent'
+		              onChangeText={(phone) => this.setState({phone})}
+		              />
+	        </View>
+        <View style={styles.inputContainer}>
+          <TextInput style={styles.inputs}
+              placeholder="Email"
+              keyboardType="email-address"
+              underlineColorAndroid='transparent'
+              onChangeText={(email) => this.setState({email})}
+              />
+        </View>
+
+        <View style={styles.inputContainer}>
+             <TextInput  style={styles.inputs}
+          placeholderTextColor="gray"
+          placeholder="Clave"
+          secureTextEntry={this.state.showPassword}
+          onChangeText={(password) => this.setState({ password })}
+        />
+           <Icon name={this.state.icon} onPress={() => this.toggleSwitch()} value={!this.state.showPassword} />
+        </View>
+		<View style={styles.inputContainer}>
+             <TextInput  style={styles.inputs}
+          placeholderTextColor="gray"
+          placeholder="Repetir Clave"
+          secureTextEntry={this.state.showPassword}
+          onChangeText={(password_confirm) => this.setState({ password_confirm })}
+        />
+
+        </View>
+
+
+          <RNPickerSelect
+                    placeholder={{
+                        label: 'Seleciona un estado',
+                        value: null,
+                    }}
+                    items={this.state.items}
+                    onValueChange={(value) => {
+                        this.setState({
+                            favColor: value,
+                        });
+                    }}
+                    style={{marginLeft:10}}
+                    value={this.state.favColor}
+
+                    useNativeAndroidPickerStyle={true}
+                    hideIcon={true}
+                />
+        <TouchableHighlight style={[styles.buttonContainer, styles.loginButton]}
+        onPress={() =>  {
+              this.Verification()}
+            }
+           >
+
+          <Text style={styles.loginText}>Continuar</Text>
+        </TouchableHighlight>
+      </View>
+
+    );
+  }
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'white',
+    fontFamily: "QUICKSAND-LIGHT",
+  },
+
+  loginTitle: {
+    fontSize: 34,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    color : '#373535'
+  },
+  inputContainer: {
+      borderBottomColor: '#bdbfc1',
+      backgroundColor: '#FFFFFF',
+      borderRadius:30,
+      borderBottomWidth: 1,
+      width:400,
+      height:55,
+      marginBottom:20,
+      flexDirection: 'row',
+      alignItems:'center'
+    },
+  inputs:{
+      height:50,
+      marginLeft:12,
+      borderBottomColor: '#FFFFFF',
+      flex:1,
+
+  },
+  inputIcon:
+  {
+    width:30,
+    height:30,
+    marginLeft:15,
+    justifyContent: 'center'
+  },
+
+  buttonContainer:
+  {
+	    height:45,
+	    flexDirection: 'row',
+	    justifyContent: 'center',
+	    alignItems: 'center',
+	    marginBottom:20,
+	    width:270,
+	    borderRadius:5,
+	    shadowColor: 'rgba(0, 0, 0, 0.1)',
+	    shadowOpacity: 0.8,
+	    elevation: 6,
+	    shadowRadius: 15 ,
+	    shadowOffset : { width: 1, height: 13},
+  },
+  loginButton: {
+    backgroundColor: "#a9d046",
+  },
+  loginText: {
+    fontFamily: "QUICKSAND-LIGHT",
+    color: 'white',
+  },
+
+  loginSubTitle:{
+    fontSize: 16,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 20,
+    marginBottom: 20,
+    color : '#bdbfc1'
+  }
+
+});
+
