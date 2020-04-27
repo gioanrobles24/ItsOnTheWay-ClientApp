@@ -12,7 +12,7 @@ import {
 import { Actions } from 'react-native-router-flux';
 import { Icon,Avatar,Badge,withBadge   } from 'react-native-elements'
 import { createStackNavigator } from 'react-navigation';
-
+ const imageverde = { uri: "http://dev.itsontheway.net/api/imgVerde" }
 
 export default class LoginClientView extends Component
 {
@@ -123,13 +123,19 @@ export default class LoginClientView extends Component
         </TouchableHighlight>
 
 
-		<View style={styles.registerContainer}>
-            <Text style={styles.registertext}  h5>Nuevo en It's?</Text>
-            <Text style={styles.registertext2} onPress={() =>  {
-              this.register()}
-            }  h5>Registrate</Text>
-        </View>
-
+  		    <View style={styles.registerContainer}>
+              <Text style={styles.registertext}  h5>Nuevo en It's?</Text>
+              <Text style={styles.registertext2} onPress={() =>  {
+                this.register()}
+              }  h5>Registrate</Text>
+          </View>
+           <Avatar
+             rounded size="xlarge"
+             overlayContainerStyle={{backgroundColor: 'transparent',}}
+             containerStyle={{alignSelf: "center", flexDirection:'column',
+             marginTop: 20,}}
+             source={imageverde}
+            />
       </View>
 
     );
