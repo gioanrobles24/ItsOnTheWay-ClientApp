@@ -6,67 +6,225 @@ import {
   TextInput,
   Button,
   TouchableHighlight,
-  Alert,Switch, ToastAndroid,BackHandler,Picker,SafeAreaView,Dimensions
+  Alert,Switch, ToastAndroid,BackHandler,Picker,SafeAreaView,Dimensions,TouchableOpacity,ImageBackground,Platform
 } from 'react-native';
-import { Actions } from 'react-native-router-flux';
+import { Actions } from 'react-native-router-flux'
 import { Icon,Avatar,Badge,withBadge,Image,Input    } from 'react-native-elements'
-import { createStackNavigator } from 'react-navigation';
-import RNPickerSelect from 'react-native-picker-select';
+import { createStackNavigator } from 'react-navigation'
+import RNPickerSelect from 'react-native-picker-select'
 import Carousel , { ParallaxImage } from 'react-native-snap-carousel'
+import { SideMenu } from 'react-native-side-menu'
+import  MenuDrawer from 'react-native-side-drawer'
+import { AirbnbRating } from 'react-native-ratings'
+import BottomBar from "react-native-bottom-bar"
+
   const image = { uri: "http://dev.itsontheway.net/api/parnetBanner1" }
+
   const win = Dimensions.get('window');
   const ratio = win.width/541;
+
+
+  const mainColor = "#bdbfc1";
+  const url = "www.freakycoder.com";
+
+  const pnkGradient = ["#ffffff", "#ffffff"];
+
+
 export default class HomeClientView extends Component
 {
   constructor(props) {
-    super(props)
-    this.state = {
-          activeIndex:0,
-          carouselItems:
-          [
-                {
-                    title:"Item 1",
-                    text: "Text 1",
-                },
-                {
-                    title:"Item 2",
-                    text: "Text 2",
-                },
-                {
-                    title:"Item 3",
-                    text: "Text 3",
-                },
-                {
-                    title:"Item 4",
-                    text: "Text 4",
-                },
-                {
-                    title:"Item 5",
-                    text: "Text 5",
-                },
-          ],
-           carouselItems2:
-          [
-                {
-                    text: "Desayunos",
-                },
-                {
-                  text: "Almuerzos",
-                },
-                {
-                    text: "Cenas",
-                },
-                {
-                  text: "Text 5",
-                },
-                {
-                  text: "Text 5",
-                },
-          ]
-      }
-  }
-    state = {}
+      super(props)
+      this.mainIconOnPress = this.mainIconOnPress.bind(this);
+      this.state = {
+                activeIndex:0,
+                  open: false,
+                carouselItems:
+                [
+                      {
+                          title:"nombre de producto",
+                          text: "Nombre de restaurante"
+                      },
+                      {
+                          title:"nombre de producto",
+                          text: "Nombre de restaurante",
+                      },
+                      {
+                          title:"nombre de producto",
+                          text: "Nombre de restaurante",
+                      },
+                      {
+                          title:"nombre de producto",
+                          text: "Nombre de restaurante",
+                      },
+                      {
+                          title:"nombre de producto",
+                          text: "Nombre de restaurante",
+                      },
+                ],
+                 carouselItems2:
+                [
+                      {
+                          text: "Desayunos",
+                      },
+                      {
+                        text: "Almuerzos",
+                      },
+                      {
+                          text: "Cenas",
+                      },
+                      {
+                        text: "Text 5",
+                      },
+                      {
+                        text: "Text 5",
+                      },
+                ]
+        }
 
+           if(this.state.doubleBackToExitPressedOnce) {
+              BackHandler.exitApp();
+            }
+            ToastAndroid.show('Por favor vuelve a presionar para salir.', ToastAndroid.SHORT);
+            this.setState({ doubleBackToExitPressedOnce: true });
+            setTimeout(() => {
+              this.setState({ doubleBackToExitPressedOnce: false });
+            }, 2000);
+            return true;
+    }
+
+    state = {}
+    mainIconOnPress() {
+    // Magic happens for main icon on press
+          console.log("mainIconOnPress");
+    }
+
+    openURL() {
+          Linking.canOpenURL(url).then(supported => {
+            if (supported) {
+              Linking.openURL(url);
+            } else {
+              console.log("Don't know how to open URI: " + url);
+            }
+          });
+      }
+      renderMainIcon() {
+          return (
+            <Icon
+              raised
+             name='home'
+             type='font-awesome'
+             size={29}
+             color="#d3e38c" />
+          );
+      }
+
+      renderFirstIconComponent() {
+            return (
+              <View
+                style={{...Platform.select({
+                    ios: {
+                      right: 16
+                    },
+                    android: {
+                      right: 8,
+                      top: 8
+                    }
+                  })
+                }}
+              >
+                <Icon
+                  name='restaurant'
+                  type='material'
+                  size={20}
+                  color={mainColor}
+                />
+                <Text style={{fontSize:10,color:'#bdbfc1'}}>Restaurantes</Text>
+              </View>
+            );
+    }
+    renderSecondIconComponent() {
+          return (
+            <View
+              style={{
+                ...Platform.select({
+                  ios: {
+                    right: 24,
+                    bottom: 3
+                  },
+                  android: {
+                    top: 3
+                  }
+                })
+              }}
+            >
+              <TouchableOpacity
+                onPress={() => {
+                  this.openURL();
+                }}
+              >
+                <Icon
+                  name='heartbeat'
+                  type='font-awesome'
+                  size={20}
+                  color={mainColor}
+                />
+                <Text style={{fontSize:10,color:'#bdbfc1'}}>Farmacia</Text>
+              </TouchableOpacity>
+            </View>
+          );
+    }
+    renderThirdIconComponent() {
+      return (
+        <View
+          style={{
+            ...Platform.select({
+              ios: {
+                left: 24,
+                bottom: 3
+              },
+              android: {
+                top: 3,
+                left: 3
+              }
+            })
+          }}
+        >
+          <Icon
+                   name='local-mall'
+                  type='material'
+                  size={20}
+                  color={mainColor}
+                />
+                <Text style={{fontSize:10,color:'#bdbfc1'}}>Tienda</Text>
+        </View>
+      );
+    }
+
+    renderFourthIconComponent() {
+      return (
+        <View
+          style={{
+            ...Platform.select({
+              ios: {
+                left: 16
+              },
+              android: {
+                left: 8,
+                top: 8
+              }
+            })
+          }}
+        >
+          <Icon
+                  name='cart'
+                  type='evilicon'
+                  size={28}
+                  color={mainColor}
+                />
+                <Text style={{fontSize:10,color:'#bdbfc1'}}>Mercado</Text>
+        </View>
+      );
+    }
 
     _renderItem({item,index}){
         return (
@@ -83,7 +241,11 @@ export default class HomeClientView extends Component
              <Image  source={image}  style={{ height: 150, width: 250,marginTop:8,marginLeft:1, borderRadius: 5}}/>
               <Text style={{fontSize: 20}}>{item.title}</Text>
 
-            <Text>{item.text}</Text>
+            <Text style={{fontSize: 15, color: '#bdbfc1'}}>{item.text}</Text>
+             <View style={{flexDirection:'row'}}>
+            <AirbnbRating isDisabled={true} showRating={false} defaultRating={4}   size={15}/>
+              <Text style={{fontSize: 10, marginLeft: 30 }}>50.00$</Text>
+            </View>
           </View>
 
         )
@@ -110,13 +272,121 @@ export default class HomeClientView extends Component
     seeAll = (viewId) => {
          alert('ver')
       }
+    handleBackButton = () => {
+          if(this.state.doubleBackToExitPressedOnce) {
+            BackHandler.exitApp();
+          }
+          ToastAndroid.show('Por favor vuelve a presionar para salir.', ToastAndroid.SHORT);
+          this.setState({ doubleBackToExitPressedOnce: true });
+          setTimeout(() => {
+            this.setState({ doubleBackToExitPressedOnce: false });
+          }, 2000);
+          return true;
+      }
+
+     toggleOpen = () => {
+        this.setState({ open: !this.state.open });
+     }
+     drawerContent = () => {
+        return (
+
+          <View style={styles.animatedMenuBox}>
+                            <TouchableOpacity onPress={this.toggleOpen}>
+                               <Icon
+                                    name='arrow-left'
+                                    type='font-awesome'
+                                    color='#a9d046'
+                                    iconStyle={{marginLeft: 10, flexDirection:'column', alignSelf: 'flex-start', marginTop:20 }}
+                                   />
+                            </TouchableOpacity>
 
 
+                  <Avatar
+                   rounded
+                   size="xlarge"
+                   overlayContainerStyle={{backgroundColor: '#bdbfc1',}}
+                   containerStyle={{alignSelf: "center", flexDirection:'column',
+                   marginTop: 20,}}
+                   source={image}
+                  />
+
+                  <Text style={styles.animatedBoxTextSpecial}  h3>Gioan Robles</Text>
+                <View style={styles.MenubarContainer}>
+
+                      <View style={styles.menubarItemContainer} >
+                           <Icon
+                                name='credit-card'
+                                type='evilicon'
+                                color='#bdbfc1'
+                                iconStyle={styles.menubarIconLeft}
+                                onPress={() =>   {
+                                    this.seeAll()}
+                                  }
+                               />
+                                <Text style={styles.menubarItemText} onPress={() =>   {
+                                    this.seeAll()}
+                                  } >Mis pedidos</Text>
+                            <Icon
+                                name='chevron-right'
+                                type='evilicon'
+                                color='#bdbfc1'
+                                iconStyle={styles.menubarIconRight}
+                                onPress={() =>   {
+                                    this.seeAll()}
+                                  }
+                               />
+                      </View>
+                       <View style={styles.menubarItemContainer}>
+                          <Icon
+                                type='font-awesome'
+                                name='map-marker'
+                                color='#bdbfc1'
+                                iconStyle={styles.menubarIconRight}
+                                onPress={() =>   {
+                                    this.seeAll()}
+                                  }
+                               />
+
+                                  <Text style={styles.menubarItemText} onPress={() =>   {
+                                    this.seeAll()}
+                                  }>Mis dirreciones</Text>
+                            <Icon
+                                name='chevron-right'
+                                type='evilicon'
+                                color='#bdbfc1'
+                                iconStyle={styles.menubarIconRight}
+                                onPress={() =>   {
+                                    this.seeAll()}
+                                  }
+                               />
+                      </View>
+
+                     <TouchableHighlight style={[styles.salirboton, styles.salirbotonButton]}
+                          onPress={() =>  {
+                                this.handleBackButton ()}
+                              }
+                             >
+
+                            <Text style={styles.salirbotonText}>Salir</Text>
+                      </TouchableHighlight>
+                </View>
+          </View>
+
+        );
+    }
 
   render() {
 
     return (
       <View style={styles.container}>
+               <MenuDrawer
+                      open={this.state.open}
+                      drawerContent={this.drawerContent()}
+                      drawerPercentage={100}
+                      animationTime={450}
+                      overlay={true}
+                      opacity={0.8}
+                >
         	          <View style={styles.headerBarContainer} >
                             <View style={styles.headerBar} >
                                   <Image
@@ -130,6 +400,7 @@ export default class HomeClientView extends Component
                                     color='#ffffff'
                                     size={35}
                                     iconStyle={{marginRight:15, marginTop:10}}
+                                    onPress={this.toggleOpen}
                                   />
                            </View>
                           <View style={styles.headerBar} >
@@ -177,10 +448,8 @@ export default class HomeClientView extends Component
                                 onSnapToItem = { index => this.setState({activeIndex:index}) } />
                           </View>
                 </SafeAreaView>
-
-                <View style={styles.container4} >
+                    <View style={styles.container4} >
                           <Text style={styles.container1Title} h3>PROMOCIONES</Text>
-
                    </View>
                 <SafeAreaView style={{flex: 1, paddingTop: 50, }}>
                           <View style={{ flex: 1, flexDirection:'row', justifyContent: 'center', marginTop:-70,marginLeft:16 }}>
@@ -194,8 +463,23 @@ export default class HomeClientView extends Component
                                 onSnapToItem = { index => this.setState({activeIndex:index}) } />
                           </View>
                 </SafeAreaView>
-
-          </View>
+            </MenuDrawer>
+               <SafeAreaView style={styles.containerbottom}>
+                    <View style={styles.containerbottom}>
+                          <BottomBar
+                            shapeColor="#ffffff"
+                            miniButtonsColor="#ffffff"
+                            mainIconGradient={pnkGradient}
+                            mainIcon={this.renderMainIcon()}
+                            mainIconOnPress={this.mainIconOnPress}
+                            firstIconComponent={this.renderFirstIconComponent()}
+                            secondIconComponent={this.renderSecondIconComponent()}
+                            thirdIconComponent={this.renderThirdIconComponent()}
+                            fourthIconComponent={this.renderFourthIconComponent()}
+                          />
+                   </View>
+            </SafeAreaView>
+         </View>
     );
   }
 }
@@ -248,5 +532,83 @@ const styles = StyleSheet.create({
   imagenes: {
     resizeMode: 'cover',
   },
+
+   animatedMenuBox: {
+    flex: 1,
+    backgroundColor: "#ffffff",
+    marginTop: -5,
+  },
+   animatedBoxTextSpecial: {
+     flexDirection: 'column',
+      flex: 0.1,
+    fontSize: 25,
+    color: '#373535',
+    marginTop: 30,
+    alignSelf: "center",
+  },
+  bodyOpenMenu: {
+    flex: 1,
+  },
+   MenubarContainer:{
+     flexDirection: 'column',
+      alignItems: "center",
+      justifyContent: "center",
+     flex: 0.7,
+   },
+
+    menubarItemContainer: {
+      borderBottomColor: '#bdbfc1',
+      backgroundColor: '#FFFFFF',
+      borderBottomWidth: 1,
+      width:400,
+      height:55,
+      marginBottom:20,
+      flexDirection: 'row',
+      alignItems:'center',
+
+       },
+  menubarItemText:{
+      flex: 0.8,
+      marginLeft:12,
+      justifyContent: 'center'
+  },
+
+  menubarIconLeft: {
+     marginStart: 25
+  },
+   menubarIconRight: {
+     marginStart: 25
+  },
+   salirboton:  {
+    marginTop: 70,
+    height: 45,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignSelf: 'center',
+    width:270,
+    borderRadius:5,
+    shadowColor: 'rgba(0, 0, 0, 0.1)',
+    shadowOpacity: 0.8,
+    elevation: 6,
+  },
+
+  salirbotonButton: {
+    backgroundColor: "#a9d046",
+  },
+  salirbotonText: {
+    fontFamily: "QUICKSAND-LIGHT",
+    color: 'white',
+  },
+   containerbottom: {
+    flex: 1
+  }
+
+
+
+
+
+
+
 });
 
