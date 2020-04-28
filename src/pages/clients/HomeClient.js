@@ -391,7 +391,7 @@ export default class HomeClientView extends Component
                             <View style={styles.headerBar} >
                                   <Image
                                     source={{ uri: 'http://dev.itsontheway.net/api/imgBlanca'}}
-                                    style={{ width: 150, height: 80, marginLeft:8}}
+                                    style={{ width: 150, height: 80,marginRight:80}}
                                     />
 
                                   <Icon
