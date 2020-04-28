@@ -491,6 +491,7 @@ const styles = StyleSheet.create({
     fontFamily: "QUICKSAND-LIGHT",
   },
    headerBarContainer: {
+    marginTop:-6,
     flexDirection: 'column',
     backgroundColor: '#a9d046',
     height: 125,
