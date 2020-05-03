@@ -166,9 +166,8 @@ const styles = StyleSheet.create({
    Title: {
       fontSize: 30,
       color : '#373535',
-      marginLeft: 20
-      // marginTop: 5
-      // alignItems: 'flex-start'
+      marginLeft: 20,
+      fontWeight: 'bold'
     },
     container1:{
     marginTop: 30,
