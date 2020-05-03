@@ -276,7 +276,9 @@ export default class HomeClientView extends Component
          Actions.allmyOrders()
       }
 
-
+       alladdress = (viewId) => {
+         Actions.addressClient()
+      }
     seeAll = (viewId) => {
          alert('ver')
       }
@@ -351,12 +353,12 @@ export default class HomeClientView extends Component
                                 color='#bdbfc1'
                                 iconStyle={styles.menubarIconRight}
                                 onPress={() =>   {
-                                    this.seeAll()}
+                                    this.alladdress()}
                                   }
                                />
 
                                   <Text style={styles.menubarItemText} onPress={() =>   {
-                                    this.seeAll()}
+                                    this.alladdress()}
                                   }>Mis dirreciones</Text>
                             <Icon
                                 name='chevron-right'
