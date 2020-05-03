@@ -231,7 +231,7 @@ export default class HomeClientView extends Component
                   size={28}
                   color={mainColor}
                 />
-                <Text style={{fontSize:10,color:'#bdbfc1'}}>Mercado</Text>
+                <Text style={{fontSize:10,color:'#bdbfc1'}}>Carrito</Text>
         </View>
       );
     }
