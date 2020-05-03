@@ -5,8 +5,18 @@ import {
   View,
   TextInput,
   Button,
-  TouchableHighlight,ScrollView,
-  Alert,Switch,ToastAndroid,BackHandler,Picker,SafeAreaView,Dimensions,TouchableOpacity,ImageBackground,Platform
+  TouchableHighlight,
+  ScrollView,
+  Alert,
+  Switch,
+  ToastAndroid,
+  BackHandler,
+  Picker,
+  SafeAreaView,
+  Dimensions,
+  TouchableOpacity,
+  ImageBackground,
+  Platform
 } from 'react-native';
 import { Actions } from 'react-native-router-flux'
 import { Icon,Avatar,Badge,withBadge,Image,Input,Card    } from 'react-native-elements'
@@ -392,14 +402,17 @@ export default class HomeClientView extends Component
                                         source={{ uri: 'http://dev.itsontheway.net/api/imgBlanca'}}
                                         style={{ width: 150, height: 80,marginRight:80}}
                                         />
-                                      <Icon
-                                          name='navicon'
-                                          type='evilicon'
-                                          color='#ffffff'
-                                          size={35}
-                                          iconStyle={{marginRight:15, marginTop:10}}
-                                          onPress={this.toggleOpen}
-                                      />
+                                          <TouchableHighlight underlayColor={'transparent'} onPress={this.toggleOpen}>
+                                              <Icon
+                                                  name='navicon'
+                                                  type='evilicon'
+                                                  color='#ffffff'
+                                                  size={35}
+                                                  iconStyle={{marginRight:15, marginTop:10}}
+
+                                            />
+                                  </TouchableHighlight>
+
                                </View>
                                 <View style={styles.headerBar} >
                                    <Input
