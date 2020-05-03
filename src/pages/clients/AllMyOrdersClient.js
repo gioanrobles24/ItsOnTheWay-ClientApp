@@ -4,15 +4,17 @@ import {
   Text,
   View,
   TextInput,
-  Button,
+  Button,ScrollView,
   TouchableHighlight,
   Image,
   Alert,Switch, ToastAndroid,BackHandler,Picker,
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { Icon,Avatar,Badge,withBadge   } from 'react-native-elements'
-import { createStackNavigator } from 'react-navigation';
-import RNPickerSelect from 'react-native-picker-select';
+import { createStackNavigator } from 'react-navigation'
+import RNPickerSelect from 'react-native-picker-select'
+import { Card } from 'react-native-shadow-cards'
+  const image = { uri: "http://dev.itsontheway.net/api/imgBlanca" }
 
 export default class AllmyOrdersClientView extends Component
 {
@@ -98,17 +100,25 @@ export default class AllmyOrdersClientView extends Component
 
     return (
       <View style={styles.container}>
-	        <View>
-	          <Text style={styles.loginTitle}  h1>Todas los pedidos vista</Text>
-	        </View>
-	         <View>
-	            <Text style={styles.loginSubTitle} onPress={() =>  {
-              this.orderClient()
-              }
-            }
-           >Pedido vista</Text>
-	          </View>
-      </View>
+               <View style={styles.header}>
+                    <Text style={styles.Title}>Mis Pedidos</Text>
+               </View>
+
+                <View style={styles.cardOrdercontainer}>
+                    <ScrollView>
+                            <Card style={styles.cardOrder} >
+                                <Avatar
+                                      rounded
+                                      size="medium"
+                                      source={image}
+                                  />
+                                    <Text style={styles.cardOrderSubTitle} >nombre pedido</Text>
+                                    <Badge containerStyle={styles.cardBadge} value="entregada"  status="primary" />
+                            </Card>
+
+                    </ScrollView>
+                </View>
+         </View>
 
     );
   }
@@ -116,7 +126,7 @@ export default class AllmyOrdersClientView extends Component
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 0.4,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'white',
@@ -187,7 +197,37 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginBottom: 20,
     color : '#bdbfc1'
-  }
+  },
+  cardOrdercontainer: {
+        flexDirection: 'row',
+     },
+
+    cardOrder:{
+      marginTop: 30,
+      padding: 20,
+      margin: 20,
+      flexDirection: 'row',
+      elevation: 8
+    },
+    cardOrderSubTitle: {
+      fontSize: 20,
+      marginLeft : 10,
+      alignSelf: 'center'
+    },
+
+    cardBadge:{
+      alignSelf: 'center'
+   },
+    header: {
+      flexDirection: 'row',
+
+  },
+   Title: {
+      fontSize: 30,
+      color : '#373535',
+      // marginTop: 5
+      // alignItems: 'flex-start'
+    },
 
 });
 
