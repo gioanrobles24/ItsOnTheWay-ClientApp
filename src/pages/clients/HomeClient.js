@@ -6,10 +6,10 @@ import {
   TextInput,
   Button,
   TouchableHighlight,
-  Alert,Switch, ToastAndroid,BackHandler,Picker,SafeAreaView,Dimensions,TouchableOpacity,ImageBackground,Platform
+  Alert,Switch,ToastAndroid,BackHandler,Picker,SafeAreaView,Dimensions,TouchableOpacity,ImageBackground,Platform
 } from 'react-native';
 import { Actions } from 'react-native-router-flux'
-import { Icon,Avatar,Badge,withBadge,Image,Input    } from 'react-native-elements'
+import { Icon,Avatar,Badge,withBadge,Image,Input,Card    } from 'react-native-elements'
 import { createStackNavigator } from 'react-navigation'
 import RNPickerSelect from 'react-native-picker-select'
 import Carousel , { ParallaxImage } from 'react-native-snap-carousel'
@@ -17,7 +17,7 @@ import { SideMenu } from 'react-native-side-menu'
 import  MenuDrawer from 'react-native-side-drawer'
 import { AirbnbRating } from 'react-native-ratings'
 import BottomBar from "react-native-bottom-bar"
-
+// import { Card } from 'react-native-shadow-cards';
   const image = { uri: "http://dev.itsontheway.net/api/parnetBanner1" }
 
   const win = Dimensions.get('window');
@@ -228,25 +228,16 @@ export default class HomeClientView extends Component
 
     _renderItem({item,index}){
         return (
-          <View style={{
+          <Card containerStyle={{flexDirection: 'row',width:199, marginLeft:-20,marginTop:-5}}
+             image={image}>
+              <Text style={{fontSize: 20,marginLeft:5}}>{item.title}</Text>
+             <Text style={{fontSize: 15, color: '#bdbfc1', marginLeft:5}}>{item.text}</Text>
 
-              height: 250,
-              marginLeft: 5,
-              marginRight: 25,
-              borderColor: 'transparent',
-              elevation:10,
-              justifyContent:'center',
-              alignItems: 'center'
-            }}>
-             <Image  source={image}  style={{ height: 150, width: 250,marginTop:8,marginLeft:1, borderRadius: 5}}/>
-              <Text style={{fontSize: 20}}>{item.title}</Text>
-
-            <Text style={{fontSize: 15, color: '#bdbfc1'}}>{item.text}</Text>
-             <View style={{flexDirection:'row'}}>
-            <AirbnbRating isDisabled={true} showRating={false} defaultRating={4}   size={15}/>
-              <Text style={{fontSize: 10, marginLeft: 30 }}>50.00$</Text>
+             <View style={{flexDirection:'row',marginLeft:5}}>
+                <AirbnbRating isDisabled={true} showRating={false} defaultRating={4}   size={15}/>
+                <Text style={{fontSize: 10, marginLeft: 30 }}>50.00$</Text>
             </View>
-          </View>
+          </Card>
 
         )
     }
@@ -266,7 +257,9 @@ export default class HomeClientView extends Component
         );
     }
 
-
+    allmyOrders = (viewId) => {
+         Actions.allmyOrders()
+      }
 
 
     seeAll = (viewId) => {
@@ -320,11 +313,11 @@ export default class HomeClientView extends Component
                                 color='#bdbfc1'
                                 iconStyle={styles.menubarIconLeft}
                                 onPress={() =>   {
-                                    this.seeAll()}
+                                    this.allmyOrders()}
                                   }
                                />
                                 <Text style={styles.menubarItemText} onPress={() =>   {
-                                    this.seeAll()}
+                                    this.allmyOrders()}
                                   } >Mis pedidos</Text>
                             <Icon
                                 name='chevron-right'
@@ -332,7 +325,7 @@ export default class HomeClientView extends Component
                                 color='#bdbfc1'
                                 iconStyle={styles.menubarIconRight}
                                 onPress={() =>   {
-                                    this.seeAll()}
+                                    this.allmyOrders()}
                                   }
                                />
                       </View>
@@ -434,8 +427,6 @@ export default class HomeClientView extends Component
                             this.seeAll()}
                           }  h3>Ver todo>>  </Text>
                    </View>
-
-
       	          <SafeAreaView style={{flex: 1, paddingTop: 50, }}>
                           <View style={{ flex: 1, flexDirection:'row', justifyContent: 'center', marginTop:-30 }}>
                               <Carousel
@@ -443,7 +434,7 @@ export default class HomeClientView extends Component
                                 ref={ref => this.carousel = ref}
                                 data={this.state.carouselItems}
                                 sliderWidth={300}
-                                itemWidth={300}
+                                itemWidth={200}
                                 renderItem={this._renderItem}
                                 onSnapToItem = { index => this.setState({activeIndex:index}) } />
                           </View>
@@ -451,18 +442,7 @@ export default class HomeClientView extends Component
                     <View style={styles.container4} >
                           <Text style={styles.container1Title} h3>PROMOCIONES</Text>
                    </View>
-                <SafeAreaView style={{flex: 1, paddingTop: 50, }}>
-                          <View style={{ flex: 1, flexDirection:'row', justifyContent: 'center', marginTop:-70,marginLeft:16 }}>
-                              <Carousel
-                                layout={"default"}
-                                ref={ref => this.carousel = ref}
-                                data={this.state.carouselItems2}
-                                sliderWidth={250}
-                                itemWidth={250}
-                                renderItem={this._renderItem2}
-                                onSnapToItem = { index => this.setState({activeIndex:index}) } />
-                          </View>
-                </SafeAreaView>
+
             </MenuDrawer>
                <SafeAreaView style={styles.containerbottom}>
                     <View style={styles.containerbottom}>
@@ -604,12 +584,6 @@ const styles = StyleSheet.create({
    containerbottom: {
     flex: 1
   }
-
-
-
-
-
-
 
 });
 
