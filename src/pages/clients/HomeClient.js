@@ -5,7 +5,7 @@ import {
   View,
   TextInput,
   Button,
-  TouchableHighlight,
+  TouchableHighlight,ScrollView,
   Alert,Switch,ToastAndroid,BackHandler,Picker,SafeAreaView,Dimensions,TouchableOpacity,ImageBackground,Platform
 } from 'react-native';
 import { Actions } from 'react-native-router-flux'
@@ -228,7 +228,8 @@ export default class HomeClientView extends Component
 
     _renderItem({item,index}){
         return (
-          <Card containerStyle={{flexDirection: 'row',width:199, marginLeft:-20,marginTop:-5}}
+          <Card containerStyle={{flexDirection: 'row',width:250, marginLeft:-20,marginTop:30}}
+             imageStyle={{width: 249, height: 130}}
              image={image}>
               <Text style={{fontSize: 20,marginLeft:5}}>{item.title}</Text>
              <Text style={{fontSize: 15, color: '#bdbfc1', marginLeft:5}}>{item.text}</Text>
@@ -243,17 +244,21 @@ export default class HomeClientView extends Component
     }
     _renderItem2 ({item, index}, parallaxProps) {
         return (
-           <View style={{
-              height: 250,
-              marginRight: 25,
-              borderColor: 'transparent',
-              justifyContent:'center',
-              alignItems: 'center'
-            }}>
-             <Image  source={image}  style={{ width: 250,
-                  height: 250 * ratio}}/>
+           <Card containerStyle={{flexDirection: 'row',width:279, marginLeft:-20, backgroundColor: 'rgba(255, 255, 255, 0.2)'}}
+              imageStyle={{width: 276, height: 130, borderRadius: 15}}
+              roundImage
+              image={image}>
             <Text>{item.text}</Text>
-          </View>
+          </Card>
+        );
+    }
+    _renderItem3 ({item, index}, parallaxProps) {
+        return (
+           <Card containerStyle={{flexDirection: 'row',width:279, height:130, marginLeft:-20, backgroundColor: 'rgba(255, 255, 255, 0.2)'}}
+              imageStyle={{width: 276, height: 130, borderRadius: 15}}
+              roundImage
+              image={image}>
+          </Card>
         );
     }
 
@@ -380,72 +385,104 @@ export default class HomeClientView extends Component
                       overlay={true}
                       opacity={0.8}
                 >
-        	          <View style={styles.headerBarContainer} >
-                            <View style={styles.headerBar} >
-                                  <Image
-                                    source={{ uri: 'http://dev.itsontheway.net/api/imgBlanca'}}
-                                    style={{ width: 150, height: 80,marginRight:80}}
-                                    />
-
-                                  <Icon
-                                    name='navicon'
-                                    type='evilicon'
-                                    color='#ffffff'
-                                    size={35}
-                                    iconStyle={{marginRight:15, marginTop:10}}
-                                    onPress={this.toggleOpen}
-                                  />
-                           </View>
-                          <View style={styles.headerBar} >
-                               <Input
-                                   placeholder=''
-                                   leftIcon={
-                                   <Icon
-                                      name='search'
-                                      type='evilicon'
-                                      color='black'
+                 <ScrollView>
+            	          <View style={styles.headerBarContainer} >
+                                <View style={styles.headerBar} >
+                                      <Image
+                                        source={{ uri: 'http://dev.itsontheway.net/api/imgBlanca'}}
+                                        style={{ width: 150, height: 80,marginRight:80}}
+                                        />
+                                      <Icon
+                                          name='navicon'
+                                          type='evilicon'
+                                          color='#ffffff'
+                                          size={35}
+                                          iconStyle={{marginRight:15, marginTop:10}}
+                                          onPress={this.toggleOpen}
                                       />
-                                     }
-                                    inputContainerStyle={{borderRadius:20,
-                                    borderBottomColor:'transparent',
-                                     width:330,
-                                     height:35,
-                                     backgroundColor:'white',
-                                     alignSelf: 'center',
-                                     marginBottom:5,
-                                     justifyContent:'center'
-                                  }}
-                               />
+                               </View>
+                                <View style={styles.headerBar} >
+                                   <Input
+                                       placeholder=''
+                                       leftIcon={
+                                       <Icon
+                                          name='search'
+                                          type='evilicon'
+                                          color='black'
+                                          />
+                                         }
+                                        inputContainerStyle={{borderRadius:20,
+                                        borderBottomColor:'transparent',
+                                         width:330,
+                                         height:35,
+                                         backgroundColor:'white',
+                                         alignSelf: 'center',
+                                         marginBottom:5,
+                                         justifyContent:'center'
+                                      }}
+                                   />
+                               </View>
                          </View>
-                   </View>
 
-                   <View style={styles.container1} >
-                          <Text style={styles.container1Title} h3>Recomendaciones...</Text>
+                         <View style={styles.container1} >
+                                <Text style={styles.container1Title} h3>Recomendaciones...</Text>
 
 
-                          <Text style={styles.container2Title} onPress={() =>   {
-                            this.seeAll()}
-                          }  h3>Ver todo>>  </Text>
-                   </View>
-      	          <SafeAreaView style={{flex: 1, paddingTop: 50, }}>
-                          <View style={{ flex: 1, flexDirection:'row', justifyContent: 'center', marginTop:-30 }}>
-                              <Carousel
-                                layout={"default"}
-                                ref={ref => this.carousel = ref}
-                                data={this.state.carouselItems}
-                                sliderWidth={300}
-                                itemWidth={200}
-                                renderItem={this._renderItem}
-                                onSnapToItem = { index => this.setState({activeIndex:index}) } />
-                          </View>
-                </SafeAreaView>
-                    <View style={styles.container4} >
-                          <Text style={styles.container1Title} h3>PROMOCIONES</Text>
-                   </View>
+                                <Text style={styles.container2Title} onPress={() =>   {
+                                  this.seeAll()}
+                                }  h3>Ver todo>>  </Text>
+                         </View>
+            	          <SafeAreaView style={{flex: 1}}>
+                                <View style={{ flex: 1, flexDirection:'row', justifyContent: 'center', marginTop:-30 }}>
+                                    <Carousel
+                                        layout={"default"}
+                                        ref={ref => this.carousel = ref}
+                                        data={this.state.carouselItems}
+                                        sliderWidth={300}
+                                        itemWidth={250}
+                                        renderItem={this._renderItem}
+                                        onSnapToItem = { index => this.setState({activeIndex:index}) }
+                                       />
+                                </View>
+                        </SafeAreaView>
+                         <View style={styles.container4} >
+                              <Text style={styles.container1Title} h3>PROMOCIONES</Text>
+                         </View>
+                       <SafeAreaView style={{flex: 1, }}>
+                              <View style={{ flexDirection:'row',backgroundColor: 'rgba(255, 255, 255, 0.2)'}}>
+                                  <Carousel
+                                      layout={"default"}
+                                      ref={ref => this.carousel = ref}
+                                      data={this.state.carouselItems2}
+                                      sliderWidth={300}
+                                      itemWidth={280}
+                                      renderItem={this._renderItem2}
+                                      onSnapToItem = { index => this.setState({activeIndex:index}) }
+                                     />
+                              </View>
+                      </SafeAreaView>
+                      <SafeAreaView style={{flex: 1, }}>
+                              <View style={{ flexDirection:'row',backgroundColor: 'rgba(255, 255, 255, 0.2)'}}>
+                                  <Carousel
+                                    layout={"default"}
+                                    ref={ref => this.carousel = ref}
+                                    data={this.state.carouselItems2}
+                                    sliderWidth={300}
+                                    itemWidth={280}
+                                    renderItem={this._renderItem3}
+                                    onSnapToItem = { index => this.setState({activeIndex:index}) } />
+                              </View>
+                      </SafeAreaView>
+
+                      <SafeAreaView style={{height: 100, }}>
+
+                      </SafeAreaView>
+                  </ScrollView>
 
             </MenuDrawer>
-               <SafeAreaView style={styles.containerbottom}>
-                    <View style={styles.containerbottom}>
+
+               <SafeAreaView style={styles.menutab}>
+                    <View style={styles.menutab}>
                           <BottomBar
                             shapeColor="#ffffff"
                             miniButtonsColor="#ffffff"
@@ -459,6 +496,7 @@ export default class HomeClientView extends Component
                           />
                    </View>
             </SafeAreaView>
+
          </View>
     );
   }
@@ -492,16 +530,16 @@ const styles = StyleSheet.create({
   },
   container1Title:{
       fontSize: 15,
+      fontWeight:'bold'
   },
   container2Title:{
       fontSize: 15,
       color: '#d3e38c'
   },
   container4:{
-    marginTop: -58,
     flexDirection:'row',
     marginLeft: 15,
-    marginBottom: 17
+    marginTop:10
   },
 
   imageContainer: {
@@ -581,8 +619,8 @@ const styles = StyleSheet.create({
     fontFamily: "QUICKSAND-LIGHT",
     color: 'white',
   },
-   containerbottom: {
-    flex: 1
+   menutab: {
+    flex: 1,
   }
 
 });
