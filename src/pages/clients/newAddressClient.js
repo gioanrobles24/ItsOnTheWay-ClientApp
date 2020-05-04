@@ -121,8 +121,6 @@ export default class NewAddressClientView extends Component
 const styles = StyleSheet.create({
   container: {
     flex: 0.7,
-    alignItems:'center',
-    justifyContent: 'center',
     backgroundColor: 'white',
     fontFamily: "QUICKSAND-LIGHT",
   },
@@ -136,10 +134,10 @@ const styles = StyleSheet.create({
     },
     header: {
       flexDirection: 'row',
-
+      marginTop:20
   },
    Title: {
-      fontSize: 30,
+      fontSize: 25,
       color : '#373535',
       marginLeft: 20,
       fontWeight: 'bold'
@@ -151,6 +149,7 @@ const styles = StyleSheet.create({
       borderBottomWidth: 1,
       width:400,
       flexDirection: 'row',
+
     },
   inputs:{
       marginLeft:12,
@@ -162,7 +161,7 @@ const styles = StyleSheet.create({
 		    height:45,
 		    flexDirection: 'row',
 		    justifyContent: 'center',
-		     alignItems: 'center',
+		    alignItems: 'center',
 		    width:270,
 		    borderRadius:5,
 		    marginTop:80,
@@ -175,6 +174,7 @@ const styles = StyleSheet.create({
 	  },
   loginButton: {
     backgroundColor: "#a9d046",
+    alignSelf:'center'
   },
   loginText: {
     fontFamily: "QUICKSAND-LIGHT",

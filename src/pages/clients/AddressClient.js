@@ -88,7 +88,10 @@ const styles = StyleSheet.create({
     borderBottomColor:'#bdbfc1',
 
   },
+     header: {
+      flexDirection: 'row',
 
+  },
   SubTitle: {
       fontSize: 15,
       marginLeft : 10,
@@ -99,10 +102,10 @@ const styles = StyleSheet.create({
     },
     header: {
       flexDirection: 'row',
-
+      marginTop:50
   },
    Title: {
-      fontSize: 30,
+      fontSize: 25,
       color : '#373535',
       marginLeft: 20,
       fontWeight: 'bold'
