@@ -112,7 +112,7 @@ export default class HomeClientView extends Component
       Actions.searchStoreType()
     }
     CurrentOrder(){
-     alert('carrito')
+     Actions.paymentType()
     }
 
 
