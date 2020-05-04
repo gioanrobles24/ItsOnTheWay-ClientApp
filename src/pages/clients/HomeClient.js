@@ -26,7 +26,7 @@ import Carousel , { ParallaxImage } from 'react-native-snap-carousel'
 import { SideMenu } from 'react-native-side-menu'
 import  MenuDrawer from 'react-native-side-drawer'
 import { AirbnbRating } from 'react-native-ratings'
-import BottomBar from "react-native-bottom-bar"
+import BottomBar from 'react-native-bottom-bar'
 // import { Card } from 'react-native-shadow-cards';
   const image = { uri: "http://dev.itsontheway.net/api/parnetBanner1" }
 
@@ -108,6 +108,14 @@ export default class HomeClientView extends Component
           console.log("mainIconOnPress");
     }
 
+    searchByCat(){
+      Actions.searchStoreType()
+    }
+    CurrentOrder(){
+     alert('carrito')
+    }
+
+
     openURL() {
           Linking.canOpenURL(url).then(supported => {
             if (supported) {
@@ -147,6 +155,9 @@ export default class HomeClientView extends Component
                   type='material'
                   size={20}
                   color={mainColor}
+                   onPress={() =>   {
+                    this.searchByCat()}
+                 }
                 />
                 <Text style={{fontSize:10,color:'#bdbfc1'}}>Restaurantes</Text>
               </View>
@@ -177,6 +188,9 @@ export default class HomeClientView extends Component
                   type='font-awesome'
                   size={20}
                   color={mainColor}
+                  onPress={() =>   {
+                    this.searchByCat()}
+                 }
                 />
                 <Text style={{fontSize:10,color:'#bdbfc1'}}>Farmacia</Text>
               </TouchableOpacity>
@@ -204,6 +218,9 @@ export default class HomeClientView extends Component
                   type='material'
                   size={20}
                   color={mainColor}
+                  onPress={() =>   {
+                    this.searchByCat()}
+                 }
                 />
                 <Text style={{fontSize:10,color:'#bdbfc1'}}>Tienda</Text>
         </View>
@@ -230,8 +247,11 @@ export default class HomeClientView extends Component
                   type='evilicon'
                   size={28}
                   color={mainColor}
+                  onPress={() =>   {
+                    this.CurrentOrder()}
+                 }
                 />
-                <Text style={{fontSize:10,color:'#bdbfc1'}}>Carrito</Text>
+                <Text style={{fontSize:10,color:'#bdbfc1'}}>Pedido</Text>
         </View>
       );
     }
@@ -397,7 +417,7 @@ export default class HomeClientView extends Component
                       overlay={true}
                       opacity={0.8}
                 >
-                 <ScrollView>
+
             	          <View style={styles.headerBarContainer} >
                                 <View style={styles.headerBar} >
                                       <Image
@@ -438,7 +458,7 @@ export default class HomeClientView extends Component
                                    />
                                </View>
                          </View>
-
+               <ScrollView>
                          <View style={styles.container1} >
                                 <Text style={styles.container1Title} h3>Recomendaciones...</Text>
 
@@ -524,10 +544,10 @@ const styles = StyleSheet.create({
     fontFamily: "QUICKSAND-LIGHT",
   },
    headerBarContainer: {
-    marginTop:-6,
+     marginTop:-5,
     flexDirection: 'column',
     backgroundColor: '#a9d046',
-    height: 125,
+    height: 130,
     alignItems: 'center'
   },
   headerBar: {
