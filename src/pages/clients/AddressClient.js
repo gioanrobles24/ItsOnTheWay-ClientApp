@@ -21,78 +21,16 @@ export default class AllmyOrdersClientView extends Component
 
   constructor(props) {
     super(props);
-    //  this.toggleSwitch = this.toggleSwitch.bind(this);
-    //   this.state = {
-    //      showPassword: true,
-    //       icon: 'visibility-off',
-    //        favColor: undefined,
-    //         items: [
-    //             {
-    //                 label: 'Aragua',
-    //                 value: 'red',
-    //             },
-    //             {
-    //                 label: 'Distrito Capital',
-    //                 value: 'orange',
-    //             },
-    //             {
-    //                 label: 'Miranda',
-    //                 value: 'blue',
-    //             },
-    //         ],
-    //   }
-    // state = {
-    //   email   : '',
-    //   password: '',
-    // }
+
 
   }
 
-  // toggleSwitch() {
-  //   this.setState(prevState => ({
-  //     icon: prevState.icon === 'visibility-off' ? 'visibility' : 'visibility-off',
-  //     showPassword: !this.state.showPassword
 
-  //     }));
-  // }
-
-  // register = (viewId) => {
-  //   alert('registro')
-  // }
-
-  // Verification = (viewId) => {
-  //   alert('Por favor introduce el codigo que te ha de llegar a tu número teléfonico')
-  // }
 
 
   newAddress = (viewId) =>
   {
-
-
-      alert('as')
-      //     fetch('http://dev.itsontheway.net/api/partner/login', {
-      //       method: 'POST',
-      //       headers: {
-      //           'Accept': 'application/json',
-      //           'Content-Type': 'application/json'
-      //       },
-      //       body: JSON.stringify({
-      //           p_email: this.state.email,
-      //           password: this.state.password,
-      //       })
-      //   }).then((response) => response.json())
-      //        .then((responseData) => {
-      //          console.log(responseData)
-      //            if (responseData.error){
-      //                alert('Usuario o contraseña incorrectos, por favor intenta nuevamente')
-      //              }
-      //            else{
-      //                 Actions.homeparter({responseData})
-      //            }
-      // }).catch((error) =>{
-      //   console.error(error);
-      // })
-
+      Actions.newAddressClient()
   }
 
   render() {

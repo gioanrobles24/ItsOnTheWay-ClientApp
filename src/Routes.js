@@ -10,6 +10,8 @@ import  AddressClient  from './pages/clients/AddressClient'
 import  AllMyOrders  from './pages/clients/AllMyOrdersClient'
 import  OrderClient  from './pages/clients/OrderViewClient'
 import  NewOrderClient  from './pages/clients/NewOrderClient'
+import VerifyClient from  './pages/clients/VerifyClient'
+import NewAddressClient from './pages/clients/newAddressClient'
 
 export default class Routes extends Component {
     render() {
@@ -23,9 +25,11 @@ export default class Routes extends Component {
                      <Scene key="homeClient" hideNavBar={true} component={HomeClient}/>
                      <Scene key="searchStoreType" hideNavBar={false} component={SearchStoreType}/>
                      <Scene key="addressClient" hideNavBar={false} component={AddressClient}/>
+                     <Scene key="newAddressClient" hideNavBar={false} component={NewAddressClient}/>
                      <Scene key="allmyOrders" hideNavBar={false} component={AllMyOrders}/>
                      <Scene key="orderClient" hideNavBar={false} component={OrderClient}/>
                      <Scene key="newOrderClient" hideNavBar={false} component={NewOrderClient}/>
+                     <Scene key="verifyClient" hideNavBar={false} component={VerifyClient}/>
                 </Stack>
             </Router>
         )
