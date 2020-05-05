@@ -12,6 +12,11 @@ import  OrderClient  from './pages/clients/OrderViewClient'
 import  NewOrderClient  from './pages/clients/NewOrderClient'
 import VerifyClient from  './pages/clients/VerifyClient'
 import NewAddressClient from './pages/clients/newAddressClient'
+import PaymentTypeClient from './pages/clients/PaymentType'
+
+import ProductClientView from './pages/clients/productView'
+import PromoAndSugesClient from './pages/clients/PromosAndSuges'
+
 
 export default class Routes extends Component {
     render() {
@@ -30,6 +35,9 @@ export default class Routes extends Component {
                      <Scene key="orderClient" hideNavBar={false} component={OrderClient}/>
                      <Scene key="newOrderClient" hideNavBar={false} component={NewOrderClient}/>
                      <Scene key="verifyClient" hideNavBar={false} component={VerifyClient}/>
+                     <Scene key="paymentType" hideNavBar={false} component={PaymentTypeClient}/>
+                     <Scene key="productView" hideNavBar={false} component={ProductClientView}/>
+                     <Scene key="promoAndSuges" hideNavBar={false} component={PromoAndSugesClient}/>
                 </Stack>
             </Router>
         )
