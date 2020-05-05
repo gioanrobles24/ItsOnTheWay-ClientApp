@@ -105,16 +105,21 @@ export default class HomeClientView extends Component
     state = {}
     mainIconOnPress() {
     // Magic happens for main icon on press
-          console.log("mainIconOnPress");
+          alert("mainIconOnPress");
     }
 
     searchByCat(){
       Actions.searchStoreType()
     }
     CurrentOrder(){
-     Actions.paymentType()
+     Actions.orderClient()
     }
-
+     PromoAndSuges(){
+     Actions.promoAndSuges()
+    }
+    productView(){
+      alert('asdsadfsd')
+    }
 
     openURL() {
           Linking.canOpenURL(url).then(supported => {
@@ -258,17 +263,23 @@ export default class HomeClientView extends Component
 
     _renderItem({item,index}){
         return (
-          <Card containerStyle={{flexDirection: 'row',width:250, marginLeft:-20,marginTop:30}}
+          <TouchableOpacity
+              onPress={() => alert('Pressed!')}>
+              <Card containerStyle={{flexDirection: 'row',width:250, marginLeft:-20,marginTop:30}}
              imageStyle={{width: 249, height: 130}}
-             image={image}>
+             image={image}
+             >
               <Text style={{fontSize: 20,marginLeft:5}}>{item.title}</Text>
-             <Text style={{fontSize: 15, color: '#bdbfc1', marginLeft:5}}>{item.text}</Text>
+             <Text style={{fontSize: 15, color: '#bdbfc1', marginLeft:5}}
+             >{item.text}</Text>
 
              <View style={{flexDirection:'row',marginLeft:5}}>
                 <AirbnbRating isDisabled={true} showRating={false} defaultRating={4}   size={15}/>
                 <Text style={{fontSize: 10, marginLeft: 30 }}>50.00$</Text>
-            </View>
-          </Card>
+                 </View>
+            </Card>
+        </TouchableOpacity>
+
 
         )
     }
@@ -464,7 +475,7 @@ export default class HomeClientView extends Component
 
 
                                 <Text style={styles.container2Title} onPress={() =>   {
-                                  this.seeAll()}
+                                  this.PromoAndSuges()}
                                 }  h3>Ver todo>>  </Text>
                          </View>
             	          <SafeAreaView style={{flex: 1}}>
@@ -561,6 +572,7 @@ const styles = StyleSheet.create({
     marginTop: 30,
     flexDirection:'row',
     marginLeft: 15,
+    marginBottom: 20,
     justifyContent: "space-between",
   },
   container1Title:{
