@@ -32,9 +32,9 @@ export default class PaymentTypeClientView extends Component
   }
 
 
-  sendResetPasswd = (viewId) => {
+  VerifyPaymentClient = (viewId) => {
 
-  	alert('correo Enviado'+ 'correo:' +this.state.email)
+  	Actions.verifyPaymentClient();
   }
 
 
@@ -57,7 +57,7 @@ export default class PaymentTypeClientView extends Component
                               checkedIcon='dot-circle-o'
                                uncheckedIcon='circle-o'
                               checked={this.state.transfchecked}
-                              onPress={() => this.setState({transfchecked: !this.state.transfchecked})}
+                              onPress={() => this.VerifyPaymentClient('paymentType')}
                           />
                     </View>
                      <View style={styles.platformName}>
