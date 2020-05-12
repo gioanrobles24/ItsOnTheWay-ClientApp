@@ -30,16 +30,9 @@ export default class SearchStoreTypeView extends Component
 
 
   }
-
- openURL() {
-          Linking.canOpenURL(url).then(supported => {
-            if (supported) {
-              Linking.openURL(url);
-            } else {
-              console.log("Don't know how to open URI: " + url);
-            }
-          });
-      }
+    //   HomeClient(){
+    //   Actions.homeClient()
+    // }
       renderMainIcon() {
           return (
             <Icon
@@ -47,7 +40,11 @@ export default class SearchStoreTypeView extends Component
              name='home'
              type='font-awesome'
              size={29}
-             color="#d3e38c" />
+             color="#d3e38c"
+             onPress={() =>   {
+                    this.HomeClient()}
+                 }
+              />
           );
       }
 
@@ -93,11 +90,7 @@ export default class SearchStoreTypeView extends Component
                 })
               }}
             >
-              <TouchableOpacity
-                onPress={() => {
-                  this.openURL();
-                }}
-              >
+              <TouchableOpacity>
                 <Icon
                   name='heartbeat'
                   type='font-awesome'
@@ -170,16 +163,17 @@ export default class SearchStoreTypeView extends Component
         </View>
       );
     }
-
+     searchByCat(){
+      Actions.searchStoreType()
+    }
 
   AllMyOrders = (viewId) =>
   {
-
       Actions.allmyOrders()
-
-
   }
-
+   CurrentOrder(){
+     Actions.orderClient()
+    }
   render() {
 
     return (

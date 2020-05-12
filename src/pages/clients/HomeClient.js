@@ -48,6 +48,7 @@ export default class HomeClientView extends Component
       this.state = {
                 activeIndex:0,
                   open: false,
+                  data: this.props.responseData.response.client_info,
                 carouselItems:
                 [
                       {
@@ -121,15 +122,6 @@ export default class HomeClientView extends Component
       alert('asdsadfsd')
     }
 
-    openURL() {
-          Linking.canOpenURL(url).then(supported => {
-            if (supported) {
-              Linking.openURL(url);
-            } else {
-              console.log("Don't know how to open URI: " + url);
-            }
-          });
-      }
       renderMainIcon() {
           return (
             <Icon
@@ -184,9 +176,9 @@ export default class HomeClientView extends Component
               }}
             >
               <TouchableOpacity
-                onPress={() => {
-                  this.openURL();
-                }}
+                // onPress={() => {
+                //   this.openURL();
+                // }}
               >
                 <Icon
                   name='heartbeat'
@@ -256,7 +248,7 @@ export default class HomeClientView extends Component
                     this.CurrentOrder()}
                  }
                 />
-                <Text style={{fontSize:10,color:'#bdbfc1'}}>Pedido</Text>
+                <Text style={{fontSize:10,color:'#bdbfc1'}}>Mercado</Text>
         </View>
       );
     }
@@ -351,7 +343,7 @@ export default class HomeClientView extends Component
                    source={image}
                   />
 
-                  <Text style={styles.animatedBoxTextSpecial}  h3>Gioan Robles</Text>
+                  <Text style={styles.animatedBoxTextSpecial}  h3>{this.state.data.cl_name}</Text>
                 <View style={styles.MenubarContainer}>
 
                       <View style={styles.menubarItemContainer} >
