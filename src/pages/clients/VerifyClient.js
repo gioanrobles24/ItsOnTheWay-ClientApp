@@ -21,24 +21,49 @@ export default class VerifyClientView extends Component
  	 constructor(props) {
     		super(props);
 		      this.state = {}
-			    state = {}
+			    state = {
+            code:''
+          }
 
   		}
 
   		register = (viewId) => {
 
-  				Alert.alert(
-		            'Has sido verficado con exito',
-		            'Gracias por registrarte, ya puedes distrutar de nuestros servicios',
-			            [
-			                {
-			                    text: 'Cancel',
-			                    onPress: () => console.log('Cancel Pressed'),
-			                    style: 'cancel',
-			                },
-			                {text: 'OK', onPress: () => Actions.homeClient()},
-			            ]
-        		);
+          fetch('http://dev.itsontheway.net/api/clients/register/verify/'+this.state.code, {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+            }).then((response) => response.json())
+                 .then((responseData) => {
+                   console.log(responseData)
+                     if (responseData.error){
+                         alert('Codigo incorrecto, Intente nuevamente')
+                       }
+                     else{
+                       Alert.alert(
+                'Has sido verficado con exito',
+                'Gracias por registrarte, ya puedes distrutar de nuestros servicios',
+                  [
+                      {
+                          text: 'Cancel',
+                          onPress: () => console.log('Cancel Pressed'),
+                          style: 'cancel',
+                      },
+                      {text: 'OK', onPress: () => Actions.homeClient({responseData})},
+                  ]
+            );
+
+                     }
+          }).catch((error) =>{
+            console.error(error);
+          })
+
+
+
+
+
   		}
 
 
@@ -52,20 +77,27 @@ export default class VerifyClientView extends Component
 	        </View>
 	        <View style={styles.inputContainer}>
           <TextInput style={styles.inputs}
-              placeholder="Inserta el codigo enviado a tu celular"
-              keyboardType="phone-pad"
+              placeholder="Inserta el codigo enviado a tu Email"
+              keyboardType="default"
               underlineColorAndroid='transparent'
-              onChangeText={(email) => this.setState({email})}
+              onChangeText={(code) => this.setState({code})}
               />
         </View>
 	        <TouchableHighlight style={[styles.buttonContainer, styles.loginButton]}
-        onPress={() =>  {
+            onPress={() =>  {
               this.register()}
             }
            >
 
           <Text style={styles.loginText}>Confirmar</Text>
         </TouchableHighlight>
+               <Avatar
+                 rounded size="xlarge"
+                 overlayContainerStyle={{backgroundColor: 'transparent',}}
+                 containerStyle={{alignSelf: "center", flexDirection:'column',
+                 marginTop: 20,}}
+                 source={{ uri: 'http://dev.itsontheway.net/api/imgVerde',}}
+                  />
       </View>
 
     );

@@ -16,7 +16,7 @@ import PaymentTypeClient from './pages/clients/PaymentType'
 
 import ProductClientView from './pages/clients/productView'
 import PromoAndSugesClient from './pages/clients/PromosAndSuges'
-
+import VerifyPaymentClient from './pages/clients/VeryfyPayment'
 
 export default class Routes extends Component {
     render() {
@@ -38,6 +38,7 @@ export default class Routes extends Component {
                      <Scene key="paymentType" hideNavBar={false} component={PaymentTypeClient}/>
                      <Scene key="productView" hideNavBar={false} component={ProductClientView}/>
                      <Scene key="promoAndSuges" hideNavBar={false} component={PromoAndSugesClient}/>
+                     <Scene key="verifyPaymentClient" hideNavBar={false} component={VerifyPaymentClient}/>
                 </Stack>
             </Router>
         )

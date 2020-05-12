@@ -46,7 +46,9 @@ export default class RegisterClientView extends Component
       phone : '',
       password: '',
       password_confirm: '',
-      estado: ''
+      estado: '',
+      user: '',
+
 
 
     }
@@ -61,12 +63,42 @@ export default class RegisterClientView extends Component
       }));
   }
 
+    Verification = (viewId) =>
+      {
+           console.log( "Button pressed "+ 'correo:' +this.state.email+ 'password'+ this.state.password)
+              fetch('http://dev.itsontheway.net/api/clients/register', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    cl_email: this.state.email,
+                    password: this.state.password,
+                    cl_user :   this.state.user,
+                    cl_phone_1 :  this.state.phone,
+                    cl_name :  this.state.name,
+                    cl_last_name : this.state.last_name
+                })
+            }).then((response) => response.json())
+                 .then((responseData) => {
+                   console.log(responseData)
+                     if (responseData.error){
+                         alert('Intente nuevamente')
+                       }
+                     else{
+                          Actions.verifyClient({responseData})
+                     }
+          }).catch((error) =>{
+            console.error(error);
+          })
 
+      }
 
-  Verification = (viewId) => {
+  // Verification = (viewId) => {
 
-  	  Actions.verifyClient()
-  }
+  // 	  Actions.verifyClient()
+  // }
 
 
   render() {
@@ -112,7 +144,14 @@ export default class RegisterClientView extends Component
               onChangeText={(email) => this.setState({email})}
               />
         </View>
-
+        <View style={styles.inputContainer}>
+          <TextInput style={styles.inputs}
+              placeholder="usuario"
+              keyboardType="text"
+              underlineColorAndroid='transparent'
+              onChangeText={(user) => this.setState({user})}
+              />
+        </View>
         <View style={styles.inputContainer}>
              <TextInput  style={styles.inputs}
           placeholderTextColor="gray"

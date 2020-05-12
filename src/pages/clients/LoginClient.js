@@ -47,34 +47,32 @@ export default class LoginClientView extends Component
 
   	Actions.resetPasswordClient()
   }
-  onClickListener = (viewId) =>
+  Login = (viewId) =>
   {
-      Actions.homeClient()
 
        console.log( "Button pressed "+ 'correo:' +this.state.email+ 'password'+ this.state.password)
-
-      //     fetch('http://dev.itsontheway.net/api/partner/login', {
-      //       method: 'POST',
-      //       headers: {
-      //           'Accept': 'application/json',
-      //           'Content-Type': 'application/json'
-      //       },
-      //       body: JSON.stringify({
-      //           p_email: this.state.email,
-      //           password: this.state.password,
-      //       })
-      //   }).then((response) => response.json())
-      //        .then((responseData) => {
-      //          console.log(responseData)
-      //            if (responseData.error){
-      //                alert('Usuario o contraseña incorrectos, por favor intenta nuevamente')
-      //              }
-      //            else{
-      //                 Actions.homeparter({responseData})
-      //            }
-      // }).catch((error) =>{
-      //   console.error(error);
-      // })
+          fetch('http://dev.itsontheway.net/api/clients/login', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                cl_email: this.state.email,
+                password: this.state.password,
+            })
+        }).then((response) => response.json())
+             .then((responseData) => {
+               console.log(responseData)
+                 if (responseData.error){
+                     alert('Usuario o contraseña incorrectos, por favor intenta nuevamente')
+                   }
+                 else{
+                      Actions.homeClient({responseData})
+                 }
+      }).catch((error) =>{
+        console.error(error);
+      })
 
   }
 
@@ -115,7 +113,7 @@ export default class LoginClientView extends Component
 
         <TouchableHighlight style={[styles.buttonContainer, styles.loginButton]}
         onPress={() =>  {
-              this.onClickListener('login')}
+              this.Login('login')}
             }
            >
 
