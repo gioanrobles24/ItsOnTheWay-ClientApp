@@ -7,14 +7,19 @@ import {
   Button,
   TouchableHighlight,
   Image,
-  Alert,ImageBackground
+  Alert,ImageBackground,ScrollView
 } from 'react-native'
 import { Actions } from 'react-native-router-flux';
 import { AirbnbRating,Rating } from 'react-native-ratings'
 import { Badge,Avatar } from 'react-native-elements';
 const image = { uri: "http://dev.itsontheway.net/api/parnetBanner" }
 import { Card } from 'react-native-shadow-cards';
-export default class OrderDeliveryShowViewPartner extends Component {
+
+import store from '../../store'
+import {connect} from 'react-redux'
+import Products from '../components/Products'
+
+ class OrderViewClient extends Component {
     constructor(props) {
        super(props);
        this.state = {
@@ -35,52 +40,33 @@ export default class OrderDeliveryShowViewPartner extends Component {
   render() {
 
     return (
-      <View style={styles.container}>
-          <Image
-            style={styles.partnerimage}
-            source={{
-              uri: 'http://dev.itsontheway.net/api/parnetBanner1',
-            }}
-          />
-          <Card style={styles.containertitle}>
-              <Avatar
-                       size="medium"
-                       overlayContainerStyle={{backgroundColor: '#bdbfc1',}}
-                       containerStyle={{alignSelf: "center", flexDirection:'column',
-                       marginTop: 20,}}
-                       source={image}
-                      />
-              <Text style={styles.Title}  h1>Nombre de tienda</Text>
-           </Card>
-
-            <View style={{flex: 0.4, flexDirection: 'column',justifyContent: 'space-around',alignItems: 'flex-start',
-                marginLeft: 10
-              }}>
-                    <View style={{width: 200}}>
-                         <Text style={styles.SubTitle}  h1>Listado de productos: </Text>
-                         <Text   h1> Producto 1, Poducto 2</Text>
-                     </View>
-                  <View style={{width: 200}}>
-                         <Text style={styles.SubTitle}  h1>Dirección a a enviar: </Text>
-                         <Text   h1> Mirada, Chacao,Casa 1, Color rosado</Text>
-                     </View>
-                   <View style={{width: 200, flexDirection: 'row'}}>
-                   </View>
-
-            </View>
-
-            <TouchableHighlight style={[styles.buttonContainer, styles.loginButton]}
-                onPress={() =>  {
-                  this.goTypePayment()}
+     <View style={styles.container}>
+                {this.props.cartItems.length > 0 ?
+                    <Products
+                        onPress={this.props.removeItem}
+                        products={this.props.cartItems} />
+                    : <Text>No items in your cart</Text>
                 }
-               >
-
-              <Text style={styles.loginText}>Pagar</Text>
-          </TouchableHighlight>
-      </View>
+            </View>
     );
   }
 }
+
+
+const mapStateToProps = (state) => {
+    return {
+        cartItems: state
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        removeItem: (product) => dispatch({ type: 'REMOVE_FROM_CART', payload: product })
+    }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(OrderViewClient);
 
 
 const styles = StyleSheet.create({

@@ -32,7 +32,6 @@ import store from '../../store'
 
 
 
-
   const carIcon = (props) =>(
           	 <View style={{
             ...Platform.select({
@@ -55,7 +54,7 @@ import store from '../../store'
                   size={28}
                   color={mainColor}
                   onPress={() =>   {
-                    this.CurrentOrder()}
+                    Actions.orderClient()}
                  }
                 />
                 <Text style={{fontSize:10,color:'#bdbfc1'}}>Mercado</Text>
@@ -67,7 +66,6 @@ const mapStateToProps = (state) => {
         cartItems: state
     }
 }
-
 export default connect(mapStateToProps)(carIcon);
 
 
