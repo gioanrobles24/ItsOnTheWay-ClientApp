@@ -131,7 +131,7 @@ import {electronics} from '../components/Data'
      Actions.promoAndSuges()
     }
     productView(){
-      this.props.addItemToCart
+      alert('asdsadfsd')
     }
 
       renderMainIcon() {
@@ -242,27 +242,7 @@ import {electronics} from '../components/Data'
       );
     }
 
-    _renderItem({item,index,props}){
-      console.log(electronics);
-        return (
-           <Card containerStyle={{flexDirection: 'row',width:279, marginLeft:-20, backgroundColor: 'rgba(255, 255, 255, 0.2)'}}
-              imageStyle={{width: 276, height: 130, borderRadius: 15}}
-              roundImage
-              image={image}>
-            <Text>{item.text}</Text>
-          </Card>
-        );
-    }
-    _renderItem2 ({item, index}, parallaxProps) {
-        return (
-           <Card containerStyle={{flexDirection: 'row',width:279, marginLeft:-20, backgroundColor: 'rgba(255, 255, 255, 0.2)'}}
-              imageStyle={{width: 276, height: 130, borderRadius: 15}}
-              roundImage
-              image={image}>
-            <Text>{item.text}</Text>
-          </Card>
-        );
-    }
+
     _renderItem3 ({item, index}, parallaxProps) {
         return (
            <Card containerStyle={{flexDirection: 'row',width:279, height:130, marginLeft:-20, backgroundColor: 'rgba(255, 255, 255, 0.2)'}}
@@ -280,8 +260,8 @@ import {electronics} from '../components/Data'
        alladdress = (viewId) => {
          Actions.addressClient()
       }
-    seeAll = (item) => {
-        this.props.addItemToCart
+    seeAll = (viewId) => {
+         alert('ver')
       }
     handleBackButton = () => {
           if(this.state.doubleBackToExitPressedOnce) {
@@ -451,7 +431,10 @@ import {electronics} from '../components/Data'
             	          <SafeAreaView style={{flex: 1}}>
                                 <View style={{ flex: 1, flexDirection:'row', justifyContent: 'center', marginTop:-30 }}>
 
-                                  <Products products={electronics} onPress={this.props.addItemToCart}/>
+
+                                        <Products products={electronics} onPress={this.props.addItemToCart}/>
+
+
                                 </View>
                         </SafeAreaView>
                          <View style={styles.container4} >
@@ -493,6 +476,8 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 export default  connect(null,mapDispatchToProps)(HomeClientView);
+
+
 
 const styles = StyleSheet.create({
   container: {

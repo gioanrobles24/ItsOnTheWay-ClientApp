@@ -3,8 +3,12 @@ import {
     View,
     Text,
     StyleSheet,
-    Button
+    Button,
+    TouchableHighlight,TouchableOpacity,ScrollView
 } from "react-native";
+import { Icon,Avatar,Badge,withBadge,Image,Input,Card    } from 'react-native-elements'
+  const image = { uri: "http://dev.itsontheway.net/api/parnetBanner1" }
+  import { AirbnbRating } from 'react-native-ratings'
 
 class Products extends Component {
 
@@ -12,9 +16,31 @@ class Products extends Component {
         console.log(products)
         return products.map((item, index) => {
             return (
-                <View key={index} style={{ padding: 20 }}>
-                    <Button onPress={() => this.props.onPress(item)} title={item.name + " - " + item.price} />
+
+
+
+                <View key={index} >
+                      <TouchableOpacity
+                             onPress={() => this.props.onPress(item)}>
+                              <Card containerStyle={{flexDirection: 'row',width:250, marginLeft:20,marginTop:30}}
+                             imageStyle={{width: 249, height: 130}}
+                             image={image}
+                             >
+                              <Text style={{fontSize: 20,marginLeft:5}}>{item.title}</Text>
+                             <Text style={{fontSize: 15, color: '#bdbfc1', marginLeft:5}}
+                             >{item.text}</Text>
+
+                             <View style={{flexDirection:'row',marginLeft:5}}>
+                                <AirbnbRating isDisabled={true} showRating={false} defaultRating={4}   size={15}/>
+                                <Text style={{fontSize: 10, marginLeft: 30 }}>50.00$</Text>
+                                 </View>
+                            </Card>
+                        </TouchableOpacity>
+
                 </View>
+
+
+
             )
         })
     }
@@ -24,7 +50,12 @@ class Products extends Component {
     render() {
         return (
             <View style={styles.container}>
-                {this.renderProducts(this.props.products)}
+            <ScrollView horizontal={true}>
+
+                 {this.renderProducts(this.props.products)}
+
+               </ScrollView>
+
             </View>
         );
     }
