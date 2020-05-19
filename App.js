@@ -6,12 +6,16 @@ import {
 } from 'react-native';
 
 import Routes from './src/Routes';
+import {Provider} from 'react-redux'
+import store from './src/store'
 
 export default class App extends Component   {
   render() {
     return (
       <View style={styles.container}>
-        <Routes/>
+        <Provider store={store}>
+          <Routes/>
+        </Provider>
       </View>
     );
   }

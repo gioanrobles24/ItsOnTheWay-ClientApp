@@ -27,7 +27,13 @@ import { SideMenu } from 'react-native-side-menu'
 import  MenuDrawer from 'react-native-side-drawer'
 import { AirbnbRating } from 'react-native-ratings'
 import BottomBar from 'react-native-bottom-bar'
-// import { Card } from 'react-native-shadow-cards';
+import BottomBarMenu from '../components/BotomBarMenu'
+import {Provider} from 'react-redux'
+import store from '../../store'
+import {connect} from 'react-redux'
+import Products from '../components/Products'
+import {electronics} from '../components/Data'
+ // import { Card } from 'react-native-shadow-cards';
   const image = { uri: "http://dev.itsontheway.net/api/parnetBanner1" }
 
   const win = Dimensions.get('window');
@@ -40,7 +46,10 @@ import BottomBar from 'react-native-bottom-bar'
   const pnkGradient = ["#ffffff", "#ffffff"];
 
 
-export default class HomeClientView extends Component
+
+
+
+ class HomeClientView extends Component
 {
   constructor(props) {
       super(props)
@@ -51,23 +60,26 @@ export default class HomeClientView extends Component
                   data: this.props.responseData.response.client_info,
                 carouselItems:
                 [
-                      {
+                      {   id:1,
                           title:"nombre de producto",
                           text: "Nombre de restaurante"
                       },
-                      {
+                      {    id:1,
                           title:"nombre de producto",
                           text: "Nombre de restaurante",
                       },
                       {
+                          id:2,
                           title:"nombre de producto",
                           text: "Nombre de restaurante",
                       },
                       {
+                          id:3,
                           title:"nombre de producto",
                           text: "Nombre de restaurante",
                       },
                       {
+                          id:4,
                           title:"nombre de producto",
                           text: "Nombre de restaurante",
                       },
@@ -119,7 +131,7 @@ export default class HomeClientView extends Component
      Actions.promoAndSuges()
     }
     productView(){
-      alert('asdsadfsd')
+      this.props.addItemToCart
     }
 
       renderMainIcon() {
@@ -224,56 +236,22 @@ export default class HomeClientView extends Component
       );
     }
 
-    renderFourthIconComponent() {
-      return (
-        <View
-          style={{
-            ...Platform.select({
-              ios: {
-                left: 16
-              },
-              android: {
-                left: 8,
-                top: 8
-              }
-            })
-          }}
-        >
-          <Icon
-                  name='cart'
-                  type='evilicon'
-                  size={28}
-                  color={mainColor}
-                  onPress={() =>   {
-                    this.CurrentOrder()}
-                 }
-                />
-                <Text style={{fontSize:10,color:'#bdbfc1'}}>Mercado</Text>
-        </View>
+    renderFourthIconComponent ()  {
+      return  (
+        <BottomBarMenu/>
       );
     }
 
-    _renderItem({item,index}){
+    _renderItem({item,index,props}){
+      console.log(electronics);
         return (
-          <TouchableOpacity
-              onPress={() => alert('Pressed!')}>
-              <Card containerStyle={{flexDirection: 'row',width:250, marginLeft:-20,marginTop:30}}
-             imageStyle={{width: 249, height: 130}}
-             image={image}
-             >
-              <Text style={{fontSize: 20,marginLeft:5}}>{item.title}</Text>
-             <Text style={{fontSize: 15, color: '#bdbfc1', marginLeft:5}}
-             >{item.text}</Text>
-
-             <View style={{flexDirection:'row',marginLeft:5}}>
-                <AirbnbRating isDisabled={true} showRating={false} defaultRating={4}   size={15}/>
-                <Text style={{fontSize: 10, marginLeft: 30 }}>50.00$</Text>
-                 </View>
-            </Card>
-        </TouchableOpacity>
-
-
-        )
+           <Card containerStyle={{flexDirection: 'row',width:279, marginLeft:-20, backgroundColor: 'rgba(255, 255, 255, 0.2)'}}
+              imageStyle={{width: 276, height: 130, borderRadius: 15}}
+              roundImage
+              image={image}>
+            <Text>{item.text}</Text>
+          </Card>
+        );
     }
     _renderItem2 ({item, index}, parallaxProps) {
         return (
@@ -302,8 +280,8 @@ export default class HomeClientView extends Component
        alladdress = (viewId) => {
          Actions.addressClient()
       }
-    seeAll = (viewId) => {
-         alert('ver')
+    seeAll = (item) => {
+        this.props.addItemToCart
       }
     handleBackButton = () => {
           if(this.state.doubleBackToExitPressedOnce) {
@@ -468,49 +446,17 @@ export default class HomeClientView extends Component
 
                                 <Text style={styles.container2Title} onPress={() =>   {
                                   this.PromoAndSuges()}
-                                }  h3>Ver todo>>  </Text>
+                                }  h3>Ver todo</Text>
                          </View>
             	          <SafeAreaView style={{flex: 1}}>
                                 <View style={{ flex: 1, flexDirection:'row', justifyContent: 'center', marginTop:-30 }}>
-                                    <Carousel
-                                        layout={"default"}
-                                        ref={ref => this.carousel = ref}
-                                        data={this.state.carouselItems}
-                                        sliderWidth={300}
-                                        itemWidth={250}
-                                        renderItem={this._renderItem}
-                                        onSnapToItem = { index => this.setState({activeIndex:index}) }
-                                       />
+
+                                  <Products products={electronics} onPress={this.props.addItemToCart}/>
                                 </View>
                         </SafeAreaView>
                          <View style={styles.container4} >
                               <Text style={styles.container1Title} h3>PROMOCIONES</Text>
                          </View>
-                       <SafeAreaView style={{flex: 1, }}>
-                              <View style={{ flexDirection:'row',backgroundColor: 'rgba(255, 255, 255, 0.2)'}}>
-                                  <Carousel
-                                      layout={"default"}
-                                      ref={ref => this.carousel = ref}
-                                      data={this.state.carouselItems2}
-                                      sliderWidth={300}
-                                      itemWidth={280}
-                                      renderItem={this._renderItem2}
-                                      onSnapToItem = { index => this.setState({activeIndex:index}) }
-                                     />
-                              </View>
-                      </SafeAreaView>
-                      <SafeAreaView style={{flex: 1, }}>
-                              <View style={{ flexDirection:'row',backgroundColor: 'rgba(255, 255, 255, 0.2)'}}>
-                                  <Carousel
-                                    layout={"default"}
-                                    ref={ref => this.carousel = ref}
-                                    data={this.state.carouselItems2}
-                                    sliderWidth={300}
-                                    itemWidth={280}
-                                    renderItem={this._renderItem3}
-                                    onSnapToItem = { index => this.setState({activeIndex:index}) } />
-                              </View>
-                      </SafeAreaView>
 
                       <SafeAreaView style={{height: 100, }}>
 
@@ -539,6 +485,14 @@ export default class HomeClientView extends Component
     );
   }
 }
+
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        addItemToCart: (product) => dispatch({ type: 'ADD_TO_CART', payload: product })
+    }
+}
+export default  connect(null,mapDispatchToProps)(HomeClientView);
 
 const styles = StyleSheet.create({
   container: {
