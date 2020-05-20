@@ -26,13 +26,13 @@ class Products extends Component {
                              imageStyle={{width: 249, height: 130}}
                              image={image}
                              >
-                              <Text style={{fontSize: 20,marginLeft:5}}>{item.title}</Text>
+                              <Text style={{fontSize: 20,marginLeft:5}}>{item.prod_name}</Text>
                              <Text style={{fontSize: 15, color: '#bdbfc1', marginLeft:5}}
                              >{item.text}</Text>
 
                              <View style={{flexDirection:'row',marginLeft:5}}>
                                 <AirbnbRating isDisabled={true} showRating={false} defaultRating={4}   size={15}/>
-                                <Text style={{fontSize: 10, marginLeft: 30 }}>50.00$</Text>
+                                <Text style={{fontSize: 10, marginLeft: 30 }}>{item.prod_price_usd}$</Text>
                                  </View>
                             </Card>
                         </TouchableOpacity>

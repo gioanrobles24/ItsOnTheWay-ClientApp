@@ -53,37 +53,13 @@ import {electronics} from '../components/Data'
 {
   constructor(props) {
       super(props)
+       console.log('esto llego a aca'+JSON.stringify(this.props))
       this.mainIconOnPress = this.mainIconOnPress.bind(this);
       this.state = {
                 activeIndex:0,
                   open: false,
                   data: this.props.responseData.response.client_info,
-                carouselItems:
-                [
-                      {   id:1,
-                          title:"nombre de producto",
-                          text: "Nombre de restaurante"
-                      },
-                      {    id:1,
-                          title:"nombre de producto",
-                          text: "Nombre de restaurante",
-                      },
-                      {
-                          id:2,
-                          title:"nombre de producto",
-                          text: "Nombre de restaurante",
-                      },
-                      {
-                          id:3,
-                          title:"nombre de producto",
-                          text: "Nombre de restaurante",
-                      },
-                      {
-                          id:4,
-                          title:"nombre de producto",
-                          text: "Nombre de restaurante",
-                      },
-                ],
+                  products: this.props.responseData.response.all_products,
                  carouselItems2:
                 [
                       {
@@ -432,7 +408,7 @@ import {electronics} from '../components/Data'
                                 <View style={{ flex: 1, flexDirection:'row', justifyContent: 'center', marginTop:-30 }}>
 
 
-                                        <Products products={electronics} onPress={this.props.addItemToCart}/>
+                                        <Products products={this.state.products} onPress={this.props.addItemToCart}/>
 
 
                                 </View>
