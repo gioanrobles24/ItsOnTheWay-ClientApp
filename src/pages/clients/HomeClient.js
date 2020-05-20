@@ -97,8 +97,10 @@ import {electronics} from '../components/Data'
           alert("mainIconOnPress");
     }
 
-    searchByCat(){
-      Actions.searchStoreType()
+    searchByCat(id){
+      console.log('id de cat'+id)
+      let cat_id = id
+      Actions.searchStoreType({cat_id})
     }
     CurrentOrder(){
      Actions.orderClient()
@@ -141,7 +143,7 @@ import {electronics} from '../components/Data'
                   size={20}
                   color={mainColor}
                    onPress={() =>   {
-                    this.searchByCat()}
+                    this.searchByCat('1')}
                  }
                 />
                 <Text style={{fontSize:10,color:'#bdbfc1'}}>Restaurantes</Text>
@@ -174,7 +176,7 @@ import {electronics} from '../components/Data'
                   size={20}
                   color={mainColor}
                   onPress={() =>   {
-                    this.searchByCat()}
+                    this.searchByCat('2')}
                  }
                 />
                 <Text style={{fontSize:10,color:'#bdbfc1'}}>Farmacia</Text>
@@ -204,7 +206,7 @@ import {electronics} from '../components/Data'
                   size={20}
                   color={mainColor}
                   onPress={() =>   {
-                    this.searchByCat()}
+                    this.searchByCat('3')}
                  }
                 />
                 <Text style={{fontSize:10,color:'#bdbfc1'}}>Tienda</Text>
