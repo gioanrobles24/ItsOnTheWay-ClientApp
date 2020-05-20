@@ -16,9 +16,6 @@ class Products extends Component {
         console.log(products)
         return products.map((item, index) => {
             return (
-
-
-
                 <View key={index} >
                       <TouchableOpacity
                              onPress={() => this.props.onPress(item)}>
@@ -28,7 +25,7 @@ class Products extends Component {
                              >
                               <Text style={{fontSize: 20,marginLeft:5}}>{item.prod_name}</Text>
                              <Text style={{fontSize: 15, color: '#bdbfc1', marginLeft:5}}
-                             >{item.text}</Text>
+                             >{item.partner_user}</Text>
 
                              <View style={{flexDirection:'row',marginLeft:5}}>
                                 <AirbnbRating isDisabled={true} showRating={false} defaultRating={4}   size={15}/>
