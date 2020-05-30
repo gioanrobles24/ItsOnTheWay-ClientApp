@@ -159,13 +159,36 @@ export default class SearchStoreTypeView extends Component
       );
     }
 
-    renderFourthIconComponent() {
+   renderFourthIconComponent ()  {
       return (
-        <BottomBarMenu/>
+         <View style={{
+            ...Platform.select({
+              ios: {
+                left: 16
+              },
+              android: {
+                left: 8,
+                top: 8
+              }
+            })
+          }}
+        >
+          <Icon
+                  name='cart'
+                  type='evilicon'
+                  size={28}
+                  color={mainColor}
+                  onPress={() =>   {
+                  this.searchByCat('3')}
+                 }
+                />
+                <Text style={{fontSize:10,color:'#bdbfc1'}}>Mercado</Text>
+        </View>
       );
     }
-     searchByCat(id){
-      console.log('id de cat'+id)
+
+    searchByCat(id){
+     console.log('id de cat'+id)
       let cat_id = id
       Actions.searchStoreType({cat_id})
     }
@@ -174,6 +197,12 @@ export default class SearchStoreTypeView extends Component
   {
       Actions.allmyOrders()
   }
+    ThisPartnerView(id){
+      console.log('id de partner'+id)
+      let p_id = id
+
+        Actions.partnerView({p_id})
+    }
    CurrentOrder(){
      Actions.orderClient()
     }
@@ -212,8 +241,6 @@ export default class SearchStoreTypeView extends Component
           </View>
             <View style={styles.productscontainer}>
                <ScrollView>
-
-
                      {this.state.partnersByCat.map(Object =>
                        <View style={styles.cardOrdercontainer}>
                           <Card style={styles.cardOrder} >
@@ -222,14 +249,15 @@ export default class SearchStoreTypeView extends Component
                                       size="medium"
                                       source={image}
                                   />
-                                    <Text style={styles.cardOrderSubTitle} >{Object.p_user}</Text>
+                                    <Text style={styles.cardOrderSubTitle}
+                                      onPress={() =>   {
+                                        this.ThisPartnerView(Object.id)}
+                                  }
+                                    >{Object.p_user}</Text>
                             </Card>
                       </View>)}
              </ScrollView>
           </View>
-
-
-
              <SafeAreaView style={styles.menutab}>
                     <View style={styles.menutab}>
                           <BottomBar
