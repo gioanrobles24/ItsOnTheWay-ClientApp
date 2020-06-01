@@ -94,11 +94,6 @@ import {electronics} from '../components/Data'
     state = {}
 
 
-    searchByCat(id){
-      console.log('id de cat'+id)
-      let cat_id = id
-      Actions.searchStoreType({cat_id})
-    }
     CurrentOrder(){
      Actions.orderClient()
     }

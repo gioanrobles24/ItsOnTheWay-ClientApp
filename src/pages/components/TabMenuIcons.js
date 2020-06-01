@@ -35,6 +35,11 @@ class TabMenuIcons extends Component{
 		  this.state = {};
 		}
 
+    searchByCat(id){
+      console.log('id de cat'+id)
+      let cat_id = id
+      Actions.searchStoreType({cat_id})
+    }
     renderMainIcon() {
           return (
             <Icon

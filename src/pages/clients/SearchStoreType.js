@@ -21,6 +21,7 @@ import RNPickerSelect from 'react-native-picker-select';
 import BottomBar from 'react-native-bottom-bar'
 import BottomBarMenu from '../components/BotomBarMenu'
 import { Card } from 'react-native-shadow-cards'
+import TabMenuIcons from '../components/TabMenuIcons'
 const image = { uri: "http://dev.itsontheway.net/api/imgBlanca" }
  const mainColor = "#bdbfc1"
  const pnkGradient = ["#ffffff", "#ffffff"]
@@ -60,132 +61,6 @@ export default class SearchStoreTypeView extends Component
 
   }
 
-      renderMainIcon() {
-          return (
-            <Icon
-              raised
-             name='home'
-             type='font-awesome'
-             size={29}
-             color="#d3e38c"
-              />
-          );
-      }
-
-      renderFirstIconComponent() {
-            return (
-              <View
-                style={{...Platform.select({
-                    ios: {
-                      right: 16
-                    },
-                    android: {
-                      right: 8,
-                      top: 8
-                    }
-                  })
-                }}
-              >
-                <Icon
-                  name='restaurant'
-                  type='material'
-                  size={20}
-                  color={mainColor}
-                   onPress={() =>   {
-                    this.searchByCat('1')}
-                 }
-                />
-                <Text style={{fontSize:10,color:'#bdbfc1'}}>Restaurantes</Text>
-              </View>
-            );
-    }
-    renderSecondIconComponent() {
-          return (
-            <View
-              style={{
-                ...Platform.select({
-                  ios: {
-                    right: 24,
-                    bottom: 3
-                  },
-                  android: {
-                    top: 3
-                  }
-                })
-              }}
-            >
-              <TouchableOpacity>
-                <Icon
-                  name='heartbeat'
-                  type='font-awesome'
-                  size={20}
-                  color={mainColor}
-                  onPress={() =>   {
-                    this.searchByCat('2')}
-                 }
-                />
-                <Text style={{fontSize:10,color:'#bdbfc1'}}>Farmacia</Text>
-              </TouchableOpacity>
-            </View>
-          );
-    }
-    renderThirdIconComponent() {
-      return (
-        <View
-          style={{
-            ...Platform.select({
-              ios: {
-                left: 24,
-                bottom: 3
-              },
-              android: {
-                top: 3,
-                left: 3
-              }
-            })
-          }}
-        >
-          <Icon
-                   name='local-mall'
-                  type='material'
-                  size={20}
-                  color={mainColor}
-                  onPress={() =>   {
-                    this.searchByCat('3')}
-                 }
-                />
-                <Text style={{fontSize:10,color:'#bdbfc1'}}>Tienda</Text>
-        </View>
-      );
-    }
-
-   renderFourthIconComponent ()  {
-      return (
-         <View style={{
-            ...Platform.select({
-              ios: {
-                left: 16
-              },
-              android: {
-                left: 8,
-                top: 8
-              }
-            })
-          }}
-        >
-          <Icon
-                  name='cart'
-                  type='evilicon'
-                  size={28}
-                  color={mainColor}
-                  onPress={() =>   {
-                  this.searchByCat('3')}
-                 }
-                />
-                <Text style={{fontSize:10,color:'#bdbfc1'}}>Mercado</Text>
-        </View>
-      );
-    }
 
     searchByCat(id){
      console.log('id de cat'+id)
@@ -259,19 +134,7 @@ export default class SearchStoreTypeView extends Component
              </ScrollView>
           </View>
              <SafeAreaView style={styles.menutab}>
-                    <View style={styles.menutab}>
-                          <BottomBar
-                            shapeColor="#ffffff"
-                            miniButtonsColor="#ffffff"
-                            mainIconGradient={pnkGradient}
-                            mainIcon={this.renderMainIcon()}
-                            mainIconOnPress={this.mainIconOnPress}
-                            firstIconComponent={this.renderFirstIconComponent()}
-                            secondIconComponent={this.renderSecondIconComponent()}
-                            thirdIconComponent={this.renderThirdIconComponent()}
-                            fourthIconComponent={this.renderFourthIconComponent()}
-                          />
-                   </View>
+                   <TabMenuIcons/>
             </SafeAreaView>
       </View>
 
