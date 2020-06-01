@@ -32,8 +32,8 @@ import store from '../../store'
 
 
 
-  const carIcon = (props) =>(
-          	<TouchableHighlight style={[styles.buttonContainer, styles.loginButton]}
+  const PayBoton = (props) =>(
+            <TouchableHighlight style={[styles.buttonContainer, styles.loginButton]}
                 onPress={() =>  {
                   Actions.orderClient()}
                 }
@@ -41,42 +41,43 @@ import store from '../../store'
 
               <Text style={styles.loginText}>Pagar({props.cartItems.length})</Text>
           </TouchableHighlight>
-  	)
+    )
 
 const mapStateToProps = (state) => {
     return {
         cartItems: state
     }
 }
-export default connect(mapStateToProps)(carIcon);
+
+export default connect(mapStateToProps)(PayBoton);
 
 
  const styles = StyleSheet.create({
   container: {
-	    flex: 0.5,
-	    justifyContent: 'center',
-	    alignItems: 'center',
-	    backgroundColor: 'white',
-	    fontFamily: "QUICKSAND-LIGHT",
+      flex: 0.5,
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: 'white',
+      fontFamily: "QUICKSAND-LIGHT",
   },
 
   ConfirTitle: {
-	    fontSize: 34,
-	    flexDirection: 'row',
-	    justifyContent: 'center',
-	    alignItems: 'center',
-	    color : '#373535'
+      fontSize: 34,
+      flexDirection: 'row',
+      justifyContent: 'center',
+      alignItems: 'center',
+      color : '#373535'
   },
   inputContainer: {
-	      borderBottomColor: '#bdbfc1',
-	      backgroundColor: '#FFFFFF',
-	      borderRadius:30,
-	      borderBottomWidth: 1,
-	      width:350,
-	      height:55,
-	      marginBottom:20,
-	      flexDirection: 'row',
-	      alignItems:'center'
+        borderBottomColor: '#bdbfc1',
+        backgroundColor: '#FFFFFF',
+        borderRadius:30,
+        borderBottomWidth: 1,
+        width:350,
+        height:55,
+        marginBottom:20,
+        flexDirection: 'row',
+        alignItems:'center'
     },
   inputs:{
       height:50,
@@ -87,26 +88,26 @@ export default connect(mapStateToProps)(carIcon);
   },
   inputIcon:
   {
-	    width:30,
-	    height:30,
-	    marginLeft:15,
-	    justifyContent: 'center'
+      width:30,
+      height:30,
+      marginLeft:15,
+      justifyContent: 'center'
   },
 
   buttonContainer:
   {
-	    height:45,
-	    flexDirection: 'row',
-	    justifyContent: 'center',
-	    alignItems: 'center',
-	    marginBottom:20,
-	    width:270,
-	    borderRadius:5,
-	    shadowColor: 'rgba(0, 0, 0, 0.1)',
-	    shadowOpacity: 0.8,
-	    elevation: 6,
-	    shadowRadius: 15 ,
-	    shadowOffset : { width: 1, height: 13},
+      height:45,
+      flexDirection: 'row',
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginBottom:20,
+      width:270,
+      borderRadius:5,
+      shadowColor: 'rgba(0, 0, 0, 0.1)',
+      shadowOpacity: 0.8,
+      elevation: 6,
+      shadowRadius: 15 ,
+      shadowOffset : { width: 1, height: 13},
   },
   loginButton: {
     backgroundColor: "#a9d046",
@@ -119,13 +120,13 @@ export default connect(mapStateToProps)(carIcon);
   },
 
   loginSubTitle:{
-	    fontSize: 16,
-	    flexDirection: 'row',
-	    justifyContent: 'center',
-	    alignItems: 'center',
-	    marginTop: 20,
-	    marginBottom: 20,
-	    color : '#bdbfc1'
+      fontSize: 16,
+      flexDirection: 'row',
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginTop: 20,
+      marginBottom: 20,
+      color : '#bdbfc1'
   },
    menutab: {
     flex: 1,
