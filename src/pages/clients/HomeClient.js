@@ -32,6 +32,7 @@ import {Provider} from 'react-redux'
 import store from '../../store'
 import {connect} from 'react-redux'
 import Products from '../components/Products'
+import TabMenuIcons from '../components/TabMenuIcons'
 import {electronics} from '../components/Data'
  // import { Card } from 'react-native-shadow-cards';
   const image = { uri: "http://dev.itsontheway.net/api/parnetBanner1" }
@@ -54,7 +55,6 @@ import {electronics} from '../components/Data'
   constructor(props) {
       super(props)
        console.log('esto llego a aca'+JSON.stringify(this.props))
-      this.mainIconOnPress = this.mainIconOnPress.bind(this);
       this.state = {
                 activeIndex:0,
                   open: false,
@@ -92,10 +92,7 @@ import {electronics} from '../components/Data'
     }
 
     state = {}
-    mainIconOnPress() {
-    // Magic happens for main icon on press
-          alert("mainIconOnPress");
-    }
+
 
     searchByCat(id){
       console.log('id de cat'+id)
@@ -112,115 +109,21 @@ import {electronics} from '../components/Data'
       alert('asdsadfsd')
     }
 
-      renderMainIcon() {
-          return (
-            <Icon
-              raised
-             name='home'
-             type='font-awesome'
-             size={29}
-             color="#d3e38c" />
-          );
-      }
-
-      renderFirstIconComponent() {
-            return (
-              <View
-                style={{...Platform.select({
-                    ios: {
-                      right: 16
-                    },
-                    android: {
-                      right: 8,
-                      top: 8
-                    }
-                  })
-                }}
-              >
-                <Icon
-                  name='restaurant'
-                  type='material'
-                  size={20}
-                  color={mainColor}
-                   onPress={() =>   {
-                    this.searchByCat('1')}
-                 }
-                />
-                <Text style={{fontSize:10,color:'#bdbfc1'}}>Restaurantes</Text>
-              </View>
-            );
+      _renderItem2 ({item,index}){
+        return (
+          <TouchableOpacity
+              onPress={() => alert('Pressed!')}>
+              <Card containerStyle={{flexDirection: 'row',width:250, marginLeft:-20,marginTop:30}}
+             imageStyle={{width: 249, height: 130}}
+             image={image}
+             >
+              <Text style={{fontSize: 20,marginLeft:5}}>{item.title}</Text>
+             <Text style={{fontSize: 15, color: 'black', marginLeft:5}}
+             >{item.text}</Text>
+            </Card>
+        </TouchableOpacity>
+        )
     }
-    renderSecondIconComponent() {
-          return (
-            <View
-              style={{
-                ...Platform.select({
-                  ios: {
-                    right: 24,
-                    bottom: 3
-                  },
-                  android: {
-                    top: 3
-                  }
-                })
-              }}
-            >
-              <TouchableOpacity
-                // onPress={() => {
-                //   this.openURL();
-                // }}
-              >
-                <Icon
-                  name='heartbeat'
-                  type='font-awesome'
-                  size={20}
-                  color={mainColor}
-                  onPress={() =>   {
-                    this.searchByCat('2')}
-                 }
-                />
-                <Text style={{fontSize:10,color:'#bdbfc1'}}>Farmacia</Text>
-              </TouchableOpacity>
-            </View>
-          );
-    }
-    renderThirdIconComponent() {
-      return (
-        <View
-          style={{
-            ...Platform.select({
-              ios: {
-                left: 24,
-                bottom: 3
-              },
-              android: {
-                top: 3,
-                left: 3
-              }
-            })
-          }}
-        >
-          <Icon
-                   name='local-mall'
-                  type='material'
-                  size={20}
-                  color={mainColor}
-                  onPress={() =>   {
-                    this.searchByCat('3')}
-                 }
-                />
-                <Text style={{fontSize:10,color:'#bdbfc1'}}>Tienda</Text>
-        </View>
-      );
-    }
-
-    renderFourthIconComponent ()  {
-      return  (
-        <BottomBarMenu/>
-      );
-    }
-
-
     _renderItem3 ({item, index}, parallaxProps) {
         return (
            <Card containerStyle={{flexDirection: 'row',width:279, height:130, marginLeft:-20, backgroundColor: 'rgba(255, 255, 255, 0.2)'}}
@@ -235,7 +138,7 @@ import {electronics} from '../components/Data'
          Actions.allmyOrders()
       }
 
-       alladdress = (viewId) => {
+      alladdress = (viewId) => {
          Actions.addressClient()
       }
     seeAll = (viewId) => {
@@ -418,7 +321,33 @@ import {electronics} from '../components/Data'
                          <View style={styles.container4} >
                               <Text style={styles.container1Title} h3>PROMOCIONES</Text>
                          </View>
+                        <SafeAreaView style={{flex: 1, paddingTop: 50, }}>
+                            <View style={{ flex: 1, flexDirection:'row', justifyContent: 'center', marginTop:-70,marginLeft:16 }}>
+                                <Carousel
+                                  layout={"default"}
+                                  ref={ref => this.carousel = ref}
+                                  data={this.state.carouselItems2}
+                                  sliderWidth={250}
+                                  itemWidth={250}
+                                  renderItem={this._renderItem2}
+                                  onSnapToItem = { index => this.setState({activeIndex:index}) } />
+                            </View>
+                      </SafeAreaView>
+                      <SafeAreaView style={{height: 40 }}>
 
+                      </SafeAreaView>
+                        <SafeAreaView style={{flex: 1, paddingTop: 50, }}>
+                          <View style={{ flex: 1, flexDirection:'row', justifyContent: 'center', marginTop:-70,marginLeft:16 }}>
+                              <Carousel
+                                layout={"default"}
+                                ref={ref => this.carousel = ref}
+                                data={this.state.carouselItems2}
+                                sliderWidth={250}
+                                itemWidth={250}
+                                renderItem={this._renderItem3}
+                                onSnapToItem = { index => this.setState({activeIndex:index}) } />
+                          </View>
+                </SafeAreaView>
                       <SafeAreaView style={{height: 100, }}>
 
                       </SafeAreaView>
@@ -427,19 +356,7 @@ import {electronics} from '../components/Data'
             </MenuDrawer>
 
                <SafeAreaView style={styles.menutab}>
-                    <View style={styles.menutab}>
-                          <BottomBar
-                            shapeColor="#ffffff"
-                            miniButtonsColor="#ffffff"
-                            mainIconGradient={pnkGradient}
-                            mainIcon={this.renderMainIcon()}
-                            mainIconOnPress={this.mainIconOnPress}
-                            firstIconComponent={this.renderFirstIconComponent()}
-                            secondIconComponent={this.renderSecondIconComponent()}
-                            thirdIconComponent={this.renderThirdIconComponent()}
-                            fourthIconComponent={this.renderFourthIconComponent()}
-                          />
-                   </View>
+                    <TabMenuIcons/>
             </SafeAreaView>
 
          </View>
