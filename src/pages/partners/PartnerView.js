@@ -17,11 +17,7 @@ import { AirbnbRating,Rating } from 'react-native-ratings'
 import { Badge,Avatar,Card } from 'react-native-elements';
 // const image = { uri: "http://dev.itsontheway.net/api/parnetBanner" }
 import Products from '../components/Products'
-import {Provider} from 'react-redux'
-import store from '../../store'
-import {connect} from 'react-redux'
-import {electronics} from '../components/Data'
-class PartnerView extends Component {
+export default class PartnerView extends Component {
     constructor(props) {
        super(props);
         console.log('id de Partner '+JSON.stringify(this.props.p_id))
@@ -84,7 +80,19 @@ class PartnerView extends Component {
 
                        <ScrollView>
                           <View style={styles.productscontainer}>
-                                   <Products products={this.state.partner_products} onPress={this.props.addItemToCart}/>
+                                     {this.state.partner_products.map(Object =>
+                                       <View style={styles.cardOrdercontainer}>
+                                          <Card style={styles.cardOrder} >
+                                                <Avatar
+                                                      rounded
+                                                      size="medium"
+                                                      source={{uri: 'http://dev.itsontheway.net/images/productos/'+Object.prod_partner_id+'/'+Object.prod_image,}}
+                                                  />
+                                                    <Text style={styles.cardOrderSubTitle}
+                                                    >{Object.prod_name}
+                                                    </Text>
+                                            </Card>
+                                      </View>)}
                           </View>
                      </ScrollView>
 
@@ -94,19 +102,14 @@ class PartnerView extends Component {
                 }
                >
 
-              <Text style={styles.loginText}>Pagar</Text>
+              <Text style={styles.loginText}>Agregar al pedido</Text>
           </TouchableHighlight>
       </View>
     );
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        addItemToCart: (product) => dispatch({ type: 'ADD_TO_CART', payload: product })
-    }
-}
-export default  connect(null,mapDispatchToProps)(PartnerView);
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -122,12 +125,13 @@ const styles = StyleSheet.create({
     height:80
   },
     cardOrdercontainer: {
-        justifyContent: 'center',
+        alignItems:'center',
+        justifyContent: 'center'
      },
    cardOrder:{
       flexDirection: 'row',
-      alignItems: 'center',
-      width: 350
+      elevation: 8,
+      alignItems: 'center'
     },
    menuText: {
     fontSize : 25,
