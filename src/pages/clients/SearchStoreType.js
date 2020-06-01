@@ -114,8 +114,8 @@ export default class SearchStoreTypeView extends Component
                    }}
                 />
           </View>
-            <View style={styles.productscontainer}>
                <ScrollView>
+            <View style={styles.productscontainer}>
                      {this.state.partnersByCat.map(Object =>
                        <View style={styles.cardOrdercontainer}>
                           <Card style={styles.cardOrder} >
@@ -131,8 +131,10 @@ export default class SearchStoreTypeView extends Component
                                     >{Object.p_user}</Text>
                             </Card>
                       </View>)}
-             </ScrollView>
           </View>
+             </ScrollView>
+            <SafeAreaView style={{height: 80 }}>
+             </SafeAreaView>
              <SafeAreaView style={styles.menutab}>
                    <TabMenuIcons/>
             </SafeAreaView>

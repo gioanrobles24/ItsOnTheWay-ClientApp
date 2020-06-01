@@ -6,15 +6,16 @@ import {
   TextInput,
   Button,
   ScrollView,
+  SafeAreaView,
   TouchableHighlight,
   Image,
-  Alert,ImageBackground
+  Alert,
+  ImageBackground,
 } from 'react-native'
 import { Actions } from 'react-native-router-flux';
 import { AirbnbRating,Rating } from 'react-native-ratings'
-import { Badge,Avatar } from 'react-native-elements';
-const image = { uri: "http://dev.itsontheway.net/api/parnetBanner" }
-import { Card } from 'react-native-shadow-cards';
+import { Badge,Avatar,Card } from 'react-native-elements';
+// const image = { uri: "http://dev.itsontheway.net/api/parnetBanner" }
 import Products from '../components/Products'
 export default class PartnerView extends Component {
     constructor(props) {
@@ -67,25 +68,33 @@ export default class PartnerView extends Component {
 
      render() {
          let partner_profile_pic ={ uri: this.state.partner_banner}
-         console.log(partner_profile_pic,'imagen Socio comercial')
+         console.log(this.state.partner_banner,'products')
     return (
       <View style={styles.container}>
           <Image
             style={styles.partnerimage}
             source={partner_profile_pic}
           />
-          <Card style={styles.containertitle}>
-              <Avatar
-                       size="medium"
-                       overlayContainerStyle={{backgroundColor: '#bdbfc1',}}
-                       containerStyle={{alignSelf: "center", flexDirection:'column',
-                       marginTop: 20,}}
-                       source={image}
-                      />
               <Text style={styles.Title}  h1>{this.state.partner.p_user}</Text>
-           </Card>
+             <Text style={styles.SubTitle}  h1>Listado de productos: </Text>
 
-
+                       <ScrollView>
+                          <View style={styles.productscontainer}>
+                                     {this.state.partner_products.map(Object =>
+                                       <View style={styles.cardOrdercontainer}>
+                                          <Card style={styles.cardOrder} >
+                                                <Avatar
+                                                      rounded
+                                                      size="medium"
+                                                      source={{uri: 'http://dev.itsontheway.net/images/productos/'+Object.prod_partner_id+'/'+Object.prod_image,}}
+                                                  />
+                                                    <Text style={styles.cardOrderSubTitle}
+                                                    >{Object.prod_name}
+                                                    </Text>
+                                            </Card>
+                                      </View>)}
+                          </View>
+                     </ScrollView>
 
             <TouchableHighlight style={[styles.buttonContainer, styles.loginButton]}
                 onPress={() =>  {
@@ -93,7 +102,7 @@ export default class PartnerView extends Component {
                 }
                >
 
-              <Text style={styles.loginText}>Pagar</Text>
+              <Text style={styles.loginText}>Agregar al pedido</Text>
           </TouchableHighlight>
       </View>
     );
@@ -109,15 +118,17 @@ const styles = StyleSheet.create({
   containertitle:{
     marginTop:10,
     flexDirection:'row',
+    maxWidth: 800,
     alignItems:'center',
     justifyContent:'center',
-    elevation:1,
+    elevation:-1,
     height:80
   },
+    cardOrdercontainer: {
+        alignItems:'center',
+        justifyContent: 'center'
+     },
    cardOrder:{
-      marginTop: 30,
-      padding: 20,
-      margin: 20,
       flexDirection: 'row',
       elevation: 8,
       alignItems: 'center'
@@ -132,7 +143,7 @@ const styles = StyleSheet.create({
    },
 
    partnerimage: {
-      flex:0.3,
+      flex:0.4,
      },
    Title: {
     fontSize: 28,
@@ -174,5 +185,8 @@ const styles = StyleSheet.create({
     fontFamily: "QUICKSAND-LIGHT",
     color: 'white',
   },
-
+  productscontainer: {
+       marginTop: 50,
+        flexDirection: 'column',
+    },
 });
