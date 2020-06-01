@@ -16,20 +16,21 @@ class Products extends Component {
         console.log(products)
         return products.map((item, index) => {
             return (
-                <View key={index} >
-                      <TouchableOpacity
-                             onPress={() => this.props.onPress(item)}>
-                              <Card containerStyle={{flexDirection: 'row',width:250, marginLeft:20,marginTop:30}}
-                             imageStyle={{width: 249, height: 130}}
-                             image={image}
-                             >
-                              <Text style={{fontSize: 20,marginLeft:5}}>{item.prod_name}</Text>
-                             <Text style={{fontSize: 15, color: '#bdbfc1', marginLeft:5}}
-                             >{item.partner_user}</Text>
+                <View key={index} style={styles.cardOrdercontainer}>
+                      <TouchableOpacity onPress={() => this.props.onPress(item)}>
+                             <Card containerStyle={styles.cardOrder} >
+                                  <Avatar
+                                        rounded
+                                        size="large"
+                                        source={{uri: 'http://dev.itsontheway.net/images/productos/'+Object.prod_partner_id+'/'+Object.prod_image,}}
+                                  />
+
+                              <Text style={styles.cardOrderSubTitle}>{item.prod_name}</Text>
+                             <Text style={styles.cardOrderSubTitle}
+                             >Bs.: {item.prod_price_bs}</Text>
 
                              <View style={{flexDirection:'row',marginLeft:5}}>
-                                <AirbnbRating isDisabled={true} showRating={false} defaultRating={4}   size={15}/>
-                                <Text style={{fontSize: 10, marginLeft: 30 }}>{item.prod_price_usd}$</Text>
+                                <Text style={{fontSize: 10, marginLeft: 30 }}>Descripcción: {item.prod_description}</Text>
                                  </View>
                             </Card>
                         </TouchableOpacity>
@@ -64,5 +65,22 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center'
-    }
+    },
+    containertitle:{
+    marginTop:10,
+    flexDirection:'row',
+    maxWidth: 600,
+    alignItems:'center',
+    justifyContent:'center',
+    elevation:-1,
+    height:80
+  },
+    cardOrdercontainer: {
+        justifyContent: 'center',
+     },
+   cardOrder:{
+      flexDirection: 'row',
+      alignItems: 'center',
+      width: 300
+    },
 });
