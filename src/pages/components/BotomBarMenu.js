@@ -33,32 +33,14 @@ import store from '../../store'
 
 
   const carIcon = (props) =>(
-          	 <View style={{
-            ...Platform.select({
-              ios: {
-                left: 16
-              },
-              android: {
-                left: 8,
-                top: 8
-              }
-            })
-          }}
-        >
-        <Text style={{fontSize:10,color:'black',marginLeft:20,fontWeight:'bold'}}>
-        	{props.cartItems.length}
-      	</Text>
-          <Icon
-                  name='cart'
-                  type='evilicon'
-                  size={28}
-                  color={mainColor}
-                  onPress={() =>   {
-                    Actions.orderClient()}
-                 }
-                />
-                <Text style={{fontSize:10,color:'#bdbfc1'}}>Mercado</Text>
-        </View>
+          	<TouchableHighlight style={[styles.buttonContainer, styles.loginButton]}
+                onPress={() =>  {
+                  Actions.orderClient()}
+                }
+               >
+
+              <Text style={styles.loginText}>Pagar({props.cartItems.length})</Text>
+          </TouchableHighlight>
   	)
 
 const mapStateToProps = (state) => {
@@ -128,6 +110,8 @@ export default connect(mapStateToProps)(carIcon);
   },
   loginButton: {
     backgroundColor: "#a9d046",
+    justifyContent:'center',
+    alignSelf:'center'
   },
   loginText: {
     fontFamily: "QUICKSAND-LIGHT",
