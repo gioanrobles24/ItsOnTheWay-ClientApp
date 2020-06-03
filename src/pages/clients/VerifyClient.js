@@ -7,7 +7,7 @@ import {
   Button,
   TouchableHighlight,
   Image,
-  Alert,Switch, ToastAndroid,BackHandler
+  Alert,Switch, ToastAndroid,BackHandler,ScrollView
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { Icon,Avatar,Badge,withBadge   } from 'react-native-elements'
@@ -51,7 +51,7 @@ export default class VerifyClientView extends Component
                           onPress: () => console.log('Cancel Pressed'),
                           style: 'cancel',
                       },
-                      {text: 'OK', onPress: () => Actions.homeClient({responseData})},
+                      {text: 'OK', onPress: () => Actions.loginClient()},
                   ]
             );
 
@@ -75,14 +75,17 @@ export default class VerifyClientView extends Component
 	        <View>
 	          <Text style={styles.ConfirTitle}  h1>Confirmación</Text>
 	        </View>
-	        <View style={styles.inputContainer}>
-          <TextInput style={styles.inputs}
-              placeholder="Inserta el codigo enviado a tu Email"
-              keyboardType="default"
-              underlineColorAndroid='transparent'
-              onChangeText={(code) => this.setState({code})}
-              />
-        </View>
+          <ScrollView>
+  	        <View style={styles.inputContainer}>
+            <TextInput style={styles.inputs}
+                placeholder="Inserta el codigo enviado a tu Email"
+                keyboardType="default"
+                underlineColorAndroid='transparent'
+                onChangeText={(code) => this.setState({code})}
+                />
+          </View>
+
+          </ScrollView>
 	        <TouchableHighlight style={[styles.buttonContainer, styles.loginButton]}
             onPress={() =>  {
               this.register()}
@@ -109,7 +112,7 @@ export default class VerifyClientView extends Component
 
  const styles = StyleSheet.create({
   container: {
-	    flex: 0.5,
+	    flex: 1,
 	    justifyContent: 'center',
 	    alignItems: 'center',
 	    backgroundColor: 'white',

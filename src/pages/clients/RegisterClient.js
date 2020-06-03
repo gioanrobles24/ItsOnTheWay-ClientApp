@@ -7,7 +7,7 @@ import {
   Button,
   TouchableHighlight,
   Image,
-  Alert,Switch, ToastAndroid,BackHandler,Picker,
+  Alert,Switch, ToastAndroid,BackHandler,Picker,ScrollView
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { Icon,Avatar,Badge,withBadge   } from 'react-native-elements'
@@ -47,10 +47,7 @@ export default class RegisterClientView extends Component
       password: '',
       password_confirm: '',
       estado: '',
-      user: '',
-
-
-
+      user: 'user_default',
     }
 
   }
@@ -66,6 +63,7 @@ export default class RegisterClientView extends Component
     Verification = (viewId) =>
       {
            console.log( "Button pressed "+ 'correo:' +this.state.email+ 'password'+ this.state.password)
+
               fetch('http://dev.itsontheway.net/api/clients/register', {
                 method: 'POST',
                 headers: {
@@ -75,16 +73,29 @@ export default class RegisterClientView extends Component
                 body: JSON.stringify({
                     cl_email: this.state.email,
                     password: this.state.password,
-                    cl_user :   this.state.user,
+                    cl_user :   'user_default',
                     cl_phone_1 :  this.state.phone,
                     cl_name :  this.state.name,
                     cl_last_name : this.state.last_name
                 })
             }).then((response) => response.json())
                  .then((responseData) => {
-                   console.log(responseData)
+                   console.log(JSON.stringify(responseData)+'register callback')
                      if (responseData.error){
-                         alert('Intente nuevamente')
+
+                          Alert.alert(
+                              "Hola!",
+                              "Este correo ya existe",
+                              [
+                                {
+                                  text: "Cancelar",
+                                  onPress: () => console.log("Cancel Pressed"),
+                                  style: "cancel"
+                                },
+                                { text: "Ir a login", onPress: () => Actions.pop()}
+                              ],
+                              { cancelable: false }
+                            );
                        }
                      else{
                           Actions.verifyClient({responseData})
@@ -105,37 +116,39 @@ export default class RegisterClientView extends Component
 
     return (
       <View style={styles.container}>
-	        <View>
-	          <Text style={styles.loginTitle}  h1>Registro</Text>
-	        </View>
-	         <View>
-	            <Text style={styles.loginSubTitle}  h3>Registrate para poder empezar</Text>
-	          </View>
-	         <View style={styles.inputContainer}>
-		          <TextInput style={styles.inputs}
-		              placeholder="Nombre"
-		              keyboardType="default"
-		              underlineColorAndroid='transparent'
-		              onChangeText={(name) => this.setState({name})}
-		              />
-	        </View>
-	        <View style={styles.inputContainer}>
-		          <TextInput style={styles.inputs}
-		              placeholder="Apellido"
-		              keyboardType="default"
-		              underlineColorAndroid='transparent'
-		              onChangeText={(last_name) => this.setState({last_name})}
-		              />
-	        </View>
+      <View>
+            <Text style={styles.loginTitle}  h1>Registro</Text>
+          </View>
+        <ScrollView>
 
-	        <View style={styles.inputContainer}>
-		          <TextInput style={styles.inputs}
-		              placeholder="Teléfono"
-		              keyboardType="phone-pad"
-		              underlineColorAndroid='transparent'
-		              onChangeText={(phone) => this.setState({phone})}
-		              />
-	        </View>
+           <View>
+              <Text style={styles.loginTitle2}  h3>Registrate para poder empezar</Text>
+            </View>
+           <View style={styles.inputContainer}>
+              <TextInput style={styles.inputs}
+                  placeholder="Nombre"
+                  keyboardType="default"
+                  underlineColorAndroid='transparent'
+                  onChangeText={(name) => this.setState({name})}
+                  />
+          </View>
+          <View style={styles.inputContainer}>
+              <TextInput style={styles.inputs}
+                  placeholder="Apellido"
+                  keyboardType="default"
+                  underlineColorAndroid='transparent'
+                  onChangeText={(last_name) => this.setState({last_name})}
+                  />
+          </View>
+
+          <View style={styles.inputContainer}>
+              <TextInput style={styles.inputs}
+                  placeholder="Teléfono"
+                  keyboardType="phone-pad"
+                  underlineColorAndroid='transparent'
+                  onChangeText={(phone) => this.setState({phone})}
+                  />
+          </View>
         <View style={styles.inputContainer}>
           <TextInput style={styles.inputs}
               placeholder="Email"
@@ -145,33 +158,23 @@ export default class RegisterClientView extends Component
               />
         </View>
         <View style={styles.inputContainer}>
-          <TextInput style={styles.inputs}
-              placeholder="usuario"
-              keyboardType="text"
-              underlineColorAndroid='transparent'
-              onChangeText={(user) => this.setState({user})}
-              />
-        </View>
-        <View style={styles.inputContainer}>
              <TextInput  style={styles.inputs}
-          placeholderTextColor="gray"
-          placeholder="Clave"
-          secureTextEntry={this.state.showPassword}
-          onChangeText={(password) => this.setState({ password })}
+                placeholderTextColor="gray"
+                placeholder="Clave"
+                secureTextEntry={this.state.showPassword}
+                onChangeText={(password) => this.setState({password})}
         />
            <Icon name={this.state.icon} onPress={() => this.toggleSwitch()} value={!this.state.showPassword} />
         </View>
-		<View style={styles.inputContainer}>
+        <View style={styles.inputContainer}>
              <TextInput  style={styles.inputs}
-          placeholderTextColor="gray"
-          placeholder="Repetir Clave"
-          secureTextEntry={this.state.showPassword}
-          onChangeText={(password_confirm) => this.setState({ password_confirm })}
-        />
+              placeholderTextColor="gray"
+              placeholder="Repetir Clave"
+              secureTextEntry={this.state.showPassword}
+              onChangeText={(password_confirm) => this.setState({ password_confirm })}
+          />
 
         </View>
-
-
           <RNPickerSelect
                     placeholder={{
                         label: 'Seleciona un estado',
@@ -189,14 +192,15 @@ export default class RegisterClientView extends Component
                     useNativeAndroidPickerStyle={true}
                     hideIcon={true}
                 />
-        <TouchableHighlight style={[styles.buttonContainer, styles.loginButton]}
-        onPress={() =>  {
-              this.Verification()}
-            }
-           >
+        </ScrollView>
 
-          <Text style={styles.loginText}>Continuar</Text>
-        </TouchableHighlight>
+          <TouchableHighlight style={[styles.buttonContainer, styles.loginButton]}
+          onPress={() =>  {
+                this.Verification()}
+              }
+             >
+            <Text style={styles.loginText}>Continuar</Text>
+          </TouchableHighlight>
       </View>
 
     );
@@ -218,6 +222,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     color : '#373535'
+  },
+  loginTitle2: {
+    fontSize: 15,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    color : '#373535',
+    fontWeight:'bold'
   },
   inputContainer: {
       borderBottomColor: '#bdbfc1',
