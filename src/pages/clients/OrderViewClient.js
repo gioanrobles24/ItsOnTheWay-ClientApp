@@ -17,16 +17,21 @@ import { Card } from 'react-native-shadow-cards';
 
 import store from '../../store'
 import {connect} from 'react-redux'
+import {address} from '../components/Data'
 import Products from '../components/Products'
 
  class OrderViewClient extends Component {
     constructor(props) {
        super(props);
+       console.log('esto llego a AAA'+JSON.stringify(this.props))
        this.state = {
 
       }
 
-
+          state = {
+          ord_description   : '',
+          ord_address : ''
+        }
 
     }
 
@@ -34,20 +39,57 @@ import Products from '../components/Products'
         console.log('${rating}');
     }
     goTypePayment(){
-     Actions.paymentType()
+
+      console.log('loque mandara'+ JSON.stringify(this.props.cartItems))
+
+      let pedido = this.props.cartItems
+        Actions.paymentType({pedido})
+
     }
 
   render() {
 
     return (
-     <View style={styles.container}>
-                {this.props.cartItems.length > 0 ?
-                    <Products
-                        onPress={this.props.removeItem}
-                        products={this.props.cartItems} />
-                    : <Text>No items in your cart</Text>
-                }
+      <View style={styles.container}>
+
+              <Text style={styles.Title}  h1>Realizar pedido a : </Text>
+
+          <View style={styles.containerProd}>
+              <Text style={styles.SubTitle}  h1>Listado de productos: </Text>
+                    {this.props.cartItems.length > 0 ?
+                        <Products
+                            onPress={this.props.removeItem}
+                            products={this.props.cartItems} />
+                        : <Text>Por favor agrega un producto</Text>
+                    }
             </View>
+                <View style={styles.containerProd2}>
+                    <Text style={styles.SubTitle}  h1>Nota de pedido: </Text>
+                    <TextInput style={styles.inputs}
+                      placeholder="Coloca una Nota(opcional)"
+                      keyboardType="Text"
+                      underlineColorAndroid='transparent'
+                      onChangeText={(ord_description) => this.setState({ord_description})}
+                      />
+              </View>
+               <View style={styles.containerProd2}>
+                    <Text style={styles.SubTitle}  h1>Dirección de pedido: </Text>
+                    <TextInput style={styles.inputs}
+                      placeholder="Coloca una Dirección"
+                      keyboardType="Text"
+                      underlineColorAndroid='transparent'
+                      onChangeText={(ord_address) => this.setState({ord_address})}
+                      />
+              </View>
+            <TouchableHighlight style={[styles.buttonContainer, styles.loginButton]}
+                onPress={() =>  {
+                  this.goTypePayment()}
+                }
+               >
+
+              <Text style={styles.loginText}>Pagar</Text>
+          </TouchableHighlight>
+      </View>
     );
   }
 }
@@ -76,6 +118,18 @@ const styles = StyleSheet.create({
     // justifyContent: "center",
 
   },
+   containerProd: {
+    flex: 0.8,
+    // alignItems: "center",
+    // justifyContent: "center",
+
+  },
+   containerProd2: {
+    flex: 0.4,
+    // alignItems: "center",
+    // justifyContent: "center",
+
+  },
   containertitle:{
     marginTop:10,
     flexDirection:'row',
@@ -93,10 +147,6 @@ const styles = StyleSheet.create({
   cardBadge:{
       alignSelf: 'center'
    },
-
-   partnerimage: {
-      flex:0.5,
-     },
    Title: {
     fontSize: 28,
     flexDirection: 'row',
@@ -110,9 +160,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight:'bold'
   },
-
-
-
 
    buttonContainer:
   {
