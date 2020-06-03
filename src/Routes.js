@@ -15,6 +15,7 @@ import NewAddressClient from './pages/clients/newAddressClient'
 import PaymentTypeClient from './pages/clients/PaymentType'
 
 import ProductClientView from './pages/clients/productView'
+import PartnerView from './pages/partners/PartnerView'
 import PromoAndSugesClient from './pages/clients/PromosAndSuges'
 import VerifyPaymentClient from './pages/clients/VeryfyPayment'
 
@@ -37,6 +38,7 @@ export default class Routes extends Component {
                      <Scene key="verifyClient" hideNavBar={false} component={VerifyClient}/>
                      <Scene key="paymentType" hideNavBar={false} component={PaymentTypeClient}/>
                      <Scene key="productView" hideNavBar={false} component={ProductClientView}/>
+                     <Scene key="partnerView" hideNavBar={false} component={PartnerView}/>
                      <Scene key="promoAndSuges" hideNavBar={false} component={PromoAndSugesClient}/>
                      <Scene key="verifyPaymentClient" hideNavBar={false} component={VerifyPaymentClient}/>
                 </Stack>
