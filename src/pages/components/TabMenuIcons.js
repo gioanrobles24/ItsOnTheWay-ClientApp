@@ -40,6 +40,9 @@ class TabMenuIcons extends Component{
       let cat_id = id
       Actions.searchStoreType({cat_id})
     }
+    MisPedios(){
+      Actions.promoAndSuges()
+    }
     renderMainIcon() {
           return (
             <Icon
@@ -47,7 +50,11 @@ class TabMenuIcons extends Component{
              name='home'
              type='font-awesome'
              size={29}
-             color="#d3e38c" />
+             color="#d3e38c"
+              onPress={() =>   {
+                    this.MisPedios()}
+                 }
+              />
           );
       }
       mainIconOnPress(){
@@ -161,10 +168,10 @@ class TabMenuIcons extends Component{
                   size={28}
                   color={mainColor}
                   onPress={() =>   {
-                    Actions.orderClient()}
+                    this.searchByCat('4')}
                  }
                 />
-                <Text style={{fontSize:10,color:'#bdbfc1'}}>Mercado</Text>
+                <Text style={{fontSize:10,color:'#bdbfc1'}}>Mercados</Text>
         </View>
       );
     }
