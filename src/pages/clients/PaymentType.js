@@ -19,22 +19,31 @@ export default class PaymentTypeClientView extends Component
 
   constructor(props) {
     super(props);
+    console.log('esto llego a aqui'+JSON.stringify(this.props.pedido))
      this.state = {
        transfchecked : '',
        pagomchecked : '',
        zellechecked : '',
        tddchecked : '',
+       total_price: this.props.pedido.prod_price_bs
       }
-    state = {
-      email   : '',
-    }
+      state = {
+        email   : '',
+      }
 
   }
 
 
   VerifyPaymentClient = (viewId) => {
+    console.log(viewId,'AAAAAAA')
+    console.log('asdasdasdsad'+JSON.stringify(this.props.pedido))
+   let pedido = this.props.pedido
+   let opType = viewId
 
-  	Actions.verifyPaymentClient();
+     console.log('epa'+this.props.pedido[0].prod_price_usd)
+  	Actions.verifyPaymentClient({pedido, opType});
+
+
   }
 
 
@@ -51,13 +60,13 @@ export default class PaymentTypeClientView extends Component
                                1.  Transferencia
                            </Text>
                            <Text  style={styles.platformNamePrice2} >
-                                50.000 bs
+                                {this.props.pedido[0].prod_price_bs} Bs.
                            </Text>
                            <CheckBox
                               checkedIcon='dot-circle-o'
                                uncheckedIcon='circle-o'
                               checked={this.state.transfchecked}
-                              onPress={() => this.VerifyPaymentClient('paymentType')}
+                              onPress={() => this.VerifyPaymentClient('P2')}
                           />
                     </View>
                      <View style={styles.platformName}>
@@ -65,13 +74,13 @@ export default class PaymentTypeClientView extends Component
                                2.  Pago móvil
                            </Text>
                            <Text  style={styles.platformNamePrice3} >
-                                50.000 bs
+                                {this.props.pedido[0].prod_price_bs} Bs.
                            </Text>
                            <CheckBox
                               checkedIcon='dot-circle-o'
                                uncheckedIcon='circle-o'
                               checked={this.state.pagomchecked}
-                              onPress={() => this.setState({pagomchecked: !this.state.pagomchecked})}
+                              onPress={() => this.VerifyPaymentClient('P1')}
                           />
                     </View>
                     <View style={styles.platformName}>
@@ -79,7 +88,7 @@ export default class PaymentTypeClientView extends Component
                                3.   Zelle
                            </Text>
                            <Text style={styles.platformNamePrice4} >
-                                50.000 bs
+                                ----
                            </Text>
                            <CheckBox
                               checkedIcon='dot-circle-o'
@@ -93,7 +102,7 @@ export default class PaymentTypeClientView extends Component
                                4.    Crédito - Débito internacional
                            </Text>
                            <Text style={styles.platformNamePrice5}  >
-                                50.000 bs
+                               ---
                            </Text>
                            <CheckBox
                               checkedIcon='dot-circle-o'
