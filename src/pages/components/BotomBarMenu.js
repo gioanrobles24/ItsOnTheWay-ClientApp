@@ -39,7 +39,7 @@ import store from '../../store'
                 }
                >
 
-              <Text style={styles.loginText}>Pagar({props.cartItems.length})</Text>
+              <Text style={styles.loginText}>Ir a pedido({props.cartItems.length})</Text>
           </TouchableHighlight>
     )
 
