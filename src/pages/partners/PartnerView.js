@@ -22,6 +22,7 @@ import {Provider} from 'react-redux'
 import store from '../../store'
 import {connect} from 'react-redux'
 import {electronics} from '../components/Data'
+ const image = { uri: "http://dev.itsontheway.net/api/parnetBanner1" }
 class PartnerView extends Component {
     constructor(props) {
        super(props);
@@ -67,9 +68,9 @@ class PartnerView extends Component {
     ratingCompleted( rating ) {
         console.log('${rating}');
     }
-    // productView(index){
-    //  Actions.productView(item)
-    // }
+    productView(item){
+     Actions.productView(item)
+    }
 
      render() {
          let partner_profile_pic ={ uri: this.state.partner_banner}
@@ -85,7 +86,25 @@ class PartnerView extends Component {
 
                        <ScrollView>
                           <View style={styles.productscontainer}>
-                                   <Products products={this.state.partner_products} />
+
+                                 {this.state.partner_products.map(item =>
+                                     <TouchableHighlight underlayColor='transparent'  onPress={() => this.productView(item)} >
+                                         <Card containerStyle={styles.cardOrder}>
+                                              <Avatar
+                                                    rounded
+                                                    size="large"
+                                                    source={image}
+                                              />
+                                              <Text style={styles.cardOrderSubTitle}>{item.prod_name}</Text>
+                                             <Text style={styles.cardOrderSubTitle}
+                                             >Bs.: {item.prod_price_bs}</Text>
+
+                                           <View style={{flexDirection:'row',marginLeft:5}}>
+                                              <Text style={{fontSize: 10, marginLeft: 30 }}>Descripcción: {item.prod_description}</Text>
+                                               </View>
+                                          </Card>
+                                    </TouchableHighlight>)}
+
                           </View>
                      </ScrollView>
 
@@ -101,6 +120,8 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 export default  connect(null,mapDispatchToProps)(PartnerView);
+
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
