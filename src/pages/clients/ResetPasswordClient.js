@@ -28,38 +28,49 @@ export default class RegisterClientView extends Component
 
   sendResetPasswd = (viewId) => {
 
-  	alert('correo Enviado'+ 'correo:' +this.state.email)
-  }
+
   // onClickListener = (viewId) =>
   // {
 
 
   //      alert( "Button pressed "+ 'correo:' +this.state.email+ 'password'+ this.state.password)
 
-  //     //     fetch('http://dev.itsontheway.net/api/partner/login', {
-  //     //       method: 'POST',
-  //     //       headers: {
-  //     //           'Accept': 'application/json',
-  //     //           'Content-Type': 'application/json'
-  //     //       },
-  //     //       body: JSON.stringify({
-  //     //           p_email: this.state.email,
-  //     //           password: this.state.password,
-  //     //       })
-  //     //   }).then((response) => response.json())
-  //     //        .then((responseData) => {
-  //     //          console.log(responseData)
-  //     //            if (responseData.error){
-  //     //                alert('Usuario o contraseña incorrectos, por favor intenta nuevamente')
-  //     //              }
-  //     //            else{
-  //     //                 Actions.homeparter({responseData})
-  //     //            }
-  //     // }).catch((error) =>{
-  //     //   console.error(error);
-  //     // })
+fetch('http://dev.itsontheway.net/api/clients/resetPassword', {
+         method: 'POST',
+         headers: {
+             'Accept': 'application/json',
+             'Content-Type': 'application/json'
+         },
+         body: JSON.stringify({
+             cl_email: this.state.email,
+         })
+     }).then((response) => response.json())
+          .then((responseData) => {
+         console.log(responseData)
+            if (responseData.error){
+                  alert('Usuario o contraseña incorrectos, por favor intenta nuevamente')
+                }
+                else{
+                   Alert.alert(
+                  "Te hemos enviado un codigo a tu correo",
+                  "Que deseas hacer?",
+                  [
+                    {
+                      text: "Log in",
+                      onPress: () =>  Actions.pop() ,
+                      style: "cancel"
+                    },
+                    { text: "re enviar codigo", onPress: () => Actions.refresh() }
+                  ],
+                  { cancelable: false }
+                );
+              }
+   }).catch((error) =>{
+     console.error(error);
+   })
 
-  // }
+      }
+
 
   render() {
 
