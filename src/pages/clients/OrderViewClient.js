@@ -23,7 +23,7 @@ import Products from '../components/Products'
  class OrderViewClient extends Component {
     constructor(props) {
        super(props);
-       console.log('esto llego a AAA'+JSON.stringify(this.props))
+
        this.state = {
 
       }
@@ -32,7 +32,7 @@ import Products from '../components/Products'
           ord_description   : '',
           ord_address : ''
         }
-
+        console.log('eee',this.props.cartItems,'eee')
     }
 
     ratingCompleted( rating ) {
@@ -57,9 +57,7 @@ import Products from '../components/Products'
           <View style={styles.containerProd}>
               <Text style={styles.SubTitle}  h1>Listado de productos: </Text>
                     {this.props.cartItems.length > 0 ?
-                        <Products
-                            onPress={this.props.removeItem}
-                            products={this.props.cartItems} />
+                           <Text>Por favor </Text>
                         : <Text>Por favor agrega un producto</Text>
                     }
             </View>

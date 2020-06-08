@@ -69,7 +69,8 @@ class PartnerView extends Component {
         console.log('${rating}');
     }
     productView(item){
-     Actions.productView(item)
+      let product = item
+     Actions.productView({product})
     }
 
      render() {
