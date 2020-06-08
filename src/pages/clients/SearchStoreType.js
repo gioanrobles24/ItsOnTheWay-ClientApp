@@ -23,6 +23,7 @@ import BottomBarMenu from '../components/BotomBarMenu'
 import { Card } from 'react-native-shadow-cards'
 import TabMenuIcons from '../components/TabMenuIcons'
 const image = { uri: "http://dev.itsontheway.net/api/imgBlanca" }
+const image2 = { uri: "http://dev.itsontheway.net/api/parnetBanner1" }
  const mainColor = "#bdbfc1"
  const pnkGradient = ["#ffffff", "#ffffff"]
 export default class SearchStoreTypeView extends Component
@@ -115,23 +116,23 @@ export default class SearchStoreTypeView extends Component
                 />
           </View>
                <ScrollView>
-            <View style={styles.productscontainer}>
-                     {this.state.partnersByCat.map(Object =>
-                       <View style={styles.cardOrdercontainer}>
-                          <Card style={styles.cardOrder} >
-                                <Avatar
-                                      rounded
-                                      size="medium"
-                                      source={image}
-                                  />
-                                    <Text style={styles.cardOrderSubTitle}
-                                      onPress={() =>   {
-                                        this.ThisPartnerView(Object.id)}
-                                  }
-                                    >{Object.p_user}</Text>
-                            </Card>
-                      </View>)}
-          </View>
+                  <View style={styles.productscontainer}>
+                           {this.state.partnersByCat.map(Object =>
+                             <View style={styles.cardOrdercontainer}>
+                             <TouchableHighlight  underlayColor='transparent' onPress={() =>   {this.ThisPartnerView(Object.id)}}>
+                                <Card style={styles.cardOrder} >
+                                      <Avatar
+                                            rounded
+                                            size="medium"
+                                            source={image2}
+                                        />
+                                          <Text style={styles.cardOrderSubTitle}
+                                          >{Object.p_user}</Text>
+                                  </Card>
+                              </TouchableHighlight>
+
+                            </View>)}
+                </View>
              </ScrollView>
             <SafeAreaView style={{height: 80 }}>
              </SafeAreaView>
