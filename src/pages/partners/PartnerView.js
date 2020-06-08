@@ -67,9 +67,9 @@ class PartnerView extends Component {
     ratingCompleted( rating ) {
         console.log('${rating}');
     }
-    productView(){
-     Actions.productView()
-    }
+    // productView(index){
+    //  Actions.productView(item)
+    // }
 
      render() {
          let partner_profile_pic ={ uri: this.state.partner_banner}
@@ -85,7 +85,7 @@ class PartnerView extends Component {
 
                        <ScrollView>
                           <View style={styles.productscontainer}>
-                                   <Products products={this.state.partner_products} onPress={this.props.addItemToCart}/>
+                                   <Products products={this.state.partner_products} />
                           </View>
                      </ScrollView>
 

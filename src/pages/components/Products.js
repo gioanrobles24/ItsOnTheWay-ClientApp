@@ -7,22 +7,27 @@ import {
     TouchableHighlight,TouchableOpacity,ScrollView
 } from "react-native";
 import { Icon,Avatar,Badge,withBadge,Image,Input,Card    } from 'react-native-elements'
+import { Actions } from 'react-native-router-flux';
+
   const image = { uri: "http://dev.itsontheway.net/api/parnetBanner1" }
+
   import { AirbnbRating } from 'react-native-ratings'
 
 class Products extends Component {
-
+    productView(item){
+     Actions.productView(item)
+    }
     renderProducts = (products,props) => {
         console.log(products)
         return products.map((item, index) => {
             return (
                 <View key={index} style={styles.cardOrdercontainer}>
-                      <TouchableOpacity onPress={() => this.props.onPress(item)}>
-                             <Card containerStyle={styles.cardOrder} >
+                      <TouchableOpacity onPress={() => this.productView(item)}>
+                             <Card containerStyle={styles.cardOrder} onPress={() => this.productView(item)}  >
                                   <Avatar
                                         rounded
                                         size="large"
-                                        source={{uri: 'http://dev.itsontheway.net/images/productos/'+Object.prod_partner_id+'/'+Object.prod_image,}}
+                                        source={image}
                                   />
 
                               <Text style={styles.cardOrderSubTitle}>{item.prod_name}</Text>
@@ -48,7 +53,7 @@ class Products extends Component {
     render() {
         return (
             <View style={styles.container}>
-            <ScrollView horizontal={true}>
+            <ScrollView>
 
                  {this.renderProducts(this.props.products)}
 
