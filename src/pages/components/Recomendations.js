@@ -9,16 +9,21 @@ import {
 import { Icon,Avatar,Badge,withBadge,Image,Input,Card    } from 'react-native-elements'
   const image = { uri: "http://dev.itsontheway.net/api/parnetBanner1" }
   import { AirbnbRating } from 'react-native-ratings'
-
+import { Actions } from 'react-native-router-flux'
 class Recomendations extends Component {
 
+     ThisPartnerView(id){
+      console.log('id de partner'+id)
+      let p_id = id
+
+        Actions.partnerView({p_id})
+    }
     renderProducts = (products,props) => {
-        console.log(products)
+        console.log('Recomendations',products)
         return products.map((item, index) => {
             return (
                 <View key={index} >
-                      <TouchableOpacity
-                             onPress={() => this.props.onPress(item)}>
+                      <TouchableOpacity onPress={() =>   {this.ThisPartnerView(item.prod_partner_id)}} >
                               <Card containerStyle={{flexDirection: 'row',width:250, marginLeft:20,marginTop:30}}
                              imageStyle={{width: 249, height: 130}}
                              image={image}

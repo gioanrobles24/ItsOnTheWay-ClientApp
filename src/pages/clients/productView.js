@@ -46,7 +46,7 @@ class ProductClientView extends Component
           onPress: () =>  Actions.pop() ,
           style: "cancel"
         },
-        { text: "Ir a tu pedido", onPress: () => Actions.orderClient(), onPress:() =>{this.props.addItemToCart } }
+        { text: "Ir a tu pedido", onPress: () => Actions.orderClient() }
       ],
       { cancelable: false }
     );
@@ -57,7 +57,7 @@ class ProductClientView extends Component
     return (
       <View style={styles.container}>
                 <Products products={this.state.product}/>
-                <TouchableHighlight  style={[styles.buttonContainer, styles.loginButton]} onPress={this.props.addItemToCart} >
+                <TouchableHighlight  style={[styles.buttonContainer, styles.loginButton]}  onPress={this.props.addItemToCart} >
                                 <Text style={styles.loginText}>Agregar al carrito</Text>
                         </TouchableHighlight>
          </View>

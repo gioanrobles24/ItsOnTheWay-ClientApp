@@ -32,6 +32,7 @@ import {Provider} from 'react-redux'
 import store from '../../store'
 import {connect} from 'react-redux'
 import Products from '../components/Products'
+import Recomedantions from '../components/Recomendations'
 import TabMenuIcons from '../components/TabMenuIcons'
 import {electronics} from '../components/Data'
  // import { Card } from 'react-native-shadow-cards';
@@ -91,7 +92,9 @@ import {electronics} from '../components/Data'
             return true;
     }
 
-    state = {}
+    state = {
+      data2 : this.props.responseData.response.client_info
+    }
 
 
     CurrentOrder(){
@@ -107,7 +110,7 @@ import {electronics} from '../components/Data'
       _renderItem2 ({item,index}){
         return (
           <TouchableOpacity
-              onPress={() => alert('Pressed!')}>
+              onPress={() =>  Actions.promoAndSuges()}>
               <Card containerStyle={{flexDirection: 'row',width:250, marginLeft:-20,marginTop:30}}
              imageStyle={{width: 249, height: 130}}
              image={image}
@@ -243,7 +246,7 @@ import {electronics} from '../components/Data'
     }
 
   render() {
-
+    const data = this.state.data
     return (
       <View style={styles.container}>
                <MenuDrawer
@@ -308,7 +311,7 @@ import {electronics} from '../components/Data'
                                 <View style={{ flex: 1, flexDirection:'row', justifyContent: 'center', marginTop:-30 }}>
 
 
-                                        <Products products={this.state.products} onPress={this.props.addItemToCart}/>
+                                        <Recomedantions products={this.state.products}/>
 
 
                                 </View>
@@ -365,6 +368,7 @@ const mapDispatchToProps = (dispatch) => {
         addItemToCart: (product) => dispatch({ type: 'ADD_TO_CART', payload: product })
     }
 }
+
 export default  connect(null,mapDispatchToProps)(HomeClientView);
 
 
