@@ -18,8 +18,8 @@ import { Card } from 'react-native-shadow-cards';
 import store from '../../store'
 import {connect} from 'react-redux'
 import {address} from '../components/Data'
-import Products from '../components/Products'
-
+import ProductsInCart from '../components/ProductToCart'
+import Recomendations from '../components/Recomendations'
  class OrderViewClient extends Component {
     constructor(props) {
        super(props);
@@ -56,10 +56,13 @@ import Products from '../components/Products'
 
           <View style={styles.containerProd}>
               <Text style={styles.SubTitle}  h1>Listado de productos: </Text>
-                    {this.props.cartItems.length > 0 ?
-                           <Text>Por favor </Text>
+
+                        {this.props.cartItems.length > 0 ?
+                        <ProductsInCart
+                            products={this.props.cartItems} />
                         : <Text>Por favor agrega un producto</Text>
                     }
+
             </View>
                 <View style={styles.containerProd2}>
                     <Text style={styles.SubTitle}  h1>Nota de pedido: </Text>

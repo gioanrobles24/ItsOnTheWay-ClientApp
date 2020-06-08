@@ -56,10 +56,8 @@ class ProductClientView extends Component
 
     return (
       <View style={styles.container}>
-                <Products products={this.state.product}/>
-                <TouchableHighlight  style={[styles.buttonContainer, styles.loginButton]}  onPress={this.props.addItemToCart} >
-                                <Text style={styles.loginText}>Agregar al carrito</Text>
-                        </TouchableHighlight>
+                <Products products={this.state.product} onPress={this.props.addItemToCart}/>
+
          </View>
 
     );

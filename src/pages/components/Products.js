@@ -48,7 +48,9 @@ class Products extends Component {
                           <View style={{width: 200}}>
                               <Text style={styles.SubTitle}  h1>Precio: Bs. {products.prod_price_bs}</Text>
                           </View>
-
+                         <TouchableHighlight  style={[styles.buttonContainer, styles.loginButton]} onPress={() => this.props.onPress(products)} >
+                                <Text style={styles.loginText}>Agregar al carrito</Text>
+                        </TouchableHighlight>
                  </View>
             )
     }
