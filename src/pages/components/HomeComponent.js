@@ -4,60 +4,59 @@ import {
   Text,
   View,
   TextInput,
-  Button,ScrollView,
+  Button,
   TouchableHighlight,
-  Image,
-  Alert,Switch, ToastAndroid,BackHandler,Picker,
+  ScrollView,
+  Alert,
+  Switch,
+  ToastAndroid,
+  BackHandler,
+  Picker,
+  SafeAreaView,
+  Dimensions,
+  TouchableOpacity,
+  ImageBackground,
+  Platform
 } from 'react-native';
-import { Actions } from 'react-native-router-flux';
-import { Icon,Avatar,Badge,withBadge   } from 'react-native-elements'
+import { Actions } from 'react-native-router-flux'
+import { Icon,Avatar,Badge,withBadge,Image,Input,Card    } from 'react-native-elements'
 import { createStackNavigator } from 'react-navigation'
 import RNPickerSelect from 'react-native-picker-select'
-import { Card } from 'react-native-shadow-cards'
-import NumericInput from 'react-native-numeric-input'
+import Carousel , { ParallaxImage } from 'react-native-snap-carousel'
+import { SideMenu } from 'react-native-side-menu'
+import  MenuDrawer from 'react-native-side-drawer'
+import BottomBar from 'react-native-bottom-bar'
+import BottomBarMenu from '../components/BotomBarMenu'
 import {Provider} from 'react-redux'
 import store from '../../store'
 import {connect} from 'react-redux'
+import Products from '../components/Products'
+import Recomedantions from '../components/Recomendations'
+import TabMenuIcons from '../components/TabMenuIcons'
+import {electronics} from '../components/Data'
   const image = { uri: "http://dev.itsontheway.net/api/parnetBanner1" }
 
   import { AirbnbRating } from 'react-native-ratings'
 
-class Products extends Component {
+class HomeInfo extends Component {
   constructor(props) {
     super(props);
      state = {
       cantidad   : '',
     }
   }
-    renderProducts = (products,props) => {
-        console.log(products,'aaaaa')
-
+    renderProducts = (client_info,props) => {
+        console.log('Home component',client_info)
             return (
 
-                     <View style={styles.container}>
+                     <View >
                            <View style={styles.header}>
-                                <Text style={styles.Title}>{products.prod_name}</Text>
-                           </View>
-                           <View style={styles.inputContainer}>
-                             <NumericInput onChange={cantidad => this.setState({cantidad})} />
-                          </View>
-                            <View style={styles.extras}>
-                                <Text style={styles.SubTitle}>Descripcción: {products.prod_description}</Text>
+                                  <TouchableHighlight  style={[styles.buttonContainer, styles.loginButton]} onPress={() => this.props.onPress(client_info)}>
+                               			 <Text style={styles.loginText}>{client_info.cl_name}</Text>
+                        			</TouchableHighlight>
                            </View>
 
-                         <View style={styles.inputContainer}>
-                             <TextInput  style={styles.inputs}
-                              placeholderTextColor="gray"
-                              placeholder="Nota para agregar a  este producto"
-                          />
-                        </View>
-                          <View style={{width: 200}}>
-                              <Text style={styles.SubTitle}  h1>Precio: Bs. {products.prod_price_bs}</Text>
-                          </View>
-                         <TouchableHighlight  style={[styles.buttonContainer, styles.loginButton]} onPress={() => this.props.onPress(products)} >
-                                <Text style={styles.loginText}>Agregar al carrito</Text>
-                        </TouchableHighlight>
-                 </View>
+                 	</View>
             )
     }
 
@@ -66,17 +65,12 @@ class Products extends Component {
     render() {
         return (
             <View style={styles.container}>
-            <ScrollView>
-
-                 {this.renderProducts(this.props.products)}
-
-               </ScrollView>
-
+                 {this.renderProducts(this.props.client_info)}
             </View>
         );
     }
 }
-export default Products;
+export default HomeInfo;
 
 const styles = StyleSheet.create({
   container: {

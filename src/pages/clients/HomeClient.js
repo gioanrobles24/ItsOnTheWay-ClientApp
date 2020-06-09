@@ -33,6 +33,7 @@ import store from '../../store'
 import {connect} from 'react-redux'
 import Products from '../components/Products'
 import Recomedantions from '../components/Recomendations'
+import HomeComponent from '../components/HomeComponent'
 import TabMenuIcons from '../components/TabMenuIcons'
 import {electronics} from '../components/Data'
  // import { Card } from 'react-native-shadow-cards';
@@ -318,6 +319,7 @@ import {electronics} from '../components/Data'
                         </SafeAreaView>
                          <View style={styles.container4} >
                               <Text style={styles.container1Title} h3>PROMOCIONES</Text>
+                              <HomeComponent client_info={this.state.data}  onPress={this.props.client_info}/>
                          </View>
                         <SafeAreaView style={{flex: 1, paddingTop: 50, }}>
                             <View style={{ flex: 1, flexDirection:'row', justifyContent: 'center', marginTop:-70,marginLeft:16 }}>
@@ -352,8 +354,8 @@ import {electronics} from '../components/Data'
                   </ScrollView>
 
             </MenuDrawer>
-
                <SafeAreaView style={styles.menutab}>
+
                     <TabMenuIcons/>
             </SafeAreaView>
 
@@ -365,7 +367,7 @@ import {electronics} from '../components/Data'
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        addItemToCart: (product) => dispatch({ type: 'ADD_TO_CART', payload: product })
+        client_info: (client_info) => dispatch({ type: 'ADD_USER_INFO', payload: client_info })
     }
 }
 

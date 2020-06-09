@@ -69,6 +69,7 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 export default  connect(null,mapDispatchToProps)(ProductClientView);
+
 const styles = StyleSheet.create({
   container: {
     flex: 0.7,

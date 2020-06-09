@@ -20,6 +20,7 @@ import {connect} from 'react-redux'
 import {address} from '../components/Data'
 import ProductsInCart from '../components/ProductToCart'
 import Recomendations from '../components/Recomendations'
+import HomeInfo from '../components/HomeComponent'
  class OrderViewClient extends Component {
     constructor(props) {
        super(props);
@@ -33,6 +34,7 @@ import Recomendations from '../components/Recomendations'
           ord_address : ''
         }
         console.log('eee',this.props.cartItems,'eee')
+         console.log('client info redux?',this.props.client_info,'eee')
     }
 
     ratingCompleted( rating ) {
@@ -98,7 +100,8 @@ import Recomendations from '../components/Recomendations'
 
 const mapStateToProps = (state) => {
     return {
-        cartItems: state
+        cartItems: state,
+        client_info: state
     }
 }
 
