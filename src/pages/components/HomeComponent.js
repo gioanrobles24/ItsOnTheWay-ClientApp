@@ -51,7 +51,7 @@ class HomeInfo extends Component {
 
                      <View >
                            <View style={styles.header}>
-                                  <TouchableHighlight  style={[styles.buttonContainer, styles.loginButton]} onPress={() => this.props.onPress(client_info)}>
+                                  <TouchableHighlight  style={{backgroundColor:'transparent'}} onPress={() => this.props.onPress(client_info)}>
                                			 <Text style={styles.loginText}>{client_info.cl_name}</Text>
                         			</TouchableHighlight>
                            </View>
