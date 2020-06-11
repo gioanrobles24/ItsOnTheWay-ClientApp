@@ -33,24 +33,7 @@ class ProductClientView extends Component
       cantidad   : '',
     }
   }
-     addcart(){
-
-
-
-      Alert.alert(
-      "Producto Agregado",
-      "Que deseas hacer?",
-      [
-        {
-          text: "Seguir comprando",
-          onPress: () =>  Actions.pop() ,
-          style: "cancel"
-        },
-        { text: "Ir a tu pedido", onPress: () => Actions.orderClient() }
-      ],
-      { cancelable: false }
-    );
-    }
+    
 
   render() {
 

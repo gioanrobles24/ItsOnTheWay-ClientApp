@@ -29,6 +29,25 @@ class Products extends Component {
       cantidad   : '',
     }
   }
+   addcart(){
+
+
+
+      Alert.alert(
+      "Producto Agregado",
+      "Que deseas hacer?",
+      [
+        {
+          text: "Seguir comprando",
+          onPress: () =>  Actions.pop() ,
+          style: "cancel"
+        },
+        { text: "Ir a tu pedido", onPress: () => Actions.orderClient() }
+      ],
+      { cancelable: false }
+    );
+    }
+
     renderProducts = (products,props) => {
         console.log(products,'aaaaa')
 
@@ -54,7 +73,10 @@ class Products extends Component {
                           <View style={{width: 200}}>
                               <Text style={styles.SubTitle}  h1>Precio: Bs. {products.prod_price_bs}</Text>
                           </View>
-                         <TouchableHighlight  style={[styles.buttonContainer, styles.loginButton]} onPress={() => this.props.onPress(products)} >
+                         <TouchableHighlight  style={[styles.buttonContainer, styles.loginButton]} 
+                                onPress={() => {this.addcart()}} 
+                                onPressIn={() => this.props.onPress(products)}
+                          >
                                 <Text style={styles.loginText}>Agregar al carrito</Text>
                         </TouchableHighlight>
                  </View>
