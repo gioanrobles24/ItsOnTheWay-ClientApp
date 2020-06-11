@@ -9,7 +9,6 @@ import  SearchStoreType  from './pages/clients/SearchStoreType'
 import  AddressClient  from './pages/clients/AddressClient'
 import  AllMyOrders  from './pages/clients/AllMyOrdersClient'
 import  OrderClient  from './pages/clients/OrderViewClient'
-import  NewOrderClient  from './pages/clients/NewOrderClient'
 import VerifyClient from  './pages/clients/VerifyClient'
 import NewAddressClient from './pages/clients/newAddressClient'
 import PaymentTypeClient from './pages/clients/PaymentType'
@@ -34,7 +33,6 @@ export default class Routes extends Component {
                      <Scene key="newAddressClient" hideNavBar={false} component={NewAddressClient}/>
                      <Scene key="allmyOrders" hideNavBar={false} component={AllMyOrders}/>
                      <Scene key="orderClient" hideNavBar={false} component={OrderClient}/>
-                     <Scene key="newOrderClient" hideNavBar={false} component={NewOrderClient}/>
                      <Scene key="verifyClient" hideNavBar={false} component={VerifyClient}/>
                      <Scene key="paymentType" hideNavBar={false} component={PaymentTypeClient}/>
                      <Scene key="productView" hideNavBar={false} component={ProductClientView}/>
