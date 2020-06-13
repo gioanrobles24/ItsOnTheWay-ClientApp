@@ -45,6 +45,7 @@ import Recomedantions from '../components/Recomendations';
 import HomeComponent from '../components/HomeComponent';
 import TabMenuIcons from '../components/TabMenuIcons';
 import {electronics} from '../components/Data';
+import {unsetUser} from '../../reducers/session';
 // import { Card } from 'react-native-shadow-cards';
 const image = {uri: 'http://dev.itsontheway.net/api/parnetBanner1'};
 
@@ -230,7 +231,6 @@ class HomeClientView extends Component {
                 this.alladdress();
               }}
             />
-
             <Text
               style={styles.menubarItemText}
               onPress={() => {
@@ -252,7 +252,7 @@ class HomeClientView extends Component {
           <TouchableHighlight
             style={[styles.salirboton, styles.salirbotonButton]}
             onPress={() => {
-              this.handleBackButton();
+              this.props.logout();
             }}>
             <Text style={styles.salirbotonText}>Salir</Text>
           </TouchableHighlight>
@@ -398,6 +398,7 @@ const mapDispatchToProps = dispatch => {
   return {
     client_info: client_info =>
       dispatch({type: 'ADD_USER_INFO', payload: client_info}),
+    logout: () => dispatch(unsetUser()),
   };
 };
 const mapStateToProps = (state, ownProps) => {
