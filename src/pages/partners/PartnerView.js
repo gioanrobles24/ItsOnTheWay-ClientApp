@@ -26,7 +26,6 @@ const image = {uri: 'http://dev.itsontheway.net/api/parnetBanner1'};
 class PartnerView extends Component {
   constructor(props) {
     super(props);
-    console.log('id de Partner ' + JSON.stringify(this.props.p_id));
     this.state = {
       partner_products: [],
       partner_banner: '',
@@ -45,7 +44,6 @@ class PartnerView extends Component {
     )
       .then(response => response.json())
       .then(responseData => {
-        console.log(responseData);
         if (responseData.error) {
           alert(' por favor intenta nuevamente');
         } else {
@@ -55,9 +53,7 @@ class PartnerView extends Component {
               partner_banner: responseData.response.partner_banner,
               partner: responseData.response.partner,
             },
-            () => {
-              console.log('PRUEBAAAA' + JSON.stringify(this.state.partner));
-            },
+            () => {},
           );
         }
       })
@@ -66,9 +62,7 @@ class PartnerView extends Component {
       });
   }
 
-  ratingCompleted(rating) {
-    console.log('${rating}');
-  }
+  ratingCompleted(rating) {}
   productView(item) {
     let product = item;
     Actions.productView({product});
@@ -76,7 +70,6 @@ class PartnerView extends Component {
 
   render() {
     let partner_profile_pic = {uri: this.state.partner_banner};
-    console.log(this.state.partner_banner, 'products');
     return (
       <View style={styles.container}>
         <Image style={styles.partnerimage} source={partner_profile_pic} />

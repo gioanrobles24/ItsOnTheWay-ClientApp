@@ -19,7 +19,6 @@ import {createStackNavigator} from 'react-navigation';
 export default class PaymentTypeClientView extends Component {
   constructor(props) {
     super(props);
-    console.log('esto llego a aqui' + JSON.stringify(this.props.pedido));
     this.state = {
       transfchecked: '',
       pagomchecked: '',
@@ -33,12 +32,9 @@ export default class PaymentTypeClientView extends Component {
   }
 
   VerifyPaymentClient = viewId => {
-    console.log(viewId, 'AAAAAAA');
-    console.log('asdasdasdsad' + JSON.stringify(this.props.pedido));
     let pedido = this.props.pedido;
     let opType = viewId;
 
-    console.log('epa' + this.props.pedido[0].prod_price_usd);
     Actions.verifyPaymentClient({pedido, opType});
   };
 

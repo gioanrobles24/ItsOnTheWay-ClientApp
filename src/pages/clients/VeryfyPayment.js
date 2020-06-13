@@ -20,8 +20,6 @@ import {createStackNavigator} from 'react-navigation';
 export default class VerifyPaymentClientView extends Component {
   constructor(props) {
     super(props);
-    console.log('esto llego a aca' + JSON.stringify(this.props.pedido));
-    console.log('esto llego a aca2' + JSON.stringify(this.props.opType));
     this.state = {};
     state = {
       pay_ref: '',
@@ -29,8 +27,6 @@ export default class VerifyPaymentClientView extends Component {
   }
 
   sendOrder = viewId => {
-    console.log('hola');
-
     fetch('http://dev.itsontheway.net/api/clients/neworder', {
       method: 'POST',
       headers: {
@@ -51,13 +47,9 @@ export default class VerifyPaymentClientView extends Component {
     })
       .then(response => response.json())
       .then(responseData => {
-        console.log(responseData);
         if (responseData.error) {
-          console.log(responseData + 'error');
           alert('Por favor intente nuevamente');
         } else {
-          console.log(responseData + 'si paso');
-
           Actions.allmyOrders();
         }
       })

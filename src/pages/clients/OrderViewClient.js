@@ -33,16 +33,10 @@ class OrderViewClient extends Component {
       ord_description: '',
       ord_address: '',
     };
-    console.log('eee', this.props.cartItems, 'eee');
-    console.log('client info redux?', this.props.client_info, 'eee');
   }
 
-  ratingCompleted(rating) {
-    console.log('${rating}');
-  }
+  ratingCompleted(rating) {}
   goTypePayment() {
-    console.log('loque mandara' + JSON.stringify(this.props.cartItems));
-
     let pedido = this.props.cartItems;
     Actions.paymentType({pedido});
   }

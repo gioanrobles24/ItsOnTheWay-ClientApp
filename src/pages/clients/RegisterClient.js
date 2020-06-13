@@ -63,14 +63,6 @@ export default class RegisterClientView extends Component {
   }
 
   Verification = viewId => {
-    console.log(
-      'Button pressed ' +
-        'correo:' +
-        this.state.email +
-        'password' +
-        this.state.password,
-    );
-
     fetch('http://dev.itsontheway.net/api/clients/register', {
       method: 'POST',
       headers: {
@@ -88,7 +80,6 @@ export default class RegisterClientView extends Component {
     })
       .then(response => response.json())
       .then(responseData => {
-        console.log(JSON.stringify(responseData) + 'register callback');
         if (responseData.error) {
           Alert.alert(
             'Hola!',

@@ -4,85 +4,29 @@ import {
   StyleSheet,
   Text,
   View,
-  TextInput,
-  Button,
-  TouchableHighlight,
   ScrollView,
-  Alert,
-  Switch,
-  ToastAndroid,
-  BackHandler,
-  Picker,
   SafeAreaView,
   Dimensions,
   TouchableOpacity,
-  ImageBackground,
   Platform,
 } from 'react-native';
 import {Actions} from 'react-native-router-flux';
-import {
-  Icon,
-  Avatar,
-  Badge,
-  withBadge,
-  Image,
-  Input,
-  Card,
-} from 'react-native-elements';
-import {createStackNavigator} from 'react-navigation';
-import RNPickerSelect from 'react-native-picker-select';
-import Carousel, {ParallaxImage} from 'react-native-snap-carousel';
-import {SideMenu} from 'react-native-side-menu';
-import MenuDrawer from 'react-native-side-drawer';
-import {AirbnbRating} from 'react-native-ratings';
-import BottomBar from 'react-native-bottom-bar';
-import BottomBarMenu from '../components/BotomBarMenu';
-import {Provider} from 'react-redux';
-import store from '../../store';
+import {Card} from 'react-native-elements';
 import {connect} from 'react-redux';
-import Products from '../components/Products';
 import Recomedantions from '../components/Recomendations';
-import HomeComponent from '../components/HomeComponent';
 import TabMenuIcons from '../components/TabMenuIcons';
-import {electronics} from '../components/Data';
 import {unsetUser} from '../../reducers/session';
-// import { Card } from 'react-native-shadow-cards';
+import {Header} from './Header';
 const image = {uri: 'http://dev.itsontheway.net/api/parnetBanner1'};
-
-const win = Dimensions.get('window');
-const ratio = win.width / 541;
-
-const mainColor = '#bdbfc1';
-const url = 'www.freakycoder.com';
-
-const pnkGradient = ['#ffffff', '#ffffff'];
 
 class HomeClientView extends Component {
   constructor(props) {
     super(props);
-    console.log('esto llego a aca' + JSON.stringify(this.props.user));
     this.state = {
       activeIndex: 0,
       open: false,
       data: this.props.user.response.client_info,
       products: this.props.user.response.all_products,
-      carouselItems2: [
-        {
-          text: 'Desayunos',
-        },
-        {
-          text: 'Almuerzos',
-        },
-        {
-          text: 'Cenas',
-        },
-        {
-          text: 'Text 5',
-        },
-        {
-          text: 'Text 5',
-        },
-      ],
     };
   }
 
@@ -143,249 +87,62 @@ class HomeClientView extends Component {
   seeAll = viewId => {
     alert('ver');
   };
-  handleBackButton = () => {
-    if (this.state.doubleBackToExitPressedOnce) {
-      BackHandler.exitApp();
-    }
-    ToastAndroid.show(
-      'Por favor vuelve a presionar para salir.',
-      ToastAndroid.SHORT,
-    );
-    this.setState({doubleBackToExitPressedOnce: true});
-    setTimeout(() => {
-      this.setState({doubleBackToExitPressedOnce: false});
-    }, 2000);
-    return true;
-  };
-
-  toggleOpen = () => {
-    this.setState({open: !this.state.open});
-  };
-  drawerContent = () => {
-    return (
-      <View style={styles.animatedMenuBox}>
-        <TouchableOpacity onPress={this.toggleOpen}>
-          <Icon
-            name="arrow-left"
-            type="font-awesome"
-            color="#a9d046"
-            iconStyle={{
-              marginLeft: 10,
-              flexDirection: 'column',
-              alignSelf: 'flex-start',
-              marginTop: 20,
-            }}
-          />
-        </TouchableOpacity>
-
-        <Avatar
-          rounded
-          size="xlarge"
-          overlayContainerStyle={{backgroundColor: '#bdbfc1'}}
-          containerStyle={{
-            alignSelf: 'center',
-            flexDirection: 'column',
-            marginTop: 20,
-          }}
-          source={image}
-        />
-
-        <Text style={styles.animatedBoxTextSpecial} h3>
-          {this.state.data.cl_name}
-        </Text>
-        <View style={styles.MenubarContainer}>
-          <View style={styles.menubarItemContainer}>
-            <Icon
-              name="credit-card"
-              type="evilicon"
-              color="#bdbfc1"
-              iconStyle={styles.menubarIconLeft}
-              onPress={() => {
-                this.allmyOrders();
-              }}
-            />
-            <Text
-              style={styles.menubarItemText}
-              onPress={() => {
-                this.allmyOrders();
-              }}>
-              Mis pedidos
-            </Text>
-            <Icon
-              name="chevron-right"
-              type="evilicon"
-              color="#bdbfc1"
-              iconStyle={styles.menubarIconRight}
-              onPress={() => {
-                this.allmyOrders();
-              }}
-            />
-          </View>
-          <View style={styles.menubarItemContainer}>
-            <Icon
-              type="font-awesome"
-              name="map-marker"
-              color="#bdbfc1"
-              iconStyle={styles.menubarIconRight}
-              onPress={() => {
-                this.alladdress();
-              }}
-            />
-            <Text
-              style={styles.menubarItemText}
-              onPress={() => {
-                this.alladdress();
-              }}>
-              Mis dirreciones
-            </Text>
-            <Icon
-              name="chevron-right"
-              type="evilicon"
-              color="#bdbfc1"
-              iconStyle={styles.menubarIconRight}
-              onPress={() => {
-                this.seeAll();
-              }}
-            />
-          </View>
-
-          <TouchableHighlight
-            style={[styles.salirboton, styles.salirbotonButton]}
-            onPress={() => {
-              this.props.logout();
-            }}>
-            <Text style={styles.salirbotonText}>Salir</Text>
-          </TouchableHighlight>
-        </View>
-      </View>
-    );
-  };
 
   render() {
     const data = this.state.data;
     return (
       <View style={styles.container}>
-        <MenuDrawer
-          open={this.state.open}
-          drawerContent={this.drawerContent()}
-          drawerPercentage={100}
-          animationTime={450}
-          overlay={true}
-          opacity={0.8}>
-          <View style={styles.headerBarContainer}>
-            <View style={styles.headerBar}>
-              <Image
-                source={{uri: 'http://dev.itsontheway.net/api/imgBlanca'}}
-                style={{width: 150, height: 80, marginRight: 80}}
-              />
-              <TouchableHighlight
-                underlayColor={'transparent'}
-                onPress={this.toggleOpen}>
-                <Icon
-                  name="navicon"
-                  type="evilicon"
-                  color="#ffffff"
-                  size={35}
-                  iconStyle={{marginRight: 15, marginTop: 10}}
-                />
-              </TouchableHighlight>
-            </View>
-            <View style={styles.headerBar}>
-              <Input
-                placeholder=""
-                leftIcon={<Icon name="search" type="evilicon" color="black" />}
-                inputContainerStyle={{
-                  borderRadius: 20,
-                  borderBottomColor: 'transparent',
-                  width: 330,
-                  height: 35,
-                  backgroundColor: 'white',
-                  alignSelf: 'center',
-                  marginBottom: 5,
-                  justifyContent: 'center',
-                }}
-              />
-            </View>
-          </View>
+        <Header>
           <ScrollView>
-            <View style={styles.container1}>
-              <Text style={styles.container1Title} h3>
-                Recomendaciones...
-              </Text>
+            <HomeSection title="Recomendaciones">
+              <SafeAreaView style={{flex: 1}}>
+                <View
+                  style={{
+                    flex: 1,
+                    flexDirection: 'row',
+                    justifyContent: 'center',
+                    marginTop: -30,
+                  }}>
+                  <Recomedantions products={this.state.products} />
+                </View>
+              </SafeAreaView>
+            </HomeSection>
+            <HomeSection title="Promociones">
+              <SafeAreaView style={{flex: 1}}>
+                <View
+                  style={{
+                    flex: 1,
+                    flexDirection: 'row',
+                    justifyContent: 'center',
+                    marginTop: -30,
+                  }}>
+                  <Recomedantions products={this.state.products} />
+                </View>
+              </SafeAreaView>
 
-              <Text
-                style={styles.container2Title}
-                onPress={() => {
-                  this.PromoAndSuges();
-                }}
-                h3>
-                Ver todo
-              </Text>
-            </View>
-            <SafeAreaView style={{flex: 1}}>
-              <View
-                style={{
-                  flex: 1,
-                  flexDirection: 'row',
-                  justifyContent: 'center',
-                  marginTop: -30,
-                }}>
-                <Recomedantions products={this.state.products} />
-              </View>
-            </SafeAreaView>
-            <View style={styles.container4}>
-              <Text style={styles.container1Title} h3>
-                PROMOCIONES
-              </Text>
-              <HomeComponent
-                client_info={this.state.data}
-                onPress={this.props.client_info}
-              />
-            </View>
-            <SafeAreaView style={{flex: 1, paddingTop: 50}}>
-              <View
-                style={{
-                  flex: 1,
-                  flexDirection: 'row',
-                  justifyContent: 'center',
-                  marginTop: -70,
-                  marginLeft: 16,
-                }}>
-                <Carousel
-                  layout={'default'}
-                  ref={ref => (this.carousel = ref)}
-                  data={this.state.carouselItems2}
-                  sliderWidth={250}
-                  itemWidth={250}
-                  renderItem={this._renderItem2}
-                  onSnapToItem={index => this.setState({activeIndex: index})}
-                />
-              </View>
-            </SafeAreaView>
-            <SafeAreaView style={{height: 40}} />
-            <SafeAreaView style={{flex: 1, paddingTop: 50}}>
-              <View
-                style={{
-                  flex: 1,
-                  flexDirection: 'row',
-                  justifyContent: 'center',
-                  marginTop: -70,
-                  marginLeft: 16,
-                }}>
-                <Carousel
-                  layout={'default'}
-                  ref={ref => (this.carousel = ref)}
-                  data={this.state.carouselItems2}
-                  sliderWidth={250}
-                  itemWidth={250}
-                  renderItem={this._renderItem3}
-                  onSnapToItem={index => this.setState({activeIndex: index})}
-                />
-              </View>
-            </SafeAreaView>
-            <SafeAreaView style={{height: 100}} />
+              {/* <SafeAreaView style={{flex: 1, paddingTop: 50}}>
+                <View
+                  style={{
+                    flex: 1,
+                    flexDirection: 'row',
+                    justifyContent: 'center',
+                    marginTop: -70,
+                    marginLeft: 16,
+                  }}>
+                  <Carousel
+                    layout={'default'}
+                    ref={ref => (this.carousel = ref)}
+                    data={this.state.carouselItems2}
+                    sliderWidth={250}
+                    itemWidth={250}
+                    renderItem={this._renderItem2}
+                    onSnapToItem={index => this.setState({activeIndex: index})}
+                  />
+                </View>
+              </SafeAreaView> */}
+            </HomeSection>
           </ScrollView>
-        </MenuDrawer>
+        </Header>
         <SafeAreaView style={styles.menutab}>
           <TabMenuIcons />
         </SafeAreaView>
@@ -412,30 +169,32 @@ export default connect(
   mapDispatchToProps,
 )(HomeClientView);
 
-const styles = StyleSheet.create({
+function HomeSection(props) {
+  return (
+    <>
+      <View style={styles.container4}>
+        <Text
+          style={{
+            marginBottom: 15,
+            fontSize: 18,
+            color: '#404040',
+            backgroundColor: '#cfcfcf',
+            padding: 7,
+            borderRadius: 3,
+          }}>
+          {props.title}
+        </Text>
+      </View>
+      {props.children}
+    </>
+  );
+}
+
+export const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'white',
     fontFamily: 'QUICKSAND-LIGHT',
-  },
-  headerBarContainer: {
-    marginTop: -5,
-    flexDirection: 'column',
-    backgroundColor: '#a9d046',
-    height: 130,
-    alignItems: 'center',
-  },
-  headerBar: {
-    flexDirection: 'row',
-    alignSelf: 'flex-end',
-  },
-  headerBarIcon: {},
-  container1: {
-    marginTop: 30,
-    flexDirection: 'row',
-    marginLeft: 15,
-    marginBottom: 20,
-    justifyContent: 'space-between',
   },
   container1Title: {
     fontSize: 15,
@@ -461,72 +220,6 @@ const styles = StyleSheet.create({
     resizeMode: 'cover',
   },
 
-  animatedMenuBox: {
-    flex: 1,
-    backgroundColor: '#ffffff',
-    marginTop: -5,
-  },
-  animatedBoxTextSpecial: {
-    flexDirection: 'column',
-    flex: 0.1,
-    fontSize: 25,
-    color: '#373535',
-    marginTop: 30,
-    alignSelf: 'center',
-  },
-  bodyOpenMenu: {
-    flex: 1,
-  },
-  MenubarContainer: {
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    flex: 0.7,
-  },
-
-  menubarItemContainer: {
-    borderBottomColor: '#bdbfc1',
-    backgroundColor: '#FFFFFF',
-    borderBottomWidth: 1,
-    width: 400,
-    height: 55,
-    marginBottom: 20,
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  menubarItemText: {
-    flex: 0.8,
-    marginLeft: 12,
-    justifyContent: 'center',
-  },
-
-  menubarIconLeft: {
-    marginStart: 25,
-  },
-  menubarIconRight: {
-    marginStart: 25,
-  },
-  salirboton: {
-    marginTop: 70,
-    height: 45,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    alignSelf: 'center',
-    width: 270,
-    borderRadius: 5,
-    shadowColor: 'rgba(0, 0, 0, 0.1)',
-    shadowOpacity: 0.8,
-    elevation: 6,
-  },
-
-  salirbotonButton: {
-    backgroundColor: '#a9d046',
-  },
-  salirbotonText: {
-    fontFamily: 'QUICKSAND-LIGHT',
-    color: 'white',
-  },
   menutab: {
     flex: 1,
   },

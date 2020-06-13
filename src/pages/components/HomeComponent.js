@@ -54,7 +54,6 @@ class HomeInfo extends Component {
     };
   }
   renderProducts = (client_info, props) => {
-    console.log('Home component', client_info);
     return (
       <View>
         <View style={styles.header}>

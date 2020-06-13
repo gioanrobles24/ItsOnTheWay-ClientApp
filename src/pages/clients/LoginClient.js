@@ -62,7 +62,6 @@ class LoginClientView extends Component {
     })
       .then(response => response.json())
       .then(responseData => {
-        console.log(responseData);
         if (responseData.error) {
           Alert.alert(
             'Usuario o contraseña incorrectos, por favor intenta nuevamente',

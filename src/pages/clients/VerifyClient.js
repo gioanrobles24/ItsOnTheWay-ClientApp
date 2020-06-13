@@ -40,7 +40,6 @@ export default class VerifyClientView extends Component {
     )
       .then(response => response.json())
       .then(responseData => {
-        console.log(responseData);
         if (responseData.error) {
           alert('Codigo incorrecto, Intente nuevamente');
         } else {

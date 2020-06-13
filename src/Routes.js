@@ -20,6 +20,7 @@ import VerifyPaymentClient from './pages/clients/VeryfyPayment';
 import {AsyncStorage, BackHandler} from 'react-native';
 import {setUser} from './reducers/session';
 import {connect} from 'react-redux';
+import {Header} from './pages/clients/Header';
 
 class Routes extends Component {
   constructor() {
@@ -101,7 +102,7 @@ const AuthApp = props => {
   return (
     <Router navBarButtonColor="#a9d046" backAndroidHandler={backAction}>
       <Scene key="root">
-        <Scene key="homeClient" hideNavBar={true} component={HomeClient} />
+        <Scene key="homeClient" hideNavBar component={HomeClient} />
         <Scene
           key="searchStoreType"
           hideNavBar={false}

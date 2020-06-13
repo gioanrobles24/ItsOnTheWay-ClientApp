@@ -42,12 +42,12 @@ class TabMenuIcons extends Component {
   }
 
   searchByCat(id) {
-    console.log('id de cat' + id);
     let cat_id = id;
     Actions.searchStoreType({cat_id});
   }
   MisPedios() {
-    Actions.promoAndSuges();
+    console.log('ENTRE');
+    Actions.homeClient();
   }
   renderMainIcon() {
     return (

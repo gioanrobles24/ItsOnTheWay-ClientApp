@@ -31,7 +31,6 @@ const pnkGradient = ['#ffffff', '#ffffff'];
 export default class SearchStoreTypeView extends Component {
   constructor(props) {
     super(props);
-    console.log('id de cat' + JSON.stringify(this.props.cat_id));
     this.state = {
       partnersByCat: [],
     };
@@ -48,7 +47,6 @@ export default class SearchStoreTypeView extends Component {
     )
       .then(response => response.json())
       .then(responseData => {
-        console.log(responseData);
         if (responseData.error) {
           alert(' por favor intenta nuevamente');
         } else {
@@ -56,11 +54,7 @@ export default class SearchStoreTypeView extends Component {
             {
               partnersByCat: responseData.response.parterByCat,
             },
-            () => {
-              console.log(
-                'PRUEBAAAA' + JSON.stringify(this.state.partnersByCat),
-              );
-            },
+            () => {},
           );
         }
       })
@@ -70,7 +64,6 @@ export default class SearchStoreTypeView extends Component {
   }
 
   searchByCat(id) {
-    console.log('id de cat' + id);
     let cat_id = id;
     Actions.searchStoreType({cat_id});
   }
@@ -79,7 +72,6 @@ export default class SearchStoreTypeView extends Component {
     Actions.allmyOrders();
   };
   ThisPartnerView(id) {
-    console.log('id de partner' + id);
     let p_id = id;
 
     Actions.partnerView({p_id});

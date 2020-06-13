@@ -22,13 +22,11 @@ import {AirbnbRating} from 'react-native-ratings';
 import {Actions} from 'react-native-router-flux';
 class Recomendations extends Component {
   ThisPartnerView(id) {
-    console.log('id de partner' + id);
     let p_id = id;
 
     Actions.partnerView({p_id});
   }
   renderProducts = (products, props) => {
-    console.log('Recomendations', products);
     return products.map((item, index) => {
       return (
         <View key={index}>

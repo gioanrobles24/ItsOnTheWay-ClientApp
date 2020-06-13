@@ -51,8 +51,6 @@ class Products extends Component {
   }
 
   renderProducts = (products, props) => {
-    console.log(products, 'aaaaa');
-
     return (
       <View style={styles.container}>
         <View style={styles.header}>
