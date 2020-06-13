@@ -11,6 +11,7 @@ import {
   Switch,
   ToastAndroid,
   BackHandler,
+  AsyncStorage,
 } from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import {Icon, Avatar, Badge, withBadge} from 'react-native-elements';
@@ -24,10 +25,9 @@ export default class LoginClientView extends Component {
     this.state = {
       showPassword: true,
       icon: 'visibility-off',
-    };
-    state = {
       email: '',
       password: '',
+      loading: false,
     };
   }
 
@@ -45,14 +45,8 @@ export default class LoginClientView extends Component {
   resetPassword = viewId => {
     Actions.resetPasswordClient();
   };
-  Login = viewId => {
-    console.log(
-      'Button pressed ' +
-        'correo:' +
-        this.state.email +
-        'password' +
-        this.state.password,
-    );
+  Login = () => {
+    this.setState({loading: true});
     fetch('http://dev.itsontheway.net/api/clients/login', {
       method: 'POST',
       headers: {
@@ -68,19 +62,23 @@ export default class LoginClientView extends Component {
       .then(responseData => {
         console.log(responseData);
         if (responseData.error) {
-          alert(
+          Alert.alert(
             'Usuario o contraseña incorrectos, por favor intenta nuevamente',
           );
         } else {
+          AsyncStorage.setItem(responseData);
+          console.log(responseData);
           Actions.homeClient({responseData});
         }
       })
       .catch(error => {
         console.error(error);
-      });
+      })
+      .finally(() => this.setState({loading: false}));
   };
 
   render() {
+    const {loading} = this.state;
     return (
       <View style={styles.container}>
         <View>
@@ -107,7 +105,7 @@ export default class LoginClientView extends Component {
           <TextInput
             style={styles.inputs}
             placeholderTextColor="gray"
-            placeholder="Password"
+            placeholder="Contraseña"
             secureTextEntry={this.state.showPassword}
             onChangeText={password => this.setState({password})}
           />
@@ -129,11 +127,16 @@ export default class LoginClientView extends Component {
         </View>
 
         <TouchableHighlight
+          disabled={loading}
           style={[styles.buttonContainer, styles.loginButton]}
           onPress={() => {
-            this.Login('login');
+            this.Login();
           }}>
-          <Text style={styles.loginText}>Ingresar</Text>
+          {!loading ? (
+            <Text style={styles.loginText}>Ingresar</Text>
+          ) : (
+            <Text style={styles.loginText}>Cargando...</Text>
+          )}
         </TouchableHighlight>
 
         <View style={styles.registerContainer}>
