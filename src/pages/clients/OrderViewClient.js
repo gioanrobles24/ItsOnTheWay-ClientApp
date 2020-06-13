@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {
   StyleSheet,
   Text,
@@ -7,186 +7,186 @@ import {
   Button,
   TouchableHighlight,
   Image,
-  Alert,ImageBackground,ScrollView
-} from 'react-native'
-import { Actions } from 'react-native-router-flux';
-import { AirbnbRating,Rating } from 'react-native-ratings'
-import { Badge,Avatar } from 'react-native-elements';
-const image = { uri: "http://dev.itsontheway.net/api/parnetBanner" }
-import { Card } from 'react-native-shadow-cards';
+  Alert,
+  ImageBackground,
+  ScrollView,
+} from 'react-native';
+import {Actions} from 'react-native-router-flux';
+import {AirbnbRating, Rating} from 'react-native-ratings';
+import {Badge, Avatar} from 'react-native-elements';
+const image = {uri: 'http://dev.itsontheway.net/api/parnetBanner'};
+import {Card} from 'react-native-shadow-cards';
 
-import store from '../../store'
-import {connect} from 'react-redux'
-import {address} from '../components/Data'
-import ProductsInCart from '../components/ProductToCart'
-import Recomendations from '../components/Recomendations'
-import HomeInfo from '../components/HomeComponent'
- class OrderViewClient extends Component {
-    constructor(props) {
-       super(props);
+import store from '../../store';
+import {connect} from 'react-redux';
+import {address} from '../components/Data';
+import ProductsInCart from '../components/ProductToCart';
+import Recomendations from '../components/Recomendations';
+import HomeInfo from '../components/HomeComponent';
+class OrderViewClient extends Component {
+  constructor(props) {
+    super(props);
 
-       this.state = {
+    this.state = {};
 
-      }
+    state = {
+      ord_description: '',
+      ord_address: '',
+    };
+    console.log('eee', this.props.cartItems, 'eee');
+    console.log('client info redux?', this.props.client_info, 'eee');
+  }
 
-          state = {
-          ord_description   : '',
-          ord_address : ''
-        }
-        console.log('eee',this.props.cartItems,'eee')
-         console.log('client info redux?',this.props.client_info,'eee')
-    }
+  ratingCompleted(rating) {
+    console.log('${rating}');
+  }
+  goTypePayment() {
+    console.log('loque mandara' + JSON.stringify(this.props.cartItems));
 
-    ratingCompleted( rating ) {
-        console.log('${rating}');
-    }
-    goTypePayment(){
-
-      console.log('loque mandara'+ JSON.stringify(this.props.cartItems))
-
-      let pedido = this.props.cartItems
-        Actions.paymentType({pedido})
-
-    }
+    let pedido = this.props.cartItems;
+    Actions.paymentType({pedido});
+  }
 
   render() {
-
     return (
       <View style={styles.container}>
+        <Text style={styles.Title} h1>
+          Realizar pedido a :{' '}
+        </Text>
 
-              <Text style={styles.Title}  h1>Realizar pedido a : </Text>
+        <View style={styles.containerProd}>
+          <Text style={styles.SubTitle} h1>
+            Listado de productos:{' '}
+          </Text>
 
-          <View style={styles.containerProd}>
-              <Text style={styles.SubTitle}  h1>Listado de productos: </Text>
-
-                        {this.props.cartItems.length > 0 ?
-                        <ProductsInCart
-                            products={this.props.cartItems} />
-                        : <Text>Por favor agrega un producto</Text>
-                    }
-
-            </View>
-                <View style={styles.containerProd2}>
-                    <Text style={styles.SubTitle}  h1>Nota de pedido: </Text>
-                    <TextInput style={styles.inputs}
-                      placeholder="Coloca una Nota(opcional)"
-                      keyboardType="Text"
-                      underlineColorAndroid='transparent'
-                      onChangeText={(ord_description) => this.setState({ord_description})}
-                      />
-              </View>
-               <View style={styles.containerProd2}>
-                    <Text style={styles.SubTitle}  h1>Dirección de pedido: </Text>
-                    <TextInput style={styles.inputs}
-                      placeholder="Coloca una Dirección"
-                      keyboardType="Text"
-                      underlineColorAndroid='transparent'
-                      onChangeText={(ord_address) => this.setState({ord_address})}
-                      />
-              </View>
-            <TouchableHighlight style={[styles.buttonContainer, styles.loginButton]}
-                onPress={() =>  {
-                  this.goTypePayment()}
-                }
-               >
-
-              <Text style={styles.loginText}>Pagar</Text>
-          </TouchableHighlight>
+          {this.props.cartItems.length > 0 ? (
+            <ProductsInCart products={this.props.cartItems} />
+          ) : (
+            <Text>Por favor agrega un producto</Text>
+          )}
+        </View>
+        <View style={styles.containerProd2}>
+          <Text style={styles.SubTitle} h1>
+            Nota de pedido:{' '}
+          </Text>
+          <TextInput
+            style={styles.inputs}
+            placeholder="Coloca una Nota(opcional)"
+            keyboardType="Text"
+            underlineColorAndroid="transparent"
+            onChangeText={ord_description => this.setState({ord_description})}
+          />
+        </View>
+        <View style={styles.containerProd2}>
+          <Text style={styles.SubTitle} h1>
+            Dirección de pedido:{' '}
+          </Text>
+          <TextInput
+            style={styles.inputs}
+            placeholder="Coloca una Dirección"
+            keyboardType="Text"
+            underlineColorAndroid="transparent"
+            onChangeText={ord_address => this.setState({ord_address})}
+          />
+        </View>
+        <TouchableHighlight
+          style={[styles.buttonContainer, styles.loginButton]}
+          onPress={() => {
+            this.goTypePayment();
+          }}>
+          <Text style={styles.loginText}>Pagar</Text>
+        </TouchableHighlight>
       </View>
     );
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    cartItems: state,
+    client_info: state,
+  };
+};
 
-const mapStateToProps = (state) => {
-    return {
-        cartItems: state,
-        client_info: state
-    }
-}
+const mapDispatchToProps = dispatch => {
+  return {
+    removeItem: product =>
+      dispatch({type: 'REMOVE_FROM_CART', payload: product}),
+  };
+};
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        removeItem: (product) => dispatch({ type: 'REMOVE_FROM_CART', payload: product })
-    }
-}
-
-
-export default connect(mapStateToProps, mapDispatchToProps)(OrderViewClient);
-
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(OrderViewClient);
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     // alignItems: "center",
     // justifyContent: "center",
-
   },
-   containerProd: {
+  containerProd: {
     flex: 0.8,
     // alignItems: "center",
     // justifyContent: "center",
-
   },
-   containerProd2: {
+  containerProd2: {
     flex: 0.4,
     // alignItems: "center",
     // justifyContent: "center",
-
   },
-  containertitle:{
-    marginTop:10,
-    flexDirection:'row',
-    alignItems:'center',
-    justifyContent:'center',
-    elevation:1,
-    height:80
+  containertitle: {
+    marginTop: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    elevation: 1,
+    height: 80,
   },
 
-   menuText: {
-    fontSize : 25,
+  menuText: {
+    fontSize: 25,
     alignSelf: 'flex-end',
     color: '#373535',
   },
-  cardBadge:{
-      alignSelf: 'center'
-   },
-   Title: {
+  cardBadge: {
+    alignSelf: 'center',
+  },
+  Title: {
     fontSize: 28,
     flexDirection: 'row',
     justifyContent: 'center',
-    alignSelf: "center",
-    color : '#373535',
+    alignSelf: 'center',
+    color: '#373535',
     marginTop: 20,
-    marginLeft:20
+    marginLeft: 20,
   },
-   SubTitle: {
+  SubTitle: {
     fontSize: 16,
-    fontWeight:'bold'
+    fontWeight: 'bold',
   },
 
-   buttonContainer:
-  {
-      height:45,
-      flexDirection: 'row',
-      justifyContent: 'center',
-      alignItems: 'center',
-      marginBottom:20,
-      width:270,
-      borderRadius:5,
-      shadowColor: 'rgba(0, 0, 0, 0.1)',
-      shadowOpacity: 0.8,
-      elevation: 6,
-      shadowRadius: 15 ,
-      shadowOffset : { width: 1, height: 13},
+  buttonContainer: {
+    height: 45,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 20,
+    width: 270,
+    borderRadius: 5,
+    shadowColor: 'rgba(0, 0, 0, 0.1)',
+    shadowOpacity: 0.8,
+    elevation: 6,
+    shadowRadius: 15,
+    shadowOffset: {width: 1, height: 13},
   },
   loginButton: {
-    backgroundColor: "#a9d046",
-    alignSelf:'center',
+    backgroundColor: '#a9d046',
+    alignSelf: 'center',
   },
   loginText: {
-    fontFamily: "QUICKSAND-LIGHT",
+    fontFamily: 'QUICKSAND-LIGHT',
     color: 'white',
   },
-
 });
