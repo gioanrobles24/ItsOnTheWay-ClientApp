@@ -68,10 +68,15 @@ class LoginClientView extends Component {
             'Usuario o contraseña incorrectos, por favor intenta nuevamente',
           );
         } else {
-          AsyncStorage.setItem(responseData);
-          this.props.login(responseData);
-          Actions.homeClient({responseData});
+          return AsyncStorage.setItem(
+            'session',
+            JSON.stringify(responseData),
+          ).then(() => responseData);
         }
+      })
+      .then(data => {
+        this.props.login(data);
+        Actions.homeClient({responseData: data});
       })
       .catch(error => {
         console.error(error);

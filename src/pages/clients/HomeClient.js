@@ -59,12 +59,12 @@ const pnkGradient = ['#ffffff', '#ffffff'];
 class HomeClientView extends Component {
   constructor(props) {
     super(props);
-    console.log('esto llego a aca' + JSON.stringify(this.props));
+    console.log('esto llego a aca' + JSON.stringify(this.props.user));
     this.state = {
       activeIndex: 0,
       open: false,
-      data: this.props.responseData.response.client_info,
-      products: this.props.responseData.response.all_products,
+      data: this.props.user.response.client_info,
+      products: this.props.user.response.all_products,
       carouselItems2: [
         {
           text: 'Desayunos',
@@ -400,9 +400,14 @@ const mapDispatchToProps = dispatch => {
       dispatch({type: 'ADD_USER_INFO', payload: client_info}),
   };
 };
+const mapStateToProps = (state, ownProps) => {
+  return {
+    user: state.session.user,
+  };
+};
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps,
 )(HomeClientView);
 

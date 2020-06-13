@@ -1,20 +1,16 @@
-import React, { Component } from 'react';
-import {
-  StyleSheet,
-  View,
-  StatusBar
-} from 'react-native';
+import React, {Component} from 'react';
+import {StyleSheet, View, StatusBar} from 'react-native';
 
 import Routes from './src/Routes';
-import {Provider} from 'react-redux'
-import store from './src/store'
+import {Provider} from 'react-redux';
+import {store} from './src/redux/store';
 
-export default class App extends Component   {
+export default class App extends Component {
   render() {
     return (
       <View style={styles.container}>
         <Provider store={store}>
-          <Routes/>
+          <Routes />
         </Provider>
       </View>
     );
@@ -24,5 +20,5 @@ export default class App extends Component   {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  }
+  },
 });
