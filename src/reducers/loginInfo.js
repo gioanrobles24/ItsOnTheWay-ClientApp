@@ -1,13 +1,12 @@
 const ClientInfo = (state = [], action) => {
-    switch (action.type) {
-        case 'ADD_TO_CART':
-            return [...state, action.payload]
-        case 'ADD_USER_INFO':
-            return [...state, action.payload]
-    }
+  switch (action.type) {
+    case 'ADD_TO_CART':
+      return [...state, action.payload];
+    case 'ADD_USER_INFO':
+      return [...state, action.payload];
+  }
 
-    return state
-}
+  return state;
+};
 
-export default ClientInfo
-
+export default ClientInfo;

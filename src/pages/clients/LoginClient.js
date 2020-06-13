@@ -16,9 +16,11 @@ import {
 import {Actions} from 'react-native-router-flux';
 import {Icon, Avatar, Badge, withBadge} from 'react-native-elements';
 import {createStackNavigator} from 'react-navigation';
+import {setUser} from '../../reducers/session';
+import {connect} from 'react-redux';
 const imageverde = {uri: 'http://dev.itsontheway.net/api/imgVerde'};
 
-export default class LoginClientView extends Component {
+class LoginClientView extends Component {
   constructor(props) {
     super(props);
     this.toggleSwitch = this.toggleSwitch.bind(this);
@@ -67,7 +69,7 @@ export default class LoginClientView extends Component {
           );
         } else {
           AsyncStorage.setItem(responseData);
-          console.log(responseData);
+          this.props.login(responseData);
           Actions.homeClient({responseData});
         }
       })
@@ -167,6 +169,17 @@ export default class LoginClientView extends Component {
     );
   }
 }
+
+const mapDispatchToProps = dispatch => {
+  return {
+    login: user => dispatch(setUser(user)),
+  };
+};
+
+export default connect(
+  null,
+  mapDispatchToProps,
+)(LoginClientView);
 
 const styles = StyleSheet.create({
   container: {
