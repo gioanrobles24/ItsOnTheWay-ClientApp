@@ -21,7 +21,7 @@ import store from '../../store';
 import {connect} from 'react-redux';
 import {address} from '../components/Data';
 import ProductsInCart from '../components/ProductToCart';
-import Recomendations from '../components/Recomendations';
+import Recomendations from '../components/ProductHorizontalCarousel';
 import HomeInfo from '../components/HomeComponent';
 class OrderViewClient extends Component {
   constructor(props) {

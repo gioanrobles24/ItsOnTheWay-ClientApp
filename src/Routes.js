@@ -4,7 +4,7 @@ import {Router, Stack, Scene, Actions} from 'react-native-router-flux';
 import LoginClient from './pages/clients/LoginClient';
 import RegisterClient from './pages/clients/RegisterClient';
 import ResetPasswordClient from './pages/clients/ResetPasswordClient';
-import HomeClient from './pages/clients/HomeClient';
+import HomeClient from './pages/clients/HomeClient/HomeClient';
 import SearchStoreType from './pages/clients/SearchStoreType';
 import AddressClient from './pages/clients/AddressClient';
 import AllMyOrders from './pages/clients/AllMyOrdersClient';
