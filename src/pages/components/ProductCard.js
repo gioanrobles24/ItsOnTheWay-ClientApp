@@ -5,12 +5,6 @@ import {AirbnbRating} from 'react-native-ratings';
 
 export function ProductCard(props) {
   const {product, onPress: handlePress} = props;
-  console.log(product);
-  console.log(
-    `http://dev.itsontheway.net/images/productos/${product.prod_partner_id}/${
-      product.prod_image
-    }`,
-  );
   return (
     <View>
       <TouchableOpacity

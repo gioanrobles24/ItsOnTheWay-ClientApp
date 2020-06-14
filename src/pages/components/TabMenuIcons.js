@@ -3,36 +3,16 @@ import {
   StyleSheet,
   Text,
   View,
-  TextInput,
-  Button,
-  TouchableHighlight,
-  ScrollView,
-  Alert,
-  Switch,
-  ToastAndroid,
-  BackHandler,
-  Picker,
   SafeAreaView,
-  Dimensions,
   TouchableOpacity,
-  ImageBackground,
   Platform,
 } from 'react-native';
 import {Actions} from 'react-native-router-flux';
-import {
-  Icon,
-  Avatar,
-  Badge,
-  withBadge,
-  Image,
-  Input,
-  Card,
-} from 'react-native-elements';
+import {Icon} from 'react-native-elements';
 import BottomBar from 'react-native-bottom-bar';
 
 const mainColor = '#bdbfc1';
-const url = 'www.freakycoder.com';
-const pnkGradient = ['#ffffff', '#ffffff'];
+const pnkGradient = ['#ffffff', mainColor];
 
 class TabMenuIcons extends Component {
   constructor(props) {
@@ -43,11 +23,13 @@ class TabMenuIcons extends Component {
 
   searchByCat(id) {
     let cat_id = id;
-    Actions.searchStoreType({cat_id});
+    Actions.searchStoreType({
+      cat_id,
+      onBack: () => Actions.popTo('homeClient'),
+    });
   }
   MisPedios() {
-    console.log('ENTRE');
-    Actions.homeClient();
+    Actions.popTo('homeClient');
   }
   renderMainIcon() {
     return (
@@ -93,6 +75,7 @@ class TabMenuIcons extends Component {
       </View>
     );
   }
+
   renderSecondIconComponent() {
     return (
       <View
@@ -181,19 +164,21 @@ class TabMenuIcons extends Component {
 
   render() {
     return (
-      <View style={styles.menutab}>
-        <BottomBar
-          shapeColor="#ffffff"
-          miniButtonsColor="#ffffff"
-          mainIconGradient={pnkGradient}
-          mainIcon={this.renderMainIcon()}
-          mainIconOnPress={this.mainIconOnPress}
-          firstIconComponent={this.renderFirstIconComponent()}
-          secondIconComponent={this.renderSecondIconComponent()}
-          thirdIconComponent={this.renderThirdIconComponent()}
-          fourthIconComponent={this.renderFourthIconComponent()}
-        />
-      </View>
+      <SafeAreaView style={styles.menutab}>
+        <View style={styles.menutab}>
+          <BottomBar
+            shapeColor="#ffffff"
+            miniButtonsColor="#ffffff"
+            mainIconGradient={pnkGradient}
+            mainIcon={this.renderMainIcon()}
+            mainIconOnPress={this.mainIconOnPress}
+            firstIconComponent={this.renderFirstIconComponent()}
+            secondIconComponent={this.renderSecondIconComponent()}
+            thirdIconComponent={this.renderThirdIconComponent()}
+            fourthIconComponent={this.renderFourthIconComponent()}
+          />
+        </View>
+      </SafeAreaView>
     );
   }
 }

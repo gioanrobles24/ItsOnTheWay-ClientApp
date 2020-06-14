@@ -77,7 +77,7 @@ export default connect(
   mapDispatchToProps,
 )(Routes);
 
-function backAction() {
+function backAction(params) {
   if (Actions.state.index === 0) {
     BackHandler.exitApp();
     return false;
@@ -105,43 +105,23 @@ const AuthApp = props => {
         <Scene key="homeClient" hideNavBar component={HomeClient} />
         <Scene
           key="searchStoreType"
-          hideNavBar={false}
           component={SearchStoreType}
+          renderBackButton={() => {}}
         />
-        <Scene
-          key="addressClient"
-          hideNavBar={false}
-          component={AddressClient}
-        />
-        <Scene
-          key="newAddressClient"
-          hideNavBar={false}
-          component={NewAddressClient}
-        />
-        <Scene key="allmyOrders" hideNavBar={false} component={AllMyOrders} />
-        <Scene key="orderClient" hideNavBar={false} component={OrderClient} />
-        <Scene key="verifyClient" hideNavBar={false} component={VerifyClient} />
-        <Scene
-          key="paymentType"
-          hideNavBar={false}
-          component={PaymentTypeClient}
-        />
+        <Scene key="addressClient" component={AddressClient} />
+        <Scene key="newAddressClient" component={NewAddressClient} />
+        <Scene key="allmyOrders" component={AllMyOrders} />
+        <Scene key="orderClient" component={OrderClient} />
+        <Scene key="verifyClient" component={VerifyClient} />
+        <Scene key="paymentType" component={PaymentTypeClient} />
         <Scene
           key="productView"
-          hideNavBar={false}
           component={ProductClientView}
+          renderBackButton={() => {}}
         />
-        <Scene key="partnerView" hideNavBar={false} component={PartnerView} />
-        <Scene
-          key="promoAndSuges"
-          hideNavBar={false}
-          component={PromoAndSugesClient}
-        />
-        <Scene
-          key="verifyPaymentClient"
-          hideNavBar={false}
-          component={VerifyPaymentClient}
-        />
+        <Scene key="partnerView" component={PartnerView} />
+        <Scene key="promoAndSuges" component={PromoAndSugesClient} />
+        <Scene key="verifyPaymentClient" component={VerifyPaymentClient} />
       </Scene>
     </Router>
   );

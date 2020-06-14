@@ -28,11 +28,9 @@ import Products from '../components/Products';
 class ProductClientView extends Component {
   constructor(props) {
     super(props);
+    console.log(props.product);
     this.state = {
-      product: this.props.product,
-    };
-    this.state = {
-      cantidad: '',
+      product: props.product,
     };
   }
 

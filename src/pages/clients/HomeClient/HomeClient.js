@@ -59,9 +59,7 @@ class HomeClientView extends Component {
             </HomeSection>
           </ScrollView>
         </Header>
-        <SafeAreaView style={styles.menutab}>
-          <TabMenuIcons />
-        </SafeAreaView>
+        <TabMenuIcons />
       </View>
     );
   }

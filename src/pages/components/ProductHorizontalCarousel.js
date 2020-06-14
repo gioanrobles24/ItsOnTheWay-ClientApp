@@ -6,10 +6,15 @@ import {ProductCard} from './ProductCard';
 export const image = {uri: 'http://dev.itsontheway.net/api/parnetBanner1'};
 
 class Recomendations extends Component {
-  ThisPartnerView(id) {
-    let p_id = id;
-
-    Actions.partnerView({p_id});
+  goToPartner(product) {
+    Actions.productView({
+      product,
+      onBack: () => {
+        Actions.replace('partnerView', {
+          p_id: product.prod_partner_id,
+        });
+      },
+    });
   }
 
   render() {
@@ -19,7 +24,7 @@ class Recomendations extends Component {
           {this.props.products.map(product => (
             <ProductCard
               product={product}
-              onPress={() => this.ThisPartnerView(product.prod_partner_id)}
+              onPress={() => this.goToPartner(product)}
               key={product.prod_name}
             />
           ))}
