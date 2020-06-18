@@ -25,6 +25,7 @@ import {Provider} from 'react-redux';
 import store from '../../store';
 import {connect} from 'react-redux';
 import Products from '../components/Products';
+
 class ProductClientView extends Component {
   constructor(props) {
     super(props);

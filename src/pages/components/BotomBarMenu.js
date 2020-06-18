@@ -49,7 +49,7 @@ const PayBoton = props => (
 
 const mapStateToProps = state => {
   return {
-    cartItems: state,
+    cartItems: state.cart,
   };
 };
 

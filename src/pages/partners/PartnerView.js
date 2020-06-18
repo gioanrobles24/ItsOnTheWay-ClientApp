@@ -44,6 +44,7 @@ class PartnerView extends Component {
     )
       .then(response => response.json())
       .then(responseData => {
+        console.log(responseData)
         if (responseData.error) {
           alert(' por favor intenta nuevamente');
         } else {
@@ -115,6 +116,7 @@ const mapDispatchToProps = dispatch => {
     addItemToCart: product => dispatch({type: 'ADD_TO_CART', payload: product}),
   };
 };
+
 export default connect(
   null,
   mapDispatchToProps,

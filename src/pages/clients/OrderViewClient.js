@@ -36,6 +36,7 @@ class OrderViewClient extends Component {
   }
 
   ratingCompleted(rating) {}
+
   goTypePayment() {
     let pedido = this.props.cartItems;
     Actions.paymentType({pedido});
@@ -50,7 +51,7 @@ class OrderViewClient extends Component {
 
         <View style={styles.containerProd}>
           <Text style={styles.SubTitle} h1>
-            Listado de productos:{' '}
+            Listado de productos:
           </Text>
 
           {this.props.cartItems.length > 0 ? (
@@ -97,8 +98,8 @@ class OrderViewClient extends Component {
 
 const mapStateToProps = state => {
   return {
-    cartItems: state,
-    client_info: state,
+    cartItems: state.cart,
+    client_info: state.session,
   };
 };
 
