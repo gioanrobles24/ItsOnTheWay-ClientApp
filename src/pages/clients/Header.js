@@ -10,6 +10,7 @@ import {
 import {Icon, Image, Input, Avatar} from 'react-native-elements';
 import MenuDrawer from 'react-native-side-drawer';
 import {} from 'react-native-gesture-handler';
+import {Actions} from 'react-native-router-flux';
 
 const image = {uri: 'http://dev.itsontheway.net/api/parnetBanner1'};
 
@@ -134,16 +135,10 @@ function SidebarMenu(props) {
             color="#bdbfc1"
             iconStyle={styles.menubarIconRight}
             onPress={() => {
-              this.alladdress();
+              Actions.addressClient();
             }}
           />
-          <Text
-            style={styles.menubarItemText}
-            onPress={() => {
-              this.alladdress();
-            }}>
-            Mis dirreciones
-          </Text>
+          <Text style={styles.menubarItemText}>Mis dirreciones</Text>
           <Icon
             name="chevron-right"
             type="evilicon"

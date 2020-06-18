@@ -4,15 +4,10 @@ import {
   Text,
   View,
   TextInput,
-  Button,
   TouchableHighlight,
-  Image,
   Alert,
-  Switch,
-  ToastAndroid,
-  BackHandler,
-  AsyncStorage,
 } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 import {Actions} from 'react-native-router-flux';
 import {Icon, Avatar, Badge, withBadge} from 'react-native-elements';
 import {createStackNavigator} from 'react-navigation';

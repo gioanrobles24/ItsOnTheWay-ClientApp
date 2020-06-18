@@ -18,6 +18,7 @@ class Recomendations extends Component {
   }
 
   render() {
+    console.log(this.props.products);
     return (
       <View style={styles.container}>
         <ScrollView horizontal={true}>
@@ -25,7 +26,7 @@ class Recomendations extends Component {
             <ProductCard
               product={product}
               onPress={() => this.goToPartner(product)}
-              key={product.prod_name}
+              key={product.id}
             />
           ))}
         </ScrollView>

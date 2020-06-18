@@ -13,13 +13,14 @@ import VerifyClient from './pages/clients/VerifyClient';
 import NewAddressClient from './pages/clients/newAddressClient';
 import PaymentTypeClient from './pages/clients/PaymentType';
 
+import {BackHandler, Alert} from 'react-native';
 import ProductClientView from './pages/clients/productView';
 import PartnerView from './pages/partners/PartnerView';
 import PromoAndSugesClient from './pages/clients/PromosAndSuges';
 import VerifyPaymentClient from './pages/clients/VeryfyPayment';
-import {AsyncStorage, BackHandler} from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 import {setUser} from './reducers/session';
-import {connect} from 'react-redux';
+import {connect, useDispatch} from 'react-redux';
 import {Header} from './pages/clients/Header';
 
 class Routes extends Component {
@@ -99,10 +100,19 @@ const UnauthApp = props => {
 };
 
 const AuthApp = props => {
+  const dispatch = useDispatch();
+
   return (
     <Router navBarButtonColor="#a9d046" backAndroidHandler={backAction}>
       <Scene key="root">
-        <Scene key="homeClient" hideNavBar component={HomeClient} />
+        <Scene
+          key="homeClient"
+          hideNavBar
+          component={HomeClient}
+          onEnter={() => {
+            dispatch({type: 'CLEAR_CART'});
+          }}
+        />
         <Scene
           key="searchStoreType"
           component={SearchStoreType}
@@ -125,10 +135,4 @@ const AuthApp = props => {
       </Scene>
     </Router>
   );
-};
-
-const styles = {
-  barButtonIconStyle: {
-    tintColor: '#a9d046',
-  },
 };

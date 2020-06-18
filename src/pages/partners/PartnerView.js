@@ -44,7 +44,7 @@ class PartnerView extends Component {
     )
       .then(response => response.json())
       .then(responseData => {
-        console.log(responseData)
+        console.log(responseData);
         if (responseData.error) {
           alert(' por favor intenta nuevamente');
         } else {
@@ -85,6 +85,7 @@ class PartnerView extends Component {
           <View style={styles.productscontainer}>
             {this.state.partner_products.map(item => (
               <TouchableHighlight
+                key={item.id}
                 underlayColor="transparent"
                 onPress={() => this.productView(item)}>
                 <Card containerStyle={styles.cardOrder}>

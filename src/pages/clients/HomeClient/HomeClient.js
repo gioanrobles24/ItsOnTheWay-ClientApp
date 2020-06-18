@@ -70,6 +70,7 @@ const mapDispatchToProps = dispatch => {
     client_info: client_info =>
       dispatch({type: 'ADD_USER_INFO', payload: client_info}),
     logout: () => dispatch(unsetUser()),
+    clearCart: () => dispatch({type: 'CLEAR_CART'}),
   };
 };
 const mapStateToProps = (state, ownProps) => {
