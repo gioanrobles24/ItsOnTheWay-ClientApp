@@ -89,7 +89,15 @@ class PartnerView extends Component {
                 underlayColor="transparent"
                 onPress={() => this.productView(item)}>
                 <Card containerStyle={styles.cardOrder}>
-                  <Avatar rounded size="large" source={image} />
+                  <Avatar
+                    rounded
+                    size="large"
+                    source={{
+                      uri: `http://dev.itsontheway.net/images/productos/${
+                        item.prod_partner_id
+                      }/${item.prod_image}`,
+                    }}
+                  />
                   <Text style={styles.cardOrderSubTitle}>{item.prod_name}</Text>
                   <Text style={styles.cardOrderSubTitle}>
                     Bs.: {item.prod_price_bs}
