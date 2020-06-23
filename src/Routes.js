@@ -22,6 +22,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import {setUser} from './reducers/session';
 import {connect, useDispatch} from 'react-redux';
 import {Header} from './pages/clients/Header';
+import {changeDollarPrice} from './reducers/dollarPrice';
 
 class Routes extends Component {
   constructor() {
@@ -111,6 +112,12 @@ const AuthApp = props => {
           component={HomeClient}
           onEnter={() => {
             dispatch({type: 'CLEAR_CART'});
+            fetch('http://dev.itsontheway.net/api/currency_value')
+              .then(response => response.json())
+              .then(dollar => {
+                console.log(dollar);
+                dispatch(changeDollarPrice(dollar.response.c_price.cur_value));
+              });
           }}
         />
         <Scene

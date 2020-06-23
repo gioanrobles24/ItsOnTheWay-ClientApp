@@ -24,11 +24,22 @@ const image = {uri: 'http://dev.itsontheway.net/api/imgBlanca'};
 export default class AllmyOrdersClientView extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      addresses: [],
+    };
   }
 
   newAddress = viewId => {
     Actions.newAddressClient();
   };
+
+  componentDidMount() {
+    fetch('http://dev.itsontheway.net/api/clients/address_client/1')
+      .then(resp => resp.json())
+      .then(resp => {
+        this.setState({addresses: resp.response.address_client});
+      });
+  }
 
   render() {
     return (
@@ -56,11 +67,13 @@ export default class AllmyOrdersClientView extends Component {
           />
         </View>
         <View>
-          <ScrollView>
-            <View style={styles.addressContainer}>
-              <Text style={styles.SubTitle}>Dirección:</Text>
-              <Text style={styles.Text}>Descripción dirección</Text>
-            </View>
+          <ScrollView style={{paddingHorizontal: 25}}>
+            {this.state.addresses.map(addr => (
+              <View style={styles.addressContainer}>
+                <Text style={styles.SubTitle}>{addr.zone_name}</Text>
+                <Text style={styles.Text}>{addr.description}</Text>
+              </View>
+            ))}
           </ScrollView>
         </View>
       </View>
@@ -70,13 +83,14 @@ export default class AllmyOrdersClientView extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 0.4,
-    justifyContent: 'center',
+    flex: 1,
+    marginTop: 25,
     backgroundColor: 'white',
     fontFamily: 'QUICKSAND-LIGHT',
   },
 
   addressContainer: {
+    marginTop: 5,
     flexDirection: 'column',
     borderBottomWidth: 1,
     borderBottomColor: '#bdbfc1',
@@ -86,20 +100,19 @@ const styles = StyleSheet.create({
   },
   SubTitle: {
     fontSize: 15,
-    marginLeft: 10,
     fontWeight: 'bold',
   },
   Text: {
-    color: '#bdbfc1',
+    // color: '#bdbfc1',
   },
   header: {
     flexDirection: 'row',
-    marginTop: 50,
+    // marginTop: 50,
   },
   Title: {
     fontSize: 25,
     color: '#373535',
-    marginLeft: 20,
+    marginLeft: 25,
     fontWeight: 'bold',
   },
   container1: {

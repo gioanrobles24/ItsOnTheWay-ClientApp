@@ -16,7 +16,6 @@ import {Actions} from 'react-native-router-flux';
 import {AirbnbRating, Rating} from 'react-native-ratings';
 import {Badge, Avatar, Card} from 'react-native-elements';
 // const image = { uri: "http://dev.itsontheway.net/api/parnetBanner" }
-import Products from '../components/Products';
 import PayBoton from '../components/BotomBarMenu';
 import {Provider} from 'react-redux';
 import store from '../../store';

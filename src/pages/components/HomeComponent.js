@@ -38,7 +38,6 @@ import BottomBarMenu from '../components/BotomBarMenu';
 import {Provider} from 'react-redux';
 import store from '../../store';
 import {connect} from 'react-redux';
-import Products from '../components/Products';
 import Recomedantions from './ProductHorizontalCarousel';
 import TabMenuIcons from '../components/TabMenuIcons';
 import {electronics} from '../components/Data';

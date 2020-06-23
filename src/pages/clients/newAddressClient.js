@@ -19,13 +19,15 @@ import {Icon, Avatar, Badge, withBadge} from 'react-native-elements';
 import {createStackNavigator} from 'react-navigation';
 import RNPickerSelect from 'react-native-picker-select';
 import {Card} from 'react-native-shadow-cards';
+import {connect} from 'react-redux';
 const image = {uri: 'http://dev.itsontheway.net/api/imgBlanca'};
 
-export default class NewAddressClientView extends Component {
+class NewAddressClientView extends Component {
   constructor(props) {
     super(props);
     //  this.toggleSwitch = this.toggleSwitch.bind(this);
     this.state = {
+      zones: [],
       items: [
         {
           label: 'Aragua',
@@ -43,20 +45,69 @@ export default class NewAddressClientView extends Component {
     };
   }
 
+  componentDidMount() {
+    fetch('http://dev.itsontheway.net/api/aviable_zones')
+      .then(resp => resp.json())
+      .then(resp => this.setState({zones: resp.response.zones_aviables}));
+  }
+
   newAddress = viewId => {
-    Alert.alert(
-      'Hola! Por favor confirma: ',
-      '¿Estás seguro agregar esta dirección?',
-      [
-        {
-          text: 'Cancelar',
-          onPress: () => console.log('Cancel Pressed'),
-          style: 'cancel',
-        },
-        {text: 'Si', onPress: () => Actions.homeClient()},
-      ],
-      {cancelable: false},
-    );
+    const {zone, description} = this.state;
+    if (zone && description) {
+      console.log(this.props.user);
+      console.log({
+        description,
+        cl_id: parseInt(this.props.user.response.client_info.id, 10),
+        mun_id: parseInt(this.state.zones.find(z => z.id === zone).mun_id, 10),
+        zone_id: parseInt(zone, 10),
+      });
+      Alert.alert(
+        'Hola! Por favor confirma: ',
+        '¿Estás seguro agregar esta dirección?',
+        [
+          {
+            text: 'Cancelar',
+            onPress: () => console.log('Cancel Pressed'),
+            style: 'cancel',
+          },
+          {
+            text: 'Si',
+            onPress: () => {
+              fetch(
+                'http://dev.itsontheway.net/api/clients/new_address_client',
+                {
+                  method: 'POST',
+                  headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                    body: JSON.stringify({
+                      description,
+                      cl_id: parseInt(
+                        this.props.user.response.client_info.id,
+                        10,
+                      ),
+                      mun_id: parseInt(
+                        this.state.zones.find(z => z.id === zone).mun_id,
+                        10,
+                      ),
+                      zone_id: parseInt(zone, 10),
+                    }),
+                  },
+                },
+              )
+                .then(resp => {
+                  return resp.json();
+                  // Actions.homeClient();
+                })
+                .then(console.log);
+            },
+          },
+        ],
+        {cancelable: false},
+      );
+    } else {
+      Alert.alert('Selecciona una zona y escribe la descripcion');
+    }
   };
 
   render() {
@@ -66,34 +117,39 @@ export default class NewAddressClientView extends Component {
           <Text style={styles.Title}>Agregar Dirección</Text>
         </View>
 
-        <RNPickerSelect
-          placeholder={{
-            label: 'Seleciona una parroquia',
-            value: null,
-          }}
-          items={this.state.items}
-          onValueChange={value => {
-            this.setState({
-              favColor: value,
-            });
-          }}
-          style={{marginLeft: 10, marginTop: 50}}
-          value={this.state.favColor}
-          useNativeAndroidPickerStyle={true}
-          hideIcon={true}
-        />
         <View style={styles.inputContainer}>
-          <TextInput
+          <RNPickerSelect
+            placeholder={{
+              label: 'Seleciona una zona`',
+            }}
+            items={this.state.zones.map(z => ({
+              label: z.zone_name,
+              value: z.id,
+            }))}
+            onValueChange={value => {
+              this.setState({
+                zone: value,
+              });
+            }}
+            style={{placeholder: {color: 'black'}}}
+            // useNativeAndroidPickerStyle={true}
+            hideIcon={true}
+          />
+        </View>
+        <Text style={{marginHorizontal: 25, color: '#bdbfc1'}}>
+          Solo enviamos a las zonas listadas
+        </Text>
+        {/* <TextInput
             style={styles.inputs}
             placeholderTextColor="gray"
             placeholder="Zona"
-          />
-        </View>
+          /> */}
         <View style={styles.inputContainer}>
           <TextInput
             style={styles.inputs}
             placeholderTextColor="gray"
             placeholder="Descripción de dirección"
+            onChangeText={value => this.setState({description: value})}
           />
         </View>
 
@@ -108,6 +164,17 @@ export default class NewAddressClientView extends Component {
     );
   }
 }
+
+const mapStateToProps = (state, ownProps) => {
+  return {
+    user: state.session.user,
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  null,
+)(NewAddressClientView);
 
 const styles = StyleSheet.create({
   container: {
@@ -135,15 +202,14 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     borderBottomColor: '#bdbfc1',
-    backgroundColor: '#FFFFFF',
-    borderRadius: 30,
     borderBottomWidth: 1,
-    width: 400,
-    flexDirection: 'row',
+    marginHorizontal: 20,
+    marginVertical: 10,
   },
   inputs: {
     marginLeft: 12,
-    borderBottomColor: '#FFFFFF',
+    color: 'black',
+    // borderBottomColor: '#FFFFFF',
   },
   buttonContainer: {
     height: 45,

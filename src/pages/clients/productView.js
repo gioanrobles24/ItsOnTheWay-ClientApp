@@ -24,7 +24,7 @@ const image = {uri: 'http://dev.itsontheway.net/api/imgBlanca'};
 import {Provider} from 'react-redux';
 import store from '../../store';
 import {connect} from 'react-redux';
-import Products from '../components/Products';
+import Product from '../components/Product/Product';
 
 class ProductClientView extends Component {
   constructor(props) {
@@ -37,12 +37,10 @@ class ProductClientView extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <Products
-          products={this.state.product}
-          onPress={this.props.addItemToCart}
-        />
-      </View>
+      <Product
+        products={this.state.product}
+        onPress={this.props.addItemToCart}
+      />
     );
   }
 }
