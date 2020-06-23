@@ -54,13 +54,6 @@ class NewAddressClientView extends Component {
   newAddress = viewId => {
     const {zone, description} = this.state;
     if (zone && description) {
-      console.log(this.props.user);
-      console.log({
-        description,
-        cl_id: parseInt(this.props.user.response.client_info.id, 10),
-        mun_id: parseInt(this.state.zones.find(z => z.id === zone).mun_id, 10),
-        zone_id: parseInt(zone, 10),
-      });
       Alert.alert(
         'Hola! Por favor confirma: ',
         '¿Estás seguro agregar esta dirección?',
@@ -73,6 +66,13 @@ class NewAddressClientView extends Component {
           {
             text: 'Si',
             onPress: () => {
+              const body = JSON.stringify({
+                description,
+                cl_id: this.props.user.response.client_info.id,
+                mun_id: this.state.zones.find(z => z.id === zone).mun_id,
+                zone_id: zone.toString(),
+              });
+
               fetch(
                 'http://dev.itsontheway.net/api/clients/new_address_client',
                 {
@@ -80,26 +80,15 @@ class NewAddressClientView extends Component {
                   headers: {
                     Accept: 'application/json',
                     'Content-Type': 'application/json',
-                    body: JSON.stringify({
-                      description,
-                      cl_id: parseInt(
-                        this.props.user.response.client_info.id,
-                        10,
-                      ),
-                      mun_id: parseInt(
-                        this.state.zones.find(z => z.id === zone).mun_id,
-                        10,
-                      ),
-                      zone_id: parseInt(zone, 10),
-                    }),
                   },
+                  body: body,
                 },
               )
                 .then(resp => {
                   return resp.json();
                   // Actions.homeClient();
                 })
-                .then(console.log);
+                .then(() => Actions.addressClient());
             },
           },
         ],
