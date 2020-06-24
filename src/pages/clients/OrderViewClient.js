@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import {AirbnbRating, Rating} from 'react-native-ratings';
-import {Badge, Avatar} from 'react-native-elements';
+import {Badge, Avatar, ListItem} from 'react-native-elements';
 const image = {uri: 'http://dev.itsontheway.net/api/parnetBanner'};
 import {Card} from 'react-native-shadow-cards';
 import RNPickerSelect from 'react-native-picker-select';
@@ -87,7 +87,7 @@ class OrderViewClient extends Component {
         </View>
         <View style={styles.containerProd2}>
           <Text style={styles.SubTitle} h1>
-            Dirección de pedido:{' '}
+            Dirección de pedido:
           </Text>
           <RNPickerSelect
             placeholder={{
@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
     // justifyContent: "center",
   },
   containerProd: {
-    flex: 0.8,
+    flex: 1,
     // alignItems: "center",
     // justifyContent: "center",
   },

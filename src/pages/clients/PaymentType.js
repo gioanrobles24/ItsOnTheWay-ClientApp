@@ -1,34 +1,27 @@
 import React, {Component} from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  TextInput,
-  Button,
-  TouchableHighlight,
-  Image,
-  Alert,
-  Switch,
-  ToastAndroid,
-  BackHandler,
-} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import {Actions} from 'react-native-router-flux';
-import {Icon, Avatar, Badge, withBadge, CheckBox} from 'react-native-elements';
-import {createStackNavigator} from 'react-navigation';
+import {CheckBox, ListItem} from 'react-native-elements';
+import {connect} from 'react-redux';
 
-export default class PaymentTypeClientView extends Component {
+class PaymentTypeClientView extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      transfchecked: '',
-      pagomchecked: '',
-      zellechecked: '',
-      tddchecked: '',
-      total_price: this.props.pedido.prod_price_bs,
+      deliveryPrice: null,
+      loading: true,
     };
-    state = {
-      email: '',
-    };
+  }
+
+  componentDidMount() {
+    fetch('http://dev.itsontheway.net/api/delivery_price')
+      .then(resp => resp.json())
+      .then(resp => {
+        this.setState({
+          deliveryPrice: parseFloat(resp.response.d_price.delivery_price),
+          loading: false,
+        });
+      });
   }
 
   VerifyPaymentClient = viewId => {
@@ -38,12 +31,72 @@ export default class PaymentTypeClientView extends Component {
     Actions.verifyPaymentClient({pedido, opType});
   };
 
+  getProductPrice(item) {
+    let extraPrice = 0;
+    item.extras.forEach(e => {
+      extraPrice += parseFloat(e.extra_price_usd);
+    });
+    return (
+      (parseFloat(item.prod_price_usd) + extraPrice) *
+      item.quantity *
+      this.props.dollarPrice
+    );
+  }
+
+  getSubTotal() {
+    let price = 0;
+    this.props.cartItems.forEach(item => {
+      price += this.getProductPrice(item);
+    });
+    return price;
+  }
+
   render() {
     return (
       <View style={styles.container}>
         <View style={styles.header}>
           <Text style={styles.Title}>Método de pago</Text>
         </View>
+        <View>
+          {this.props.cartItems.map(item => (
+            <ListItem
+              title={`${item.quantity} ${item.prod_name}`}
+              bottomDivider
+              rightContentContainerStyle={{flex: 1}}
+              rightTitle={`BsS. ${this.getProductPrice(
+                item,
+              )} ($${this.getProductPrice(item) / this.props.dollarPrice})`}
+            />
+          ))}
+          <ListItem
+            titleStyle={{fontWeight: 'bold'}}
+            rightTitleStyle={{fontWeight: 'bold'}}
+            rightContentContainerStyle={{flex: 1}}
+            bottomDivider
+            title="Sub Total"
+            rightTitle={`BsS. ${this.getSubTotal()} ($${this.getSubTotal() /
+              this.props.dollarPrice})`}
+          />
+          <ListItem
+            bottomDivider
+            rightContentContainerStyle={{flex: 1}}
+            title="Delivery"
+            rightTitle={`BsS. ${this.state.deliveryPrice *
+              this.props.dollarPrice} ($${this.state.deliveryPrice})`}
+          />
+          <ListItem
+            bottomDivider
+            titleStyle={{fontWeight: 'bold'}}
+            rightTitleStyle={{fontWeight: 'bold'}}
+            rightContentContainerStyle={{flex: 1}}
+            title="Total"
+            rightTitle={`BsS. ${this.state.deliveryPrice *
+              this.props.dollarPrice +
+              this.getSubTotal()} ($${this.state.deliveryPrice +
+              this.getSubTotal() / this.props.dollarPrice})`}
+          />
+        </View>
+
         <View style={styles.platformsContainer}>
           <View style={styles.platformName}>
             <Text>1. Transferencia</Text>
@@ -100,6 +153,17 @@ export default class PaymentTypeClientView extends Component {
     );
   }
 }
+const mapStateToProps = state => {
+  return {
+    cartItems: state.cart,
+    client_info: state.session,
+    dollarPrice: state.dollarPrice.price,
+  };
+};
+export default connect(
+  mapStateToProps,
+  null,
+)(PaymentTypeClientView);
 
 const styles = StyleSheet.create({
   container: {
