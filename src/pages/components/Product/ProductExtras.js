@@ -1,9 +1,11 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Text, View, ScrollView, TouchableOpacity} from 'react-native';
 import {CheckBox} from 'react-native-elements';
 import faker from 'faker';
 import {styles} from './styles';
-export function ProductExtras({title}) {
+import {onChange} from 'react-native-reanimated';
+export function ProductExtras({title, extras, onChange, radio}) {
+  const [selected, setSelected] = useState([]);
   return (
     <View style={{maxHeight: 250}}>
       <Text
@@ -13,9 +15,28 @@ export function ProductExtras({title}) {
         {title}
       </Text>
       <ScrollView nestedScrollEnabled={true}>
-        {[0, 1].map(extra => (
+        {extras.map(extra => (
           <TouchableOpacity
-            key={extra}
+            onPress={() => {
+              if (radio) {
+                setSelected(extra);
+                onChange(extra);
+              } else {
+                const filtered = selected.filter(
+                  s => s.extra_id !== extra.extra_id,
+                );
+
+                if (filtered.length !== selected.length) {
+                  setSelected(filtered);
+                  onChange(filtered);
+                } else {
+                  if (!radio) filtered.push(extra);
+                  setSelected(filtered);
+                  onChange(filtered);
+                }
+              }
+            }}
+            key={extra.extra_id}
             style={{
               borderBottomWidth: 1,
               borderBottomColor: '#dedede',
@@ -24,9 +45,14 @@ export function ProductExtras({title}) {
               flexDirection: 'row',
             }}>
             <Text style={{...styles.bodyText, alignSelf: 'center'}}>
-              {faker.commerce.productAdjective()}
+              {extra.extra_name}
             </Text>
             <CheckBox
+              checked={
+                !radio
+                  ? selected.find(s => s.extra_id === extra.extra_id)
+                  : selected.extra_id === extra.extra_id
+              }
               containerStyle={{alignSelf: 'flex-end', paddingVertical: 1}}
               right
             />

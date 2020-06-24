@@ -16,6 +16,7 @@ import {AirbnbRating, Rating} from 'react-native-ratings';
 import {Badge, Avatar} from 'react-native-elements';
 const image = {uri: 'http://dev.itsontheway.net/api/parnetBanner'};
 import {Card} from 'react-native-shadow-cards';
+import RNPickerSelect from 'react-native-picker-select';
 
 import store from '../../store';
 import {connect} from 'react-redux';
@@ -26,20 +27,32 @@ import HomeInfo from '../components/HomeComponent';
 class OrderViewClient extends Component {
   constructor(props) {
     super(props);
-
-    this.state = {};
-
-    state = {
-      ord_description: '',
-      ord_address: '',
+    this.state = {
+      addresses: [],
     };
+  }
+  componentDidMount() {
+    fetch(
+      `http://dev.itsontheway.net/api/clients/address_client/${
+        this.props.client_info.user.response.client_info.id
+      }`,
+    )
+      .then(resp => resp.json())
+      .then(resp => {
+        console.log(resp.response.address_client);
+        this.setState({addresses: resp.response.address_client});
+      });
   }
 
   ratingCompleted(rating) {}
 
   goTypePayment() {
-    let pedido = this.props.cartItems;
-    Actions.paymentType({pedido});
+    if (this.state.address) {
+      let pedido = this.props.cartItems;
+      Actions.paymentType({pedido});
+    } else {
+      Alert.alert('Selecciona una direccion');
+    }
   }
 
   render() {
@@ -62,7 +75,7 @@ class OrderViewClient extends Component {
         </View>
         <View style={styles.containerProd2}>
           <Text style={styles.SubTitle} h1>
-            Nota de pedido:{' '}
+            Nota de pedido:
           </Text>
           <TextInput
             style={styles.inputs}
@@ -76,12 +89,22 @@ class OrderViewClient extends Component {
           <Text style={styles.SubTitle} h1>
             Dirección de pedido:{' '}
           </Text>
-          <TextInput
-            style={styles.inputs}
-            placeholder="Coloca una Dirección"
-            keyboardType="Text"
-            underlineColorAndroid="transparent"
-            onChangeText={ord_address => this.setState({ord_address})}
+          <RNPickerSelect
+            placeholder={{
+              label: 'Seleciona una direccion`',
+            }}
+            items={this.state.addresses.map(z => ({
+              label: `${z.zone_name} ${z.description}`,
+              value: z.zone_id,
+            }))}
+            onValueChange={value => {
+              this.setState({
+                address: value,
+              });
+            }}
+            style={{placeholder: {color: 'black'}}}
+            // useNativeAndroidPickerStyle={true}
+            hideIcon={true}
           />
         </View>
         <TouchableHighlight

@@ -11,6 +11,8 @@ import {Icon, Image, Input, Avatar} from 'react-native-elements';
 import MenuDrawer from 'react-native-side-drawer';
 import {} from 'react-native-gesture-handler';
 import {Actions} from 'react-native-router-flux';
+import {useDispatch} from 'react-redux';
+import {unsetUser} from '../../reducers/session';
 
 const image = {uri: 'http://dev.itsontheway.net/api/parnetBanner1'};
 
@@ -65,6 +67,7 @@ export function Header(props) {
 }
 
 function SidebarMenu(props) {
+  const dispatch = useDispatch();
   return (
     <View style={styles.animatedMenuBox}>
       <TouchableOpacity
@@ -153,7 +156,7 @@ function SidebarMenu(props) {
         <TouchableHighlight
           style={[styles.salirboton, styles.salirbotonButton]}
           onPress={() => {
-            this.props.logout();
+            dispatch(unsetUser());
           }}>
           <Text style={styles.salirbotonText}>Salir</Text>
         </TouchableHighlight>

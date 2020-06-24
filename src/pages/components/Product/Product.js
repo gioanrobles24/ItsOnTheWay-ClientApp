@@ -1,4 +1,4 @@
-import React, {Component, useState} from 'react';
+import React, {Component, useState, useEffect} from 'react';
 import {View, ScrollView, Alert, TouchableHighlight, Text} from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import {Input, Icon, Button} from 'react-native-elements';
@@ -12,11 +12,50 @@ import {useDispatch} from 'react-redux';
 function ProductDetail(props) {
   const {products: product} = props;
   const [qty, setQuantity] = useState(1);
+  const [extras, setExtras] = useState([]);
+  const [selectedExtras, setSelectedExtras] = useState([]);
+  const [sizes, setSizes] = useState([]);
+  const [selectedSize, setSelectedSize] = useState(null);
+  console.log(qty);
+
   const dispatch = useDispatch();
   const [comment, setComment] = useState('');
 
+  useEffect(() => {
+    fetch(
+      `http://dev.itsontheway.net/api/clients/products_extras/${product.id}`,
+    )
+      .then(resp => resp.json())
+      .then(resp => {
+        console.log(resp.response.prod_extras);
+        const extras = [];
+        const sizes = [];
+        if (!resp.error) {
+          resp.response.prod_extras.forEach(e => {
+            if (e.extra_type === '1') {
+              sizes.push(e);
+            } else {
+              extras.push(e);
+            }
+          });
+          setSizes(sizes);
+          setExtras(extras);
+        }
+      });
+  }, [product.id]);
+
   function onAddPress() {
-    dispatch({type: 'ADD_TO_CART', payload: product});
+    dispatch({
+      type: 'ADD_TO_CART',
+      payload: {
+        ...product,
+        extras: selectedSize
+          ? [...selectedExtras, selectedSize]
+          : selectedExtras,
+        quantity: qty,
+        comment,
+      },
+    });
     Alert.alert(
       'Producto Agregado',
       '¿Que deseas hacer?',
@@ -38,8 +77,17 @@ function ProductDetail(props) {
         <View style={styles.container}>
           <ProductDetailHeader title={product.prod_name} />
           <ProductCounter quantity={qty} onChange={setQuantity} />
-          <ProductExtras title="Presentaciones" />
-          <ProductExtras title="Extras" />
+          <ProductExtras
+            title="Presentaciones"
+            extras={sizes}
+            onChange={setSelectedSize}
+            radio
+          />
+          <ProductExtras
+            title="Extras"
+            extras={extras}
+            onChange={setSelectedExtras}
+          />
           <View>
             <Input
               containerStyle={{paddingHorizontal: 0, marginVertical: 30}}
@@ -52,7 +100,13 @@ function ProductDetail(props) {
         </View>
       </ScrollView>
       <View style={{marginBottom: 30}}>
-        <ProductPrice product={product} />
+        <ProductPrice
+          product={product}
+          extras={
+            selectedSize ? [...selectedExtras, selectedSize] : selectedExtras
+          }
+          quantity={qty}
+        />
         <TouchableHighlight
           style={[styles.buttonContainer, styles.loginButton]}
           onPress={onAddPress}>

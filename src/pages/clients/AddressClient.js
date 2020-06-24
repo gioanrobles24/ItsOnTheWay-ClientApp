@@ -1,27 +1,11 @@
 import React, {Component} from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  TextInput,
-  Button,
-  ScrollView,
-  TouchableHighlight,
-  Image,
-  Alert,
-  Switch,
-  ToastAndroid,
-  BackHandler,
-  Picker,
-} from 'react-native';
+import {StyleSheet, Text, View, ScrollView} from 'react-native';
 import {Actions} from 'react-native-router-flux';
-import {Icon, Avatar, Badge, withBadge} from 'react-native-elements';
-import {createStackNavigator} from 'react-navigation';
-import RNPickerSelect from 'react-native-picker-select';
-import {Card} from 'react-native-shadow-cards';
+import {Icon} from 'react-native-elements';
+import {connect} from 'react-redux';
 const image = {uri: 'http://dev.itsontheway.net/api/imgBlanca'};
 
-export default class AllmyOrdersClientView extends Component {
+class AllmyOrdersClientView extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -34,7 +18,11 @@ export default class AllmyOrdersClientView extends Component {
   };
 
   componentDidMount() {
-    fetch('http://dev.itsontheway.net/api/clients/address_client/1')
+    fetch(
+      `http://dev.itsontheway.net/api/clients/address_client/${
+        this.props.user.response.client_info.id
+      }`,
+    )
       .then(resp => resp.json())
       .then(resp => {
         this.setState({addresses: resp.response.address_client});
@@ -80,6 +68,17 @@ export default class AllmyOrdersClientView extends Component {
     );
   }
 }
+
+const mapStateToProps = (state, ownProps) => {
+  return {
+    user: state.session.user,
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  null,
+)(AllmyOrdersClientView);
 
 const styles = StyleSheet.create({
   container: {

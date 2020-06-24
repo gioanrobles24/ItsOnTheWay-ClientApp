@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {
   View,
   Text,
@@ -18,18 +18,12 @@ import {
   Input,
   Card,
 } from 'react-native-elements';
-const image = { uri: 'http://dev.itsontheway.net/api/parnetBanner1' };
-import { AirbnbRating } from 'react-native-ratings';
-import { Actions } from 'react-native-router-flux';
-import { connect } from 'react-redux';
+const image = {uri: 'http://dev.itsontheway.net/api/parnetBanner1'};
+import {AirbnbRating} from 'react-native-ratings';
+import {Actions} from 'react-native-router-flux';
+import {connect} from 'react-redux';
 
 class ProductsInCart extends Component {
-  ThisPartnerView(id) {
-    let p_id = id;
-
-    Actions.partnerView({ p_id });
-  }
-
   confirmRemoveProduct(product) {
     Alert.alert(
       'Eliminar Producto',
@@ -40,9 +34,12 @@ class ProductsInCart extends Component {
           onPress: () => {},
           style: 'cancel',
         },
-        {text: 'Si', onPress: () => {
-          this.props.removeProduct(product)
-        }},
+        {
+          text: 'Si',
+          onPress: () => {
+            this.props.removeProduct(product);
+          },
+        },
       ],
       {cancelable: false},
     );
@@ -59,23 +56,27 @@ class ProductsInCart extends Component {
                 marginLeft: 20,
                 marginTop: 30,
               }}
-              imageStyle={{ width: 249, height: 130 }}
-              image={image}>
-              <Text style={{ fontSize: 20, marginLeft: 5 }}>
+              imageStyle={{width: 249, height: 130}}
+              image={{
+                uri: `http://dev.itsontheway.net/images/productos/${
+                  item.prod_partner_id
+                }/${item.prod_image}`,
+              }}>
+              <Text style={{fontSize: 20, marginLeft: 5}}>
                 {item.prod_name}
               </Text>
-              <Text style={{ fontSize: 15, color: '#bdbfc1', marginLeft: 5 }}>
+              <Text style={{fontSize: 15, color: '#bdbfc1', marginLeft: 5}}>
                 {item.partner_user}
               </Text>
 
-              <View style={{ flexDirection: 'row', marginLeft: 5 }}>
+              <View style={{flexDirection: 'row', marginLeft: 5}}>
                 <AirbnbRating
                   isDisabled={true}
                   showRating={false}
                   defaultRating={4}
                   size={15}
-                />  
-                <Text style={{ fontSize: 10, marginLeft: 30 }}>
+                />
+                <Text style={{fontSize: 10, marginLeft: 30}}>
                   Bs.: {item.prod_price_bs}
                 </Text>
                 <Icon
@@ -85,7 +86,7 @@ class ProductsInCart extends Component {
                   color="red"
                   size={20}
                   onPress={() => this.confirmRemoveProduct(item)}
-                  containerStyle={{ position: 'absolute', top: -4, right: -35 }}
+                  containerStyle={{position: 'absolute', top: -4, right: -35}}
                 />
               </View>
             </Card>
@@ -93,7 +94,7 @@ class ProductsInCart extends Component {
         </View>
       );
     });
-  };
+  }
 
   render() {
     return (
@@ -113,8 +114,10 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-
-export default connect(null, mapDispatchToProps)(ProductsInCart)
+export default connect(
+  null,
+  mapDispatchToProps,
+)(ProductsInCart);
 
 const styles = StyleSheet.create({
   container: {
