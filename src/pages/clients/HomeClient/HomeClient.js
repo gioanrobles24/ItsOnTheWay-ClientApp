@@ -44,7 +44,7 @@ class HomeClientView extends Component {
                 </View>
               </SafeAreaView>
             </HomeSection>
-            <HomeSection title="Promociones">
+            {/* <HomeSection title="Promociones">
               <SafeAreaView style={{flex: 1}}>
                 <View
                   style={{
@@ -56,7 +56,7 @@ class HomeClientView extends Component {
                   <Recomedantions products={this.state.products} />
                 </View>
               </SafeAreaView>
-            </HomeSection>
+            </HomeSection> */}
           </ScrollView>
         </Header>
         <TabMenuIcons />

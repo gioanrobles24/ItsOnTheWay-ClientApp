@@ -15,11 +15,17 @@ class PaymentTypeClientView extends Component {
   }
 
   componentDidMount() {
-    fetch('http://dev.itsontheway.net/api/delivery_price')
+    console.log(this.props.address);
+    fetch(
+      `http://dev.itsontheway.net/api/delivery_price/${
+        this.props.address.zone_id
+      }`,
+    )
       .then(resp => resp.json())
       .then(resp => {
+        console.log(resp);
         this.setState({
-          deliveryPrice: parseFloat(resp.response.d_price.delivery_price),
+          deliveryPrice: parseFloat(resp.response.d_price.delivery_price_usd),
           loading: false,
         });
       });

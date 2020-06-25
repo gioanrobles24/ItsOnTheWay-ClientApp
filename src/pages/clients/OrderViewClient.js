@@ -49,7 +49,12 @@ class OrderViewClient extends Component {
   goTypePayment() {
     if (this.state.address) {
       let pedido = this.props.cartItems;
-      Actions.paymentType({pedido});
+      Actions.paymentType({
+        pedido,
+        address: this.state.addresses.find(
+          ad => ad.client_address_id === this.state.address,
+        ),
+      });
     } else {
       Alert.alert('Selecciona una direccion');
     }
@@ -95,7 +100,7 @@ class OrderViewClient extends Component {
             }}
             items={this.state.addresses.map(z => ({
               label: `${z.zone_name} ${z.description}`,
-              value: z.zone_id,
+              value: z.client_address_id,
             }))}
             onValueChange={value => {
               this.setState({
