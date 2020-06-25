@@ -3,6 +3,7 @@ import {StyleSheet, Text, View} from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import {CheckBox, ListItem} from 'react-native-elements';
 import {connect} from 'react-redux';
+import {ScrollView} from 'react-native-gesture-handler';
 
 class PaymentTypeClientView extends Component {
   constructor(props) {
@@ -58,30 +59,34 @@ class PaymentTypeClientView extends Component {
           <Text style={styles.Title}>Método de pago</Text>
         </View>
         <View>
-          {this.props.cartItems.map(item => (
-            <ListItem
-              title={`${item.quantity} ${item.prod_name}`}
-              bottomDivider
-              rightContentContainerStyle={{flex: 1}}
-              rightTitle={`BsS. ${this.getProductPrice(
-                item,
-              )} ($${this.getProductPrice(item) / this.props.dollarPrice})`}
-            />
-          ))}
+          <View style={{maxHeight: 200}}>
+            <ScrollView>
+              {this.props.cartItems.map(item => (
+                <ListItem
+                  title={`${item.quantity} ${item.prod_name}`}
+                  bottomDivider
+                  rightContentContainerStyle={{flex: 1}}
+                  rightTitle={`Bs ${this.getProductPrice(
+                    item,
+                  )} ($${this.getProductPrice(item) / this.props.dollarPrice})`}
+                />
+              ))}
+            </ScrollView>
+          </View>
           <ListItem
             titleStyle={{fontWeight: 'bold'}}
             rightTitleStyle={{fontWeight: 'bold'}}
             rightContentContainerStyle={{flex: 1}}
             bottomDivider
             title="Sub Total"
-            rightTitle={`BsS. ${this.getSubTotal()} ($${this.getSubTotal() /
+            rightTitle={`Bs ${this.getSubTotal()} ($${this.getSubTotal() /
               this.props.dollarPrice})`}
           />
           <ListItem
             bottomDivider
             rightContentContainerStyle={{flex: 1}}
             title="Delivery"
-            rightTitle={`BsS. ${this.state.deliveryPrice *
+            rightTitle={`Bs ${this.state.deliveryPrice *
               this.props.dollarPrice} ($${this.state.deliveryPrice})`}
           />
           <ListItem
@@ -90,7 +95,7 @@ class PaymentTypeClientView extends Component {
             rightTitleStyle={{fontWeight: 'bold'}}
             rightContentContainerStyle={{flex: 1}}
             title="Total"
-            rightTitle={`BsS. ${this.state.deliveryPrice *
+            rightTitle={`Bs ${this.state.deliveryPrice *
               this.props.dollarPrice +
               this.getSubTotal()} ($${this.state.deliveryPrice +
               this.getSubTotal() / this.props.dollarPrice})`}

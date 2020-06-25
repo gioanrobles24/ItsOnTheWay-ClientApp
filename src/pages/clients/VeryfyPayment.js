@@ -12,17 +12,54 @@ import {
   ToastAndroid,
   BackHandler,
   ScrollView,
+  TouchableOpacity,
 } from 'react-native';
 import {Actions} from 'react-native-router-flux';
-import {Icon, Avatar, Badge, withBadge, Card} from 'react-native-elements';
+import {
+  Icon,
+  Avatar,
+  Badge,
+  withBadge,
+  Card,
+  CheckBox,
+} from 'react-native-elements';
 import {createStackNavigator} from 'react-navigation';
 
 export default class VerifyPaymentClientView extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
-    state = {
-      pay_ref: '',
+    this.state = {
+      mobile: [
+        {
+          name: 'Bancaribe o Provincial',
+          phone: '04144537395',
+          ci: '13115089',
+        },
+      ],
+      banks: [
+        {
+          name: 'Bancaribe',
+          cta: '01140205462050035290',
+          type: 'Corriente',
+          titular: 'Luis Emilio Hernandez',
+          ci: '13115089',
+        },
+        {
+          name: 'Mercantil',
+          cta: '0105 0190 380190 133554',
+          type: 'Ahorro',
+          titular: 'Luisa Hernández',
+          ci: '11.987.613',
+        },
+        {
+          name: 'Provincial',
+          cta: '01080157560100055621',
+          type: 'Corriente',
+          titular: 'Carlos Valero Morales',
+          ci: '11.735.524',
+        },
+      ],
+      selectedPayment: null,
     };
   }
 
@@ -69,6 +106,56 @@ export default class VerifyPaymentClientView extends Component {
     ]);
   };
 
+  renderMobile() {
+    return this.state.mobile.map(m => (
+      <>
+        <Text style={styles.loginSubTitle} h1>
+          Pago Movil
+        </Text>
+        <Text style={styles.loginSubTitle} h1>
+          Banco: {m.name}
+        </Text>
+        <Text style={styles.loginSubTitle} h1>
+          N° teléfono: {m.phone}
+        </Text>
+        <Text style={styles.loginSubTitle} h1>
+          N° Cédula: {m.ci}
+        </Text>
+      </>
+    ));
+  }
+
+  renderBanks() {
+    return this.state.banks.map(bank => (
+      <TouchableOpacity
+        onPress={() => this.setState({selectedPayment: bank.name})}>
+        <Card style={{alignItems: 'center', width: 200}}>
+          <Text style={styles.loginSubTitle2} h1>
+            Banco: {bank.name}
+          </Text>
+          <Text style={styles.loginSubTitle2} h1>
+            N° Cta: {bank.cta}
+          </Text>
+          <Text style={styles.loginSubTitle2} h1>
+            Tipo de cuenta: {bank.type}
+          </Text>
+          <Text style={styles.loginSubTitle2} h1>
+            Titular: {bank.titular}
+          </Text>
+          <Text style={styles.loginSubTitle2} h1>
+            N° Cédula: {bank.ci}
+          </Text>
+          <CheckBox
+            checkedIcon="dot-circle-o"
+            uncheckedIcon="circle-o"
+            containerStyle={{alignItems: 'flex-end'}}
+            checked={this.state.selectedPayment === bank.name}
+          />
+        </Card>
+      </TouchableOpacity>
+    ));
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -98,73 +185,10 @@ export default class VerifyPaymentClientView extends Component {
         </Text>
 
         {this.props.opType == 'P1' ? (
-          <View style={{flexDirection: 'column'}}>
-            <Text style={styles.loginSubTitle} h1>
-              Pago Movil:{' '}
-            </Text>
-            <Text style={styles.loginSubTitle} h1>
-              N° teléfono: 04144537395{' '}
-            </Text>
-            <Text style={styles.loginSubTitle} h1>
-              N° Cédula: 13115089{' '}
-            </Text>
-            <Text style={styles.loginSubTitle} h1>
-              Banco: Bancaribe O Provincial{' '}
-            </Text>
-          </View>
+          <View style={{flexDirection: 'column'}}>{this.renderMobile()}</View>
         ) : (
           <ScrollView style={{flexDirection: 'column'}}>
-            <Card style={{alignItems: 'center', width: 200}}>
-              <Text style={styles.loginSubTitle2} h1>
-                Bancaribe:{' '}
-              </Text>
-              <Text style={styles.loginSubTitle2} h1>
-                N° Cta: 01140205462050035290{' '}
-              </Text>
-              <Text style={styles.loginSubTitle2} h1>
-                Tipo de cuenta: Corriente{' '}
-              </Text>
-              <Text style={styles.loginSubTitle2} h1>
-                Titular: Luis Emilio Hernandez{' '}
-              </Text>
-              <Text style={styles.loginSubTitle2} h1>
-                N° Cédula: 13115089{' '}
-              </Text>
-            </Card>
-            <Card style={{alignItems: 'center', width: 200}}>
-              <Text style={styles.loginSubTitle2} h1>
-                Banco Mercantil:{' '}
-              </Text>
-              <Text style={styles.loginSubTitle2} h1>
-                N° Cta: 0105 0190 380190 133554
-              </Text>
-              <Text style={styles.loginSubTitle2} h1>
-                Tipo de cuenta: Ahorro{' '}
-              </Text>
-              <Text style={styles.loginSubTitle2} h1>
-                Titular: Luisa Hernández
-              </Text>
-              <Text style={styles.loginSubTitle2} h1>
-                N° Cédula: 11.987.613{' '}
-              </Text>
-            </Card>
-            <Card style={{alignItems: 'center', width: 200}}>
-              <Text style={styles.loginSubTitle2} h1>
-                Banco Provincial{' '}
-              </Text>
-              <Text style={styles.loginSubTitle2} h1>
-                N° Cta: 01080157560100055621{' '}
-              </Text>
-              <Text style={styles.loginSubTitle2} h1>
-                Tipo de cuenta: Corriente{' '}
-              </Text>
-              <Text style={styles.loginSubTitle2} h1>
-                Titular:Carlos Valero Morales{' '}
-              </Text>
-              <Text style={styles.loginSubTitle2} h1>
-                N° Cédula: 11.735.524
-              </Text>
-            </Card>
+            {this.renderBanks()}
           </ScrollView>
         )}
       </View>
@@ -248,6 +272,5 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    color: '#bdbfc1',
   },
 });

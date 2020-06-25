@@ -23,6 +23,7 @@ import {setUser} from './reducers/session';
 import {connect, useDispatch} from 'react-redux';
 import {Header} from './pages/clients/Header';
 import {changeDollarPrice} from './reducers/dollarPrice';
+import GeneralSearch from './pages/clients/GeneralSearch';
 
 class Routes extends Component {
   constructor() {
@@ -126,6 +127,7 @@ const AuthApp = props => {
           renderBackButton={() => {}}
         />
         <Scene key="addressClient" component={AddressClient} />
+        <Scene key="generalSearch" component={GeneralSearch} />
         <Scene key="newAddressClient" component={NewAddressClient} />
         <Scene key="allmyOrders" component={AllMyOrders} />
         <Scene key="orderClient" component={OrderClient} />

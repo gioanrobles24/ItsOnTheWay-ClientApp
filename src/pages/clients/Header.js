@@ -18,6 +18,14 @@ const image = {uri: 'http://dev.itsontheway.net/api/parnetBanner1'};
 
 export function Header(props) {
   const [open, setOpen] = useState(false);
+  const [search, setSearch] = useState('');
+
+  function handleSearch() {
+    if (search.trim() !== '') {
+      Actions.generalSearch({param: search});
+    }
+  }
+
   return (
     <MenuDrawer
       open={open}
@@ -46,7 +54,9 @@ export function Header(props) {
         </View>
         <View style={styles.headerBar}>
           <Input
-            placeholder=""
+            onEndEditing={handleSearch}
+            value={search}
+            onChangeText={setSearch}
             leftIcon={<Icon name="search" type="evilicon" color="black" />}
             inputContainerStyle={{
               borderRadius: 20,
