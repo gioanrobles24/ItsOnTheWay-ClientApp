@@ -33,9 +33,12 @@ class PaymentTypeClientView extends Component {
 
   VerifyPaymentClient = viewId => {
     let pedido = this.props.pedido;
+    let address = this.props.address;
+    let description = this.props.description;
     let opType = viewId;
+    console.log(description, address);
 
-    Actions.verifyPaymentClient({pedido, opType});
+    Actions.verifyPaymentClient({address, description, pedido, opType});
   };
 
   getProductPrice(item) {
@@ -140,9 +143,7 @@ class PaymentTypeClientView extends Component {
               checkedIcon="dot-circle-o"
               uncheckedIcon="circle-o"
               checked={this.state.zellechecked}
-              onPress={() =>
-                this.setState({zellechecked: !this.state.zellechecked})
-              }
+              onPress={() => this.VerifyPaymentClient('P3')}
             />
           </View>
           <View style={styles.platformName}>

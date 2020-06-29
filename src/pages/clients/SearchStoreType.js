@@ -63,6 +63,21 @@ export default class SearchStoreTypeView extends Component {
       });
   }
 
+  backAction = () => {
+    Actions.popTo('homeClient');
+    return true;
+  };
+
+  componentDidMount() {
+    this.backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      this.backAction,
+    );
+  }
+  componentWillUnmount() {
+    this.backHandler.remove();
+  }
+
   searchByCat(id) {
     let cat_id = id;
     Actions.searchStoreType({cat_id});

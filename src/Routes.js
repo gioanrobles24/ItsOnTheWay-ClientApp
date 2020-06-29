@@ -17,13 +17,14 @@ import {BackHandler, Alert} from 'react-native';
 import ProductClientView from './pages/clients/productView';
 import PartnerView from './pages/partners/PartnerView';
 import PromoAndSugesClient from './pages/clients/PromosAndSuges';
-import VerifyPaymentClient from './pages/clients/VeryfyPayment';
+import VerifyPaymentClient from './pages/clients/VerifyPayment/VeryfyPayment';
 import AsyncStorage from '@react-native-community/async-storage';
 import {setUser} from './reducers/session';
 import {connect, useDispatch} from 'react-redux';
 import {Header} from './pages/clients/Header';
 import {changeDollarPrice} from './reducers/dollarPrice';
 import GeneralSearch from './pages/clients/GeneralSearch';
+import {OrderDetail} from './pages/clients/OrderDetail';
 
 class Routes extends Component {
   constructor() {
@@ -130,6 +131,7 @@ const AuthApp = props => {
         <Scene key="generalSearch" component={GeneralSearch} />
         <Scene key="newAddressClient" component={NewAddressClient} />
         <Scene key="allmyOrders" component={AllMyOrders} />
+        <Scene key="orderDetail" component={OrderDetail} />
         <Scene key="orderClient" component={OrderClient} />
         <Scene key="verifyClient" component={VerifyClient} />
         <Scene key="paymentType" component={PaymentTypeClient} />

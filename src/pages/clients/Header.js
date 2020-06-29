@@ -13,6 +13,7 @@ import {} from 'react-native-gesture-handler';
 import {Actions} from 'react-native-router-flux';
 import {useDispatch} from 'react-redux';
 import {unsetUser} from '../../reducers/session';
+import AsyncStorage from '@react-native-community/async-storage';
 
 const image = {uri: 'http://dev.itsontheway.net/api/parnetBanner1'};
 
@@ -114,20 +115,24 @@ function SidebarMenu(props) {
         {/* {this.state.data.cl_name} */}
       </Text>
       <View style={styles.MenubarContainer}>
-        <View style={styles.menubarItemContainer}>
+        <TouchableOpacity
+          style={styles.menubarItemContainer}
+          onPress={() => {
+            Actions.allmyOrders();
+          }}>
           <Icon
             name="credit-card"
             type="evilicon"
             color="#bdbfc1"
             iconStyle={styles.menubarIconLeft}
             onPress={() => {
-              this.allmyOrders();
+              Actions.allmyOrders();
             }}
           />
           <Text
             style={styles.menubarItemText}
             onPress={() => {
-              this.allmyOrders();
+              Actions.allmyOrders();
             }}>
             Mis pedidos
           </Text>
@@ -137,11 +142,15 @@ function SidebarMenu(props) {
             color="#bdbfc1"
             iconStyle={styles.menubarIconRight}
             onPress={() => {
-              this.allmyOrders();
+              Actions.allmyOrders();
             }}
           />
-        </View>
-        <View style={styles.menubarItemContainer}>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.menubarItemContainer}
+          onPress={() => {
+            Actions.addressClient();
+          }}>
           <Icon
             type="font-awesome"
             name="map-marker"
@@ -158,15 +167,17 @@ function SidebarMenu(props) {
             color="#bdbfc1"
             iconStyle={styles.menubarIconRight}
             onPress={() => {
-              this.seeAll();
+              Actions.addressClient();
             }}
           />
-        </View>
+        </TouchableOpacity>
 
         <TouchableHighlight
           style={[styles.salirboton, styles.salirbotonButton]}
           onPress={() => {
-            dispatch(unsetUser());
+            AsyncStorage.removeItem('session').then(() =>
+              dispatch(unsetUser()),
+            );
           }}>
           <Text style={styles.salirbotonText}>Salir</Text>
         </TouchableHighlight>

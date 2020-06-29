@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import {AirbnbRating, Rating} from 'react-native-ratings';
-import {Badge, Avatar, ListItem} from 'react-native-elements';
+import {Badge, Avatar, ListItem, Icon} from 'react-native-elements';
 const image = {uri: 'http://dev.itsontheway.net/api/parnetBanner'};
 import {Card} from 'react-native-shadow-cards';
 import RNPickerSelect from 'react-native-picker-select';
@@ -51,6 +51,7 @@ class OrderViewClient extends Component {
       let pedido = this.props.cartItems;
       Actions.paymentType({
         pedido,
+        description: this.state.ord_description,
         address: this.state.addresses.find(
           ad => ad.client_address_id === this.state.address,
         ),
@@ -94,23 +95,33 @@ class OrderViewClient extends Component {
           <Text style={styles.SubTitle} h1>
             Dirección de pedido:
           </Text>
-          <RNPickerSelect
-            placeholder={{
-              label: 'Seleciona una direccion`',
-            }}
-            items={this.state.addresses.map(z => ({
-              label: `${z.zone_name} ${z.description}`,
-              value: z.client_address_id,
-            }))}
-            onValueChange={value => {
-              this.setState({
-                address: value,
-              });
-            }}
-            style={{placeholder: {color: 'black'}}}
-            // useNativeAndroidPickerStyle={true}
-            hideIcon={true}
-          />
+          <View style={{flexDirection: 'row', flex: 1, alignItems: 'center'}}>
+            <View style={{width: '90%'}}>
+              <RNPickerSelect
+                placeholder={{
+                  label: 'Seleciona una direccion`',
+                }}
+                items={this.state.addresses.map(z => ({
+                  label: `${z.zone_name} ${z.description}`,
+                  value: z.client_address_id,
+                }))}
+                onValueChange={value => {
+                  this.setState({
+                    address: value,
+                  });
+                }}
+                style={{placeholder: {color: 'black'}}}
+              />
+            </View>
+            <Icon
+              name="plus"
+              type="evilicon"
+              color="#a9d046"
+              onPress={() => {
+                Actions.push('newAddressClient');
+              }}
+            />
+          </View>
         </View>
         <TouchableHighlight
           style={[styles.buttonContainer, styles.loginButton]}

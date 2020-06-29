@@ -26,11 +26,11 @@ class HomeClientView extends Component {
   }
 
   render() {
-    const data = this.state.data;
+    console.log(this.props.user);
     return (
       <View style={styles.container}>
         <Header>
-          <ScrollView>
+          <ScrollView style={{marginBottom: 150}}>
             <HomeSection title="Recomendaciones">
               <SafeAreaView style={{flex: 1}}>
                 <View
@@ -40,11 +40,15 @@ class HomeClientView extends Component {
                     justifyContent: 'center',
                     marginTop: -30,
                   }}>
-                  <Recomedantions products={this.state.products} />
+                  <Recomedantions
+                    products={this.state.products.filter(
+                      p => p.prod_recome === '1',
+                    )}
+                  />
                 </View>
               </SafeAreaView>
             </HomeSection>
-            {/* <HomeSection title="Promociones">
+            <HomeSection title="Promociones">
               <SafeAreaView style={{flex: 1}}>
                 <View
                   style={{
@@ -53,10 +57,14 @@ class HomeClientView extends Component {
                     justifyContent: 'center',
                     marginTop: -30,
                   }}>
-                  <Recomedantions products={this.state.products} />
+                  <Recomedantions
+                    products={this.state.products.filter(
+                      p => p.prod_suges === '1',
+                    )}
+                  />
                 </View>
               </SafeAreaView>
-            </HomeSection> */}
+            </HomeSection>
           </ScrollView>
         </Header>
         <TabMenuIcons />

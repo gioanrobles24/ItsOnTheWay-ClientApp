@@ -16,7 +16,8 @@ function ProductDetail(props) {
   const [selectedExtras, setSelectedExtras] = useState([]);
   const [sizes, setSizes] = useState([]);
   const [selectedSize, setSelectedSize] = useState(null);
-  console.log(qty);
+
+  console.log(product);
 
   const dispatch = useDispatch();
   const [comment, setComment] = useState('');
@@ -75,7 +76,7 @@ function ProductDetail(props) {
     <View style={{flex: 1}}>
       <ScrollView>
         <View style={styles.container}>
-          <ProductDetailHeader title={product.prod_name} />
+          <ProductDetailHeader title={product.prod_name} product={product} />
           <ProductCounter quantity={qty} onChange={setQuantity} />
           <ProductExtras
             title="Presentaciones"

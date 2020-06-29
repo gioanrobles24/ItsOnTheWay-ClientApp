@@ -35,6 +35,23 @@ class ProductClientView extends Component {
     };
   }
 
+  backAction = () => {
+    Actions.replace('partnerView', {
+      p_id: this.state.product.prod_partner_id,
+    });
+    return true;
+  };
+
+  componentDidMount() {
+    this.backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      this.backAction,
+    );
+  }
+  componentWillUnmount() {
+    this.backHandler.remove();
+  }
+
   render() {
     return (
       <Product

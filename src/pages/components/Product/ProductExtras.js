@@ -6,6 +6,29 @@ import {styles} from './styles';
 import {onChange} from 'react-native-reanimated';
 export function ProductExtras({title, extras, onChange, radio}) {
   const [selected, setSelected] = useState([]);
+
+  function handleSelect(extra) {
+    if (radio) {
+      if (extra.extra_id === selected.extra_id) {
+        setSelected([]);
+        onChange(null);
+      } else {
+        setSelected(extra);
+        onChange(extra);
+      }
+    } else {
+      const filtered = selected.filter(s => s.extra_id !== extra.extra_id);
+
+      if (filtered.length !== selected.length) {
+        setSelected(filtered);
+        onChange(filtered);
+      } else {
+        filtered.push(extra);
+        setSelected(filtered);
+        onChange(filtered);
+      }
+    }
+  }
   return (
     <View style={{maxHeight: 250}}>
       <Text
@@ -17,25 +40,7 @@ export function ProductExtras({title, extras, onChange, radio}) {
       <ScrollView nestedScrollEnabled={true}>
         {extras.map(extra => (
           <TouchableOpacity
-            onPress={() => {
-              if (radio) {
-                setSelected(extra);
-                onChange(extra);
-              } else {
-                const filtered = selected.filter(
-                  s => s.extra_id !== extra.extra_id,
-                );
-
-                if (filtered.length !== selected.length) {
-                  setSelected(filtered);
-                  onChange(filtered);
-                } else {
-                  if (!radio) filtered.push(extra);
-                  setSelected(filtered);
-                  onChange(filtered);
-                }
-              }
-            }}
+            onPress={() => handleSelect(extra)}
             key={extra.extra_id}
             style={{
               borderBottomWidth: 1,
@@ -55,6 +60,7 @@ export function ProductExtras({title, extras, onChange, radio}) {
               }
               containerStyle={{alignSelf: 'flex-end', paddingVertical: 1}}
               right
+              onPress={() => handleSelect(extra)}
             />
           </TouchableOpacity>
         ))}

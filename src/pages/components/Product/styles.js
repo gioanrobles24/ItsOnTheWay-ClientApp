@@ -34,12 +34,15 @@ export const styles = StyleSheet.create({
   },
   header: {
     flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   extras: {
     flexDirection: 'column',
   },
   Title: {
-    fontSize: 25,
+    fontSize: 22,
+    width: '50%',
     color: '#031f30',
   },
   inputContainer: {
