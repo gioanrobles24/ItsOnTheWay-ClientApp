@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, ScrollView} from 'react-native';
+import {StyleSheet, Text, View, ScrollView, Alert} from 'react-native';
 import {Actions} from 'react-native-router-flux';
-import {Icon} from 'react-native-elements';
+import {Icon, ListItem} from 'react-native-elements';
 import {connect} from 'react-redux';
-const image = {uri: 'http://dev.itsontheway.net/api/imgBlanca'};
+import {address} from 'faker';
+const image = {uri: 'http://test.itsontheway.com.ve/api/imgBlanca'};
 
 class AllmyOrdersClientView extends Component {
   constructor(props) {
@@ -11,33 +12,79 @@ class AllmyOrdersClientView extends Component {
     this.state = {
       addresses: [],
     };
+    this.props.navigation.setParams({
+      title: 'Mis Direcciónes',
+    });
   }
 
   newAddress = viewId => {
     Actions.newAddressClient();
   };
 
-  componentDidMount() {
+  fetchAddresses() {
     fetch(
-      `http://dev.itsontheway.net/api/clients/address_client/${
+      `http://test.itsontheway.com.ve/api/clients/address_client/${
         this.props.user.response.client_info.id
       }`,
     )
       .then(resp => resp.json())
       .then(resp => {
+        console.log(JSON.stringify(resp, undefined, 2));
         this.setState({addresses: resp.response.address_client});
-      });
+      })
+      .catch(console.log);
+  }
+
+  componentDidMount() {
+    this.fetchAddresses();
+  }
+
+  deleteAddress(address) {
+    fetch(
+      `http://test.itsontheway.com.ve/api/clients/delete_address_client/${
+        address.client_address_id
+      }`,
+      {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+      },
+    )
+      .then(resp => resp.json())
+      .then(resp => {
+        this.fetchAddresses();
+      })
+      .catch(e => Alert.alert('Error'));
+  }
+
+  confirmDeleteAddress(address) {
+    Alert.alert(
+      'Eliminar Dirección',
+      '¿Seguro quieres eliminar esta dirección?',
+      [
+        {
+          text: 'No',
+          onPress: () => {},
+          style: 'cancel',
+        },
+        {
+          text: 'Si',
+          onPress: () => {
+            this.deleteAddress(address);
+          },
+        },
+      ],
+      {cancelable: false},
+    );
   }
 
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.header}>
-          <Text style={styles.Title}>Mis Direcciones</Text>
-        </View>
         <View style={styles.container1}>
-          <Text style={styles.container1Title} h3 />
-
+          <Text style={styles.container1Title} />
           <Text
             style={styles.container2Title}
             onPress={() => {
@@ -55,12 +102,21 @@ class AllmyOrdersClientView extends Component {
           />
         </View>
         <View>
-          <ScrollView style={{paddingHorizontal: 25}}>
+          <ScrollView>
             {this.state.addresses.map(addr => (
-              <View style={styles.addressContainer}>
-                <Text style={styles.SubTitle}>{addr.zone_name}</Text>
-                <Text style={styles.Text}>{addr.description}</Text>
-              </View>
+              <ListItem
+                title={addr.zone_name}
+                subtitle={addr.description}
+                onPress={() => {
+                  Actions.newAddressClient({address: addr});
+                }}
+                rightIcon={{
+                  type: 'font-awesome',
+                  name: 'times',
+                  color: 'red',
+                  onPress: () => this.confirmDeleteAddress(addr),
+                }}
+              />
             ))}
           </ScrollView>
         </View>

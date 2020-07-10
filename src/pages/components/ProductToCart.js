@@ -17,11 +17,13 @@ import {
   Image,
   Input,
   Card,
+  ListItem,
 } from 'react-native-elements';
-const image = {uri: 'http://dev.itsontheway.net/api/parnetBanner1'};
+const image = {uri: 'http://test.itsontheway.com.ve/api/parnetBanner1'};
 import {AirbnbRating} from 'react-native-ratings';
 import {Actions} from 'react-native-router-flux';
 import {connect} from 'react-redux';
+import {gray, green} from '../../colors';
 
 class ProductsInCart extends Component {
   confirmRemoveProduct(product) {
@@ -44,68 +46,87 @@ class ProductsInCart extends Component {
       {cancelable: false},
     );
   }
-  renderProducts(products) {
-    return products.map((item, index) => {
-      return (
-        <View key={index}>
-          <TouchableOpacity>
-            <Card
-              containerStyle={{
-                flexDirection: 'row',
-                width: 250,
-                marginLeft: 20,
-                marginTop: 30,
-              }}
-              imageStyle={{width: 249, height: 130}}
-              image={{
-                uri: `http://dev.itsontheway.net/images/productos/${
-                  item.prod_partner_id
-                }/${item.prod_image}`,
-              }}>
-              <Text style={{fontSize: 20, marginLeft: 5}}>
-                {item.prod_name}
-              </Text>
-              <Text style={{fontSize: 15, color: '#bdbfc1', marginLeft: 5}}>
-                {item.partner_user}
-              </Text>
 
-              <View style={{flexDirection: 'row', marginLeft: 5}}>
-                <AirbnbRating
-                  isDisabled={true}
-                  showRating={false}
-                  defaultRating={4}
-                  size={15}
-                />
-                <Text style={{fontSize: 10, marginLeft: 30}}>
-                  Bs.: {item.prod_price_bs}
-                </Text>
-                <Icon
-                  raised
-                  name="times"
-                  type="font-awesome"
-                  color="red"
-                  size={20}
-                  onPress={() => this.confirmRemoveProduct(item)}
-                  containerStyle={{position: 'absolute', top: -4, right: -35}}
-                />
-              </View>
-            </Card>
-          </TouchableOpacity>
-        </View>
+  getProductPrice(item) {
+    let extraPrice = 0;
+    item.extras.forEach(e => {
+      extraPrice += parseFloat(e.extra_price_usd);
+    });
+    return (parseFloat(item.prod_price_usd) + extraPrice) * item.quantity;
+  }
+
+  renderProducts(products) {
+    return products.map(item => {
+      const presentation = item.extras.find(extra => extra.extra_type === '1');
+      const extras = item.extras
+        .filter(extra => extra.extra_type !== '1')
+        .map(extra => extra.extra_name);
+
+      const price = this.getProductPrice(item);
+      const bsPrice = price * this.props.dollarPrice;
+      return (
+        <ListItem
+          title={`(${item.quantity}) ${item.prod_name}`}
+          titleStyle={{
+            fontWeight: 'bold',
+            ...styles.grayText,
+          }}
+          subtitle={
+            <View>
+              <Text style={{...styles.grayText}}>
+                Presentación: {presentation ? presentation.extra_name : 'No'}
+              </Text>
+              <Text style={{...styles.grayText}}>
+                Extras: {extras.length > 0 ? `${extras.join(', ')}` : ' No'}
+              </Text>
+              <Text style={{color: green}}>
+                <Text style={styles.grayText}>Precio: </Text>
+                Bs {bsPrice} (${price})
+              </Text>
+            </View>
+          }
+          rightIcon={
+            this.props.haveDelete
+              ? {
+                  type: 'font-awesome',
+                  name: 'times',
+                  color: 'red',
+                  onPress: () => this.confirmRemoveProduct(item),
+                }
+              : undefined
+          }
+          leftAvatar={
+            this.props.haveImage
+              ? {
+                  source: {
+                    uri: `http://test.itsontheway.com.ve/images/productos/${
+                      item.prod_partner_id
+                    }/${item.prod_image}`,
+                  },
+                }
+              : undefined
+          }
+          bottomDivider
+          // chevron
+        />
       );
     });
   }
-
   render() {
     return (
       <View style={styles.container}>
-        <ScrollView horizontal={true}>
+        <ScrollView nestedScrollEnabled>
           {this.renderProducts(this.props.products)}
         </ScrollView>
       </View>
     );
   }
 }
+
+ProductsInCart.defaultProps = {
+  haveImage: true,
+  haveDelete: true,
+};
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -120,9 +141,14 @@ export default connect(
 )(ProductsInCart);
 
 const styles = StyleSheet.create({
+  grayText: {
+    color: gray,
+  },
+
   container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    maxHeight: '30%',
+    // flex: 1,
+    // alignItems: 'center',
+    // justifyContent: 'center',
   },
 });

@@ -24,8 +24,8 @@ import BottomBar from 'react-native-bottom-bar';
 import BottomBarMenu from '../components/BotomBarMenu';
 import {Card} from 'react-native-shadow-cards';
 import TabMenuIcons from '../components/TabMenuIcons';
-const image = {uri: 'http://dev.itsontheway.net/api/imgBlanca'};
-const image2 = {uri: 'http://dev.itsontheway.net/api/parnetBanner1'};
+const image = {uri: 'http://test.itsontheway.com.ve/api/imgBlanca'};
+const image2 = {uri: 'http://test.itsontheway.com.ve/api/parnetBanner1'};
 const mainColor = '#bdbfc1';
 const pnkGradient = ['#ffffff', '#ffffff'];
 export default class SearchStoreTypeView extends Component {
@@ -36,7 +36,8 @@ export default class SearchStoreTypeView extends Component {
     };
 
     fetch(
-      'http://dev.itsontheway.net/api/clients/searchByCat/' + this.props.cat_id,
+      'http://test.itsontheway.com.ve/api/clients/searchByCat/' +
+        this.props.cat_id,
       {
         method: 'GET',
         headers: {
@@ -50,6 +51,7 @@ export default class SearchStoreTypeView extends Component {
         if (responseData.error) {
           alert(' por favor intenta nuevamente');
         } else {
+          console.log(responseData);
           this.setState(
             {
               partnersByCat: responseData.response.parterByCat,
@@ -95,6 +97,7 @@ export default class SearchStoreTypeView extends Component {
     Actions.orderClient();
   }
   render() {
+    console.log(this.state.partnersByCat);
     return (
       <View style={styles.container}>
         <View style={styles.header}>
@@ -118,17 +121,25 @@ export default class SearchStoreTypeView extends Component {
         </View>
         <ScrollView>
           <View style={styles.productscontainer}>
-            {this.state.partnersByCat.map(Object => (
+            {this.state.partnersByCat.map(partner => (
               <View style={styles.cardOrdercontainer}>
                 <TouchableHighlight
                   underlayColor="transparent"
                   onPress={() => {
-                    this.ThisPartnerView(Object.id);
+                    this.ThisPartnerView(partner.id);
                   }}>
                   <Card style={styles.cardOrder}>
-                    <Avatar rounded size="medium" source={image2} />
+                    <Avatar
+                      rounded
+                      size="medium"
+                      source={{
+                        uri: `http://test.itsontheway.com.ve/images/socios/${
+                          partner.id
+                        }/${partner.profile_pic}`,
+                      }}
+                    />
                     <Text style={styles.cardOrderSubTitle}>
-                      {Object.p_user}
+                      {partner.p_user}
                     </Text>
                   </Card>
                 </TouchableHighlight>

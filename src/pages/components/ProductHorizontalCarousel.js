@@ -3,7 +3,7 @@ import {View, StyleSheet, ScrollView} from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import {ProductCard} from './ProductCard';
 
-export const image = {uri: 'http://dev.itsontheway.net/api/parnetBanner1'};
+export const image = {uri: 'http://test.itsontheway.com.ve/api/parnetBanner1'};
 
 class Recomendations extends Component {
   goToPartner(product) {

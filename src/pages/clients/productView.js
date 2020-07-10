@@ -20,7 +20,7 @@ import {createStackNavigator} from 'react-navigation';
 import RNPickerSelect from 'react-native-picker-select';
 import {Card} from 'react-native-shadow-cards';
 import NumericInput from 'react-native-numeric-input';
-const image = {uri: 'http://dev.itsontheway.net/api/imgBlanca'};
+const image = {uri: 'http://test.itsontheway.com.ve/api/imgBlanca'};
 import {Provider} from 'react-redux';
 import store from '../../store';
 import {connect} from 'react-redux';
@@ -29,7 +29,6 @@ import Product from '../components/Product/Product';
 class ProductClientView extends Component {
   constructor(props) {
     super(props);
-    console.log(props.product);
     this.state = {
       product: props.product,
     };
@@ -43,6 +42,10 @@ class ProductClientView extends Component {
   };
 
   componentDidMount() {
+    this.props.navigation.setParams({
+      title: this.props.product.prod_name,
+    });
+
     this.backHandler = BackHandler.addEventListener(
       'hardwareBackPress',
       this.backAction,
@@ -61,6 +64,7 @@ class ProductClientView extends Component {
     );
   }
 }
+
 const mapDispatchToProps = dispatch => {
   return {
     addItemToCart: product => dispatch({type: 'ADD_TO_CART', payload: product}),

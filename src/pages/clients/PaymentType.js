@@ -15,9 +15,8 @@ class PaymentTypeClientView extends Component {
   }
 
   componentDidMount() {
-    console.log(this.props.address);
     fetch(
-      `http://dev.itsontheway.net/api/delivery_price/${
+      `http://test.itsontheway.com.ve/api/delivery_price/${
         this.props.address.zone_id
       }`,
     )
@@ -36,7 +35,6 @@ class PaymentTypeClientView extends Component {
     let address = this.props.address;
     let description = this.props.description;
     let opType = viewId;
-    console.log(description, address);
 
     Actions.verifyPaymentClient({address, description, pedido, opType});
   };

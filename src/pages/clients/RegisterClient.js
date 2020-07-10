@@ -63,7 +63,7 @@ export default class RegisterClientView extends Component {
   }
 
   Verification = viewId => {
-    fetch('http://dev.itsontheway.net/api/clients/register', {
+    fetch('http://test.itsontheway.com.ve/api/clients/register', {
       method: 'POST',
       headers: {
         Accept: 'application/json',

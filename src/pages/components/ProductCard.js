@@ -20,7 +20,7 @@ export function ProductCard(props) {
           }}
           imageStyle={{width: 249, height: 130}}
           image={{
-            uri: `http://dev.itsontheway.net/images/productos/${
+            uri: `http://test.itsontheway.com.ve/images/productos/${
               product.prod_partner_id
             }/${product.prod_image}`,
           }}>

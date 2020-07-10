@@ -41,7 +41,7 @@ import {connect} from 'react-redux';
 import Recomedantions from './ProductHorizontalCarousel';
 import TabMenuIcons from '../components/TabMenuIcons';
 import {electronics} from '../components/Data';
-const image = {uri: 'http://dev.itsontheway.net/api/parnetBanner1'};
+const image = {uri: 'http://test.itsontheway.com.ve/api/parnetBanner1'};
 
 import {AirbnbRating} from 'react-native-ratings';
 

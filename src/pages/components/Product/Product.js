@@ -24,7 +24,9 @@ function ProductDetail(props) {
 
   useEffect(() => {
     fetch(
-      `http://dev.itsontheway.net/api/clients/products_extras/${product.id}`,
+      `http://test.itsontheway.com.ve/api/clients/products_extras/${
+        product.id
+      }`,
     )
       .then(resp => resp.json())
       .then(resp => {
@@ -63,7 +65,10 @@ function ProductDetail(props) {
       [
         {
           text: 'Seguir comprando',
-          onPress: () => Actions.pop(),
+          onPress: () =>
+            Actions.replace('partnerView', {
+              p_id: product.prod_partner_id,
+            }),
           style: 'cancel',
         },
         {text: 'Ir a tu pedido', onPress: () => Actions.orderClient()},
@@ -76,7 +81,10 @@ function ProductDetail(props) {
     <View style={{flex: 1}}>
       <ScrollView>
         <View style={styles.container}>
-          <ProductDetailHeader title={product.prod_name} product={product} />
+          <ProductDetailHeader
+            title={product.prod_description}
+            product={product}
+          />
           <ProductCounter quantity={qty} onChange={setQuantity} />
           <ProductExtras
             title="Presentaciones"

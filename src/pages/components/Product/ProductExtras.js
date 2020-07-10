@@ -4,6 +4,7 @@ import {CheckBox} from 'react-native-elements';
 import faker from 'faker';
 import {styles} from './styles';
 import {onChange} from 'react-native-reanimated';
+import {gray} from '../../../colors';
 export function ProductExtras({title, extras, onChange, radio}) {
   const [selected, setSelected] = useState([]);
 
@@ -52,16 +53,26 @@ export function ProductExtras({title, extras, onChange, radio}) {
             <Text style={{...styles.bodyText, alignSelf: 'center'}}>
               {extra.extra_name}
             </Text>
-            <CheckBox
-              checked={
-                !radio
-                  ? selected.find(s => s.extra_id === extra.extra_id)
-                  : selected.extra_id === extra.extra_id
-              }
-              containerStyle={{alignSelf: 'flex-end', paddingVertical: 1}}
-              right
-              onPress={() => handleSelect(extra)}
-            />
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                alignContent: 'center',
+              }}>
+              <Text style={{...styles.bodyText, color: gray}}>
+                + ${extra.extra_price_usd}
+              </Text>
+              <CheckBox
+                checked={
+                  !radio
+                    ? selected.find(s => s.extra_id === extra.extra_id)
+                    : selected.extra_id === extra.extra_id
+                }
+                containerStyle={{alignSelf: 'flex-end', paddingVertical: 1}}
+                right
+                onPress={() => handleSelect(extra)}
+              />
+            </View>
           </TouchableOpacity>
         ))}
       </ScrollView>

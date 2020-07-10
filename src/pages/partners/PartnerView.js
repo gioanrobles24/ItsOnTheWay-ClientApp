@@ -11,17 +11,20 @@ import {
   Image,
   Alert,
   ImageBackground,
+  Dimensions,
+  BackHandler,
 } from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import {AirbnbRating, Rating} from 'react-native-ratings';
-import {Badge, Avatar, Card} from 'react-native-elements';
-// const image = { uri: "http://dev.itsontheway.net/api/parnetBanner" }
+import {Badge, Avatar, Card, ListItem} from 'react-native-elements';
+// const image = { uri: "http://test.itsontheway.com.ve/api/parnetBanner" }
 import PayBoton from '../components/BotomBarMenu';
 import {Provider} from 'react-redux';
 import store from '../../store';
 import {connect} from 'react-redux';
 import {electronics} from '../components/Data';
-const image = {uri: 'http://dev.itsontheway.net/api/parnetBanner1'};
+import {green} from '../../colors';
+
 class PartnerView extends Component {
   constructor(props) {
     super(props);
@@ -32,7 +35,8 @@ class PartnerView extends Component {
     };
 
     fetch(
-      'http://dev.itsontheway.net/api/clients/showPartner/' + this.props.p_id,
+      'http://test.itsontheway.com.ve/api/clients/showPartner/' +
+        this.props.p_id,
       {
         method: 'GET',
         headers: {
@@ -43,10 +47,15 @@ class PartnerView extends Component {
     )
       .then(response => response.json())
       .then(responseData => {
-        console.log(responseData);
         if (responseData.error) {
           alert(' por favor intenta nuevamente');
         } else {
+          this.props.navigation.setParams({
+            title: responseData.response.partner.p_user,
+          });
+
+          console.log(responseData);
+
           this.setState(
             {
               partner_products: responseData.response.partner_products,
@@ -61,6 +70,44 @@ class PartnerView extends Component {
         console.error(error);
       });
   }
+  backAction = () => {
+    if (this.props.cartItems.length > 0) {
+      Alert.alert(
+        'Se perderea el carrito actual',
+        '¿Esta seguro que desea hacerlo?',
+        [
+          {
+            text: 'No',
+          },
+          {
+            text: 'Si',
+            onPress: () => {
+              this.props.clearCart();
+              Actions.pop();
+            },
+          },
+        ],
+        {cancelable: true},
+      );
+    } else {
+      console.log('ENTRE aqui');
+      Actions.pop();
+    }
+    return true;
+  };
+
+  componentDidMount() {
+    this.backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      this.backAction,
+    );
+    this.props.navigation.setParams({
+      onBack: this.backAction,
+    });
+  }
+  componentWillUnmount() {
+    this.backHandler.remove();
+  }
 
   ratingCompleted(rating) {}
   productView(item) {
@@ -69,47 +116,50 @@ class PartnerView extends Component {
   }
 
   render() {
+    console.log(this.state.partner_banner);
+    console.log(!!this.state.partner_banner);
     let partner_profile_pic = {uri: this.state.partner_banner};
+    console.log(partner_profile_pic);
+
     return (
       <View style={styles.container}>
-        <Image style={styles.partnerimage} source={partner_profile_pic} />
-        <Text style={styles.Title} h1>
-          {this.state.partner.p_user}
-        </Text>
-        <Text style={styles.SubTitle} h1>
-          Listado de productos:{' '}
-        </Text>
-
+        {!!this.state.partner_banner && (
+          <View style={{flex: 1.1, backgroundColor: 'red'}}>
+            <Image
+              source={partner_profile_pic}
+              style={{flex: 1, height: undefined, width: '100%'}}
+            />
+          </View>
+        )}
+        <View style={{marginTop: 30}}>
+          <Text style={{textAlign: 'center', color: green, fontSize: 24}}>
+            Productos
+          </Text>
+        </View>
         <ScrollView>
           <View style={styles.productscontainer}>
-            {this.state.partner_products.map(item => (
-              <TouchableHighlight
-                key={item.id}
-                underlayColor="transparent"
-                onPress={() => this.productView(item)}>
-                <Card containerStyle={styles.cardOrder}>
-                  <Avatar
-                    rounded
-                    size="large"
-                    source={{
-                      uri: `http://dev.itsontheway.net/images/productos/${
+            {this.state.partner_products.map(item => {
+              return (
+                <ListItem
+                  title={item.prod_name}
+                  rightTitle={`$${item.prod_price_usd}`}
+                  titleStyle={{
+                    fontWeight: 'bold',
+                    ...styles.grayText,
+                  }}
+                  leftAvatar={{
+                    source: {
+                      uri: `http://test.itsontheway.com.ve/images/productos/${
                         item.prod_partner_id
                       }/${item.prod_image}`,
-                    }}
-                  />
-                  <Text style={styles.cardOrderSubTitle}>{item.prod_name}</Text>
-                  <Text style={styles.cardOrderSubTitle}>
-                    Bs.: {item.prod_price_bs}
-                  </Text>
-
-                  <View style={{flexDirection: 'row', marginLeft: 5}}>
-                    <Text style={{fontSize: 10, marginLeft: 30}}>
-                      Descripcción: {item.prod_description}
-                    </Text>
-                  </View>
-                </Card>
-              </TouchableHighlight>
-            ))}
+                    },
+                  }}
+                  chevron
+                  onPress={() => this.productView(item)}
+                  bottomDivider
+                />
+              );
+            })}
           </View>
         </ScrollView>
 
@@ -119,20 +169,30 @@ class PartnerView extends Component {
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    cartItems: state.cart,
+    client_info: state.session,
+    dollarPrice: state.dollarPrice.price,
+  };
+};
+
 const mapDispatchToProps = dispatch => {
   return {
     addItemToCart: product => dispatch({type: 'ADD_TO_CART', payload: product}),
+    clearCart: () => dispatch({type: 'CLEAR_CART'}),
   };
 };
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps,
 )(PartnerView);
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    flexDirection: 'column',
   },
   containertitle: {
     marginTop: 10,
@@ -160,9 +220,6 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
 
-  partnerimage: {
-    flex: 0.4,
-  },
   Title: {
     fontSize: 28,
     flexDirection: 'row',

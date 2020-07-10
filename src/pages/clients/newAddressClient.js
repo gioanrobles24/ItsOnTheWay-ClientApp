@@ -15,12 +15,16 @@ import {
   Picker,
 } from 'react-native';
 import {Actions} from 'react-native-router-flux';
-import {Icon, Avatar, Badge, withBadge} from 'react-native-elements';
-import {createStackNavigator} from 'react-navigation';
 import RNPickerSelect from 'react-native-picker-select';
 import {Card} from 'react-native-shadow-cards';
 import {connect} from 'react-redux';
-const image = {uri: 'http://dev.itsontheway.net/api/imgBlanca'};
+import MapboxGL from '@react-native-mapbox-gl/maps';
+import GetLocation from 'react-native-get-location';
+import {green} from '../../colors';
+import {isPointInPolygon} from 'geolib';
+const markerIcon = require('../../assets/marker.png');
+
+const image = {uri: 'http://test.itsontheway.com.ve/api/imgBlanca'};
 
 class NewAddressClientView extends Component {
   constructor(props) {
@@ -28,32 +32,68 @@ class NewAddressClientView extends Component {
     //  this.toggleSwitch = this.toggleSwitch.bind(this);
     this.state = {
       zones: [],
-      items: [
-        {
-          label: 'Aragua',
-          value: 'red',
-        },
-        {
-          label: 'Distrito Capital',
-          value: 'orange',
-        },
-        {
-          label: 'Miranda',
-          value: 'blue',
-        },
-      ],
+      coordinates: props.address
+        ? [
+            parseFloat(props.address.address_lat),
+            parseFloat(props.address.address_lon),
+          ]
+        : [0, 0],
+      description: props.address ? props.address.description : '',
     };
+
+    this.props.navigation.setParams({
+      title: props.address ? 'Actualizar Dirección' : 'Agregar una Dirección',
+    });
   }
 
   componentDidMount() {
-    fetch('http://dev.itsontheway.net/api/aviable_zones')
+    fetch('http://test.itsontheway.com.ve/api/aviable_zones')
       .then(resp => resp.json())
-      .then(resp => this.setState({zones: resp.response.zones_aviables}));
+      .then(resp => this.setState({zones: resp.zones_aviables}));
+
+    GetLocation.getCurrentPosition({
+      enableHighAccuracy: true,
+      timeout: 15000,
+    })
+      .then(location => {
+        if (!this.props.address) {
+          this.setState({coordinates: [location.longitude, location.latitude]});
+        }
+      })
+      .catch(error => {
+        const {code, message} = error;
+      });
   }
 
   newAddress = viewId => {
-    const {zone, description} = this.state;
-    if (zone && description) {
+    const {description} = this.state;
+    let zone;
+
+    const coordinate = {
+      latitude: this.state.coordinates[0],
+      longitude: this.state.coordinates[1],
+    };
+
+    if (this.state.zones.length === 0) {
+      Alert.alert('Error', 'Error al cargar las zonas validas');
+      return;
+    } else {
+      zone = this.state.zones
+        .map(z => ({
+          id: z.id,
+          coordinates: z.zones_markers.map(m => ({
+            latitude: m.marker_lat,
+            longitude: m.marker_lon,
+          })),
+        }))
+        .find(zone => !isPointInPolygon(coordinate, zone.coordinates));
+      if (!zone) {
+        Alert.alert('No enviamos a esta dirección');
+        return;
+      }
+    }
+
+    if (description) {
       Alert.alert(
         'Hola! Por favor confirma: ',
         '¿Estás seguro agregar esta dirección?',
@@ -69,76 +109,110 @@ class NewAddressClientView extends Component {
               const body = JSON.stringify({
                 description,
                 cl_id: this.props.user.response.client_info.id,
-                mun_id: this.state.zones.find(z => z.id === zone).mun_id,
-                zone_id: zone.toString(),
+                mun_id: this.state.zones.find(z => z.id === zone.id).mun_id,
+                zone_id: zone.id,
+                address_lat: coordinate.latitude,
+                address_lon: coordinate.longitude,
+                client_address_id: this.props.address
+                  ? this.props.address.client_address_id
+                  : undefined,
               });
 
-              fetch(
-                'http://dev.itsontheway.net/api/clients/new_address_client',
-                {
-                  method: 'POST',
-                  headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                  },
-                  body: body,
+              const url = this.props.address
+                ? 'http://test.itsontheway.com.ve/api/clients/edit_address_client'
+                : 'http://test.itsontheway.com.ve/api/clients/new_address_client';
+
+              fetch(url, {
+                method: 'POST',
+                headers: {
+                  Accept: 'application/json',
+                  'Content-Type': 'application/json',
                 },
-              )
+                body: body,
+              })
                 .then(resp => {
                   return resp.json();
-                  // Actions.homeClient();
                 })
-                .then(() => Actions.addressClient());
+                .then(resp => {
+                  console.log(JSON.stringify(resp, undefined, 2));
+                  if (resp.error) {
+                    Alert.alert(resp.error);
+                  } else {
+                    Actions.addressClient();
+                  }
+                })
+                .catch(e => Alert.alert('Error'));
             },
           },
         ],
         {cancelable: false},
       );
     } else {
-      Alert.alert('Selecciona una zona y escribe la descripcion');
+      Alert.alert('Por favor ingresa la descripcion');
     }
   };
 
   render() {
+    console.log(this.state);
+    const marker = {
+      type: 'FeatureCollection',
+      features:
+        this.state.coordinates.length > 0
+          ? [
+              {
+                type: 'Feature',
+                properties: {},
+                geometry: {
+                  type: 'Point',
+                  coordinates: this.state.coordinates,
+                },
+              },
+            ]
+          : [],
+    };
+
     return (
       <View style={styles.container}>
-        <View style={styles.header}>
-          <Text style={styles.Title}>Agregar Dirección</Text>
-        </View>
-
-        <View style={styles.inputContainer}>
-          <RNPickerSelect
-            placeholder={{
-              label: 'Seleciona una zona`',
-            }}
-            items={this.state.zones.map(z => ({
-              label: z.zone_name,
-              value: z.id,
-            }))}
-            onValueChange={value => {
-              this.setState({
-                zone: value,
-              });
-            }}
-            style={{placeholder: {color: 'black'}}}
-            // useNativeAndroidPickerStyle={true}
-            hideIcon={true}
+        <MapboxGL.MapView
+          style={{flex: 1, flexGrow: 1}}
+          onPress={e => {
+            if (e.type === 'Feature') {
+              this.setState({coordinates: e.geometry.coordinates});
+            }
+          }}>
+          {/* <MapboxGL.UserLocation visible={true} /> */}
+          <MapboxGL.Camera
+            zoomLevel={16}
+            centerCoordinate={this.state.coordinates}
+            // followUserMode="normal"
+            // followUserLocation
           />
-        </View>
-        <Text style={{marginHorizontal: 25, color: '#bdbfc1'}}>
-          Solo enviamos a las zonas listadas
-        </Text>
-        {/* <TextInput
-            style={styles.inputs}
-            placeholderTextColor="gray"
-            placeholder="Zona"
-          /> */}
+          <MapboxGL.ShapeSource
+            id="marker"
+            shape={marker}
+            key={JSON.stringify(this.state.coordinates)}>
+            {/* <MapboxGL.CircleLayer id="marker" /> */}
+
+            <MapboxGL.SymbolLayer
+              id="marker"
+              style={{
+                iconImage: markerIcon,
+                iconColor: green,
+                iconSize: 1,
+                iconAllowOverlap: true,
+              }}
+            />
+          </MapboxGL.ShapeSource>
+        </MapboxGL.MapView>
         <View style={styles.inputContainer}>
           <TextInput
+            numberOfLines={4}
+            multiline
             style={styles.inputs}
-            placeholderTextColor="gray"
-            placeholder="Descripción de dirección"
-            onChangeText={value => this.setState({description: value})}
+            placeholder="Edificio, Casa, Calle, Referencia, etc."
+            underlineColorAndroid="transparent"
+            onChangeText={description => this.setState({description})}
+            value={this.state.description}
           />
         </View>
 
@@ -167,7 +241,7 @@ export default connect(
 
 const styles = StyleSheet.create({
   container: {
-    flex: 0.7,
+    flex: 1,
     backgroundColor: 'white',
     fontFamily: 'QUICKSAND-LIGHT',
   },
@@ -196,18 +270,22 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   inputs: {
-    marginLeft: 12,
-    color: 'black',
-    // borderBottomColor: '#FFFFFF',
+    marginTop: 5,
+    borderRadius: 15,
+    textAlignVertical: 'top',
+    paddingHorizontal: 10,
+    borderColor: green,
+    borderWidth: 2,
   },
   buttonContainer: {
     height: 45,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    width: 270,
+    width: '80%',
     borderRadius: 5,
-    marginTop: 80,
+    marginTop: 20,
+    marginBottom: 10,
     shadowColor: 'rgba(0, 0, 0, 0.1)',
     shadowOpacity: 0.8,
     elevation: 6,

@@ -12,7 +12,7 @@ import {Actions} from 'react-native-router-flux';
 import {Icon, Avatar, Input} from 'react-native-elements';
 import {Card} from 'react-native-shadow-cards';
 import TabMenuIcons from '../components/TabMenuIcons';
-const image2 = {uri: 'http://dev.itsontheway.net/api/parnetBanner1'};
+const image2 = {uri: 'http://test.itsontheway.com.ve/api/parnetBanner1'};
 
 export default class GeneralSearch extends Component {
   constructor(props) {
@@ -24,7 +24,7 @@ export default class GeneralSearch extends Component {
   }
 
   search(param) {
-    fetch(`http://dev.itsontheway.net/api/clients/searchByParam/${param}`)
+    fetch(`http://test.itsontheway.com.ve/api/clients/searchByParam/${param}`)
       .then(response => response.json())
       .then(responseData => {
         if (responseData.error) {

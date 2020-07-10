@@ -33,9 +33,9 @@ export const styles = StyleSheet.create({
     color: '#bdbfc1',
   },
   header: {
+    flex: 1,
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    // alignItems: 'center',
   },
   extras: {
     flexDirection: 'column',

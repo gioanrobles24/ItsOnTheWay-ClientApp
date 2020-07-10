@@ -27,7 +27,7 @@ import {createStackNavigator} from 'react-navigation';
 import Carousel, {ParallaxImage} from 'react-native-snap-carousel';
 import {AirbnbRating} from 'react-native-ratings';
 
-const image = {uri: 'http://dev.itsontheway.net/api/parnetBanner1'};
+const image = {uri: 'http://test.itsontheway.com.ve/api/parnetBanner1'};
 const mainColor = '#bdbfc1';
 const url = 'www.freakycoder.com';
 

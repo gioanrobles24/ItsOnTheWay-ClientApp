@@ -4,10 +4,11 @@ import {useSelector} from 'react-redux';
 export function ProductPrice({product, extras, quantity}) {
   const dollarPrice = parseFloat(useSelector(state => state.dollarPrice.price));
   const [showDollar, setShowDollar] = useState(true);
-  let price = parseFloat(product.prod_price_usd) * quantity;
+  let price = parseFloat(product.prod_price_usd);
   extras.forEach(e => {
     price += parseFloat(e.extra_price_usd);
   });
+  price *= quantity;
   if (!showDollar) {
     price = price * dollarPrice;
   }

@@ -13,7 +13,7 @@ import {Icon, Avatar, Badge, withBadge} from 'react-native-elements';
 import {createStackNavigator} from 'react-navigation';
 import {setUser} from '../../reducers/session';
 import {connect} from 'react-redux';
-const imageverde = {uri: 'http://dev.itsontheway.net/api/imgVerde'};
+const imageverde = {uri: 'http://test.itsontheway.com.ve/api/imgVerde'};
 
 class LoginClientView extends Component {
   constructor(props) {
@@ -44,7 +44,7 @@ class LoginClientView extends Component {
   };
   Login = () => {
     this.setState({loading: true});
-    fetch('http://dev.itsontheway.net/api/clients/login', {
+    fetch('http://test.itsontheway.com.ve/api/clients/login', {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -58,9 +58,11 @@ class LoginClientView extends Component {
       .then(response => response.json())
       .then(responseData => {
         if (responseData.error) {
+          console.log(responseData);
           Alert.alert(
             'Usuario o contraseña incorrectos, por favor intenta nuevamente',
           );
+          throw new Error(responseData.error);
         } else {
           return AsyncStorage.setItem(
             'session',

@@ -97,6 +97,7 @@ const UnauthApp = props => {
         <Scene key="loginClient" hideNavBar={true} component={LoginClient} />
         <Scene key="registerClient" component={RegisterClient} />
         <Scene key="resetPasswordClient" component={ResetPasswordClient} />
+        <Scene key="verifyClient" component={VerifyClient} />
       </Scene>
     </Router>
   );
@@ -107,14 +108,14 @@ const AuthApp = props => {
 
   return (
     <Router navBarButtonColor="#a9d046" backAndroidHandler={backAction}>
-      <Scene key="root">
+      <Scene key="root" headerLayoutPreset="center">
         <Scene
           key="homeClient"
           hideNavBar
           component={HomeClient}
           onEnter={() => {
             dispatch({type: 'CLEAR_CART'});
-            fetch('http://dev.itsontheway.net/api/currency_value')
+            fetch('http://test.itsontheway.com.ve/api/currency_value')
               .then(response => response.json())
               .then(dollar => {
                 console.log(dollar);
@@ -132,15 +133,14 @@ const AuthApp = props => {
         <Scene key="newAddressClient" component={NewAddressClient} />
         <Scene key="allmyOrders" component={AllMyOrders} />
         <Scene key="orderDetail" component={OrderDetail} />
-        <Scene key="orderClient" component={OrderClient} />
-        <Scene key="verifyClient" component={VerifyClient} />
+        <Scene key="orderClient" component={OrderClient} title="Tu Pedido" />
         <Scene key="paymentType" component={PaymentTypeClient} />
         <Scene
           key="productView"
           component={ProductClientView}
           renderBackButton={() => {}}
         />
-        <Scene key="partnerView" component={PartnerView} />
+        <Scene key="partnerView" component={PartnerView} back />
         <Scene key="promoAndSuges" component={PromoAndSugesClient} />
         <Scene key="verifyPaymentClient" component={VerifyPaymentClient} />
       </Scene>

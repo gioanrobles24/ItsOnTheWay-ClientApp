@@ -30,7 +30,7 @@ export default class RegisterClientView extends Component {
 
     //      alert( "Button pressed "+ 'correo:' +this.state.email+ 'password'+ this.state.password)
 
-    fetch('http://dev.itsontheway.net/api/clients/resetPassword', {
+    fetch('http://test.itsontheway.com.ve/api/clients/resetPassword', {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -102,7 +102,7 @@ export default class RegisterClientView extends Component {
             flexDirection: 'column',
             marginTop: 20,
           }}
-          source={{uri: 'http://dev.itsontheway.net/api/imgVerde'}}
+          source={{uri: 'http://test.itsontheway.com.ve/api/imgVerde'}}
         />
       </View>
     );

@@ -28,7 +28,7 @@ export default class VerifyClientView extends Component {
 
   register = viewId => {
     fetch(
-      'http://dev.itsontheway.net/api/clients/register/verify/' +
+      'http://test.itsontheway.com.ve/api/clients/register/verify/' +
         this.state.code,
       {
         method: 'GET',
@@ -97,7 +97,7 @@ export default class VerifyClientView extends Component {
             flexDirection: 'column',
             marginTop: 20,
           }}
-          source={{uri: 'http://dev.itsontheway.net/api/imgVerde'}}
+          source={{uri: 'http://test.itsontheway.com.ve/api/imgVerde'}}
         />
       </View>
     );

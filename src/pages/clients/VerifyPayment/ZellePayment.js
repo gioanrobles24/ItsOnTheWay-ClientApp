@@ -96,7 +96,7 @@ export function ZellePayment({address, description}) {
       });
 
       setLoading(true);
-      fetch('http://dev.itsontheway.net/api/clients/neworder', {
+      fetch('http://test.itsontheway.com.ve/api/clients/neworder', {
         method: 'POST',
         headers: {
           'Content-Type': 'multipart/form-data',
@@ -161,13 +161,29 @@ export function ZellePayment({address, description}) {
           underlineColorAndroid="transparent"
         />
       </View>
-      <TouchableHighlight
-        style={[styles.buttonContainer, styles.loginButton]}
-        onPress={() => {
-          selectRef();
-        }}>
-        <Text style={styles.loginText}>Agregar Captura</Text>
-      </TouchableHighlight>
+
+      <View style={{flexDirection: 'row'}}>
+        <TouchableHighlight
+          style={[styles.buttonContainer, styles.loginButton, {flex: 0.7}]}
+          onPress={() => {
+            selectRef();
+          }}>
+          <Text style={styles.loginText}>Agregar Captura</Text>
+        </TouchableHighlight>
+        {photo && (
+          <View style={{flex: 0.2}}>
+            <Image
+              source={photo}
+              style={{
+                flex: 1,
+                height: undefined,
+                width: undefined,
+                marginLeft: 20,
+              }}
+            />
+          </View>
+        )}
+      </View>
 
       <Text style={styles.loginSubTitle} h1>
         Bancos
