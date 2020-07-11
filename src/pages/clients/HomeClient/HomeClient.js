@@ -6,6 +6,7 @@ import {
   ScrollView,
   SafeAreaView,
   Platform,
+  ImageBackground,
 } from 'react-native';
 import {connect} from 'react-redux';
 import Recomedantions from '../../components/ProductHorizontalCarousel';
@@ -13,6 +14,7 @@ import TabMenuIcons from '../../components/TabMenuIcons';
 import {unsetUser} from '../../../reducers/session';
 import {Header} from '../Header';
 import {HomeSection} from './HomeSection';
+const background = require('../../../assets/background.png');
 
 class HomeClientView extends Component {
   constructor(props) {
@@ -29,45 +31,49 @@ class HomeClientView extends Component {
     console.log(this.props.user);
     return (
       <View style={styles.container}>
-        <Header>
-          <ScrollView style={{marginBottom: 150}}>
-            <HomeSection title="Recomendaciones">
-              <SafeAreaView style={{flex: 1}}>
-                <View
-                  style={{
-                    flex: 1,
-                    flexDirection: 'row',
-                    justifyContent: 'center',
-                    marginTop: -30,
-                  }}>
-                  <Recomedantions
-                    products={this.state.products.filter(
-                      p => p.prod_recome === '1',
-                    )}
-                  />
-                </View>
-              </SafeAreaView>
-            </HomeSection>
-            <HomeSection title="Promociones">
-              <SafeAreaView style={{flex: 1}}>
-                <View
-                  style={{
-                    flex: 1,
-                    flexDirection: 'row',
-                    justifyContent: 'center',
-                    marginTop: -30,
-                  }}>
-                  <Recomedantions
-                    products={this.state.products.filter(
-                      p => p.prod_suges === '1',
-                    )}
-                  />
-                </View>
-              </SafeAreaView>
-            </HomeSection>
-          </ScrollView>
-        </Header>
-        <TabMenuIcons />
+        <ImageBackground
+          source={background}
+          style={{flex: 1, resizeMode: 'cover'}}>
+          <Header>
+            <ScrollView contentContainerStyle={{flexGrow: 1}}>
+              <HomeSection title="Recomendaciones">
+                <SafeAreaView style={{flex: 1}}>
+                  <View
+                    style={{
+                      flex: 1,
+                      flexDirection: 'row',
+                      justifyContent: 'center',
+                      marginTop: -30,
+                    }}>
+                    <Recomedantions
+                      products={this.state.products.filter(
+                        p => p.prod_recome === '1',
+                      )}
+                    />
+                  </View>
+                </SafeAreaView>
+              </HomeSection>
+              <HomeSection title="Promociones">
+                <SafeAreaView style={{flex: 1, marginBottom: 150}}>
+                  <View
+                    style={{
+                      flex: 1,
+                      flexDirection: 'row',
+                      justifyContent: 'center',
+                      marginTop: -30,
+                    }}>
+                    <Recomedantions
+                      products={this.state.products.filter(
+                        p => p.prod_suges === '1',
+                      )}
+                    />
+                  </View>
+                </SafeAreaView>
+              </HomeSection>
+            </ScrollView>
+          </Header>
+          <TabMenuIcons />
+        </ImageBackground>
       </View>
     );
   }

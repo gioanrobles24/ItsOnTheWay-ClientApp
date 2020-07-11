@@ -74,6 +74,8 @@ export function MobilePayment({address, description}) {
         products: JSON.stringify(
           cartItems.map(item => ({
             prod_id: item.id,
+            quantity: item.quantity,
+
             extras: item.extras.map(e => e.extra_id),
           })),
         ),

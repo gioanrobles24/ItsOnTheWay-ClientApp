@@ -160,10 +160,6 @@ const styles = StyleSheet.create({
   Text: {
     // color: '#bdbfc1',
   },
-  header: {
-    flexDirection: 'row',
-    // marginTop: 50,
-  },
   Title: {
     fontSize: 25,
     color: '#373535',

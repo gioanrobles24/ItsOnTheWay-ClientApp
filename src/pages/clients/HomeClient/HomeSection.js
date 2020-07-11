@@ -15,6 +15,10 @@ export function HomeSection(props) {
             borderRadius: 3,
             borderBottomWidth: 3,
             borderBottomColor: '#a9d046',
+            fontFamily: 'Moon',
+            textShadowOffset: {width: 0.5, height: 0.5},
+            textShadowColor: '#FFFFFF',
+            textShadowRadius: 1,
           }}>
           {props.title}
         </Text>

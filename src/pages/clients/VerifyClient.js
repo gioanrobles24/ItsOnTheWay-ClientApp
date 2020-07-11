@@ -12,10 +12,13 @@ import {
   ToastAndroid,
   BackHandler,
   ScrollView,
+  ImageBackground,
 } from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import {Icon, Avatar, Badge, withBadge} from 'react-native-elements';
 import {createStackNavigator} from 'react-navigation';
+import {green} from '../../colors';
+const background = require('../../assets/background.png');
 
 export default class VerifyClientView extends Component {
   constructor(props) {
@@ -64,41 +67,47 @@ export default class VerifyClientView extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <View>
-          <Text style={styles.ConfirTitle} h1>
-            Confirmación
-          </Text>
-        </View>
-        <ScrollView>
-          <View style={styles.inputContainer}>
-            <TextInput
-              style={styles.inputs}
-              placeholder="Inserta el codigo enviado a tu Email"
-              keyboardType="default"
-              underlineColorAndroid="transparent"
-              onChangeText={code => this.setState({code})}
+      <View style={{flex: 1}}>
+        <ImageBackground
+          source={background}
+          style={{flex: 1, resizeMode: 'cover'}}>
+          <View style={styles.container}>
+            <View>
+              <Text style={styles.ConfirTitle} h1>
+                Confirmación
+              </Text>
+            </View>
+            <ScrollView style={{width: '100%'}}>
+              <View style={styles.inputContainer}>
+                <TextInput
+                  style={styles.inputs}
+                  placeholder="Inserta el codigo enviado a tu Email"
+                  keyboardType="default"
+                  underlineColorAndroid="transparent"
+                  onChangeText={code => this.setState({code})}
+                />
+              </View>
+            </ScrollView>
+            <TouchableHighlight
+              style={[styles.buttonContainer, styles.loginButton]}
+              onPress={() => {
+                this.register();
+              }}>
+              <Text style={styles.loginText}>Confirmar</Text>
+            </TouchableHighlight>
+            <Avatar
+              rounded
+              size="xlarge"
+              overlayContainerStyle={{backgroundColor: 'transparent'}}
+              containerStyle={{
+                alignSelf: 'center',
+                flexDirection: 'column',
+                marginTop: 20,
+              }}
+              source={{uri: 'http://test.itsontheway.com.ve/api/imgVerde'}}
             />
           </View>
-        </ScrollView>
-        <TouchableHighlight
-          style={[styles.buttonContainer, styles.loginButton]}
-          onPress={() => {
-            this.register();
-          }}>
-          <Text style={styles.loginText}>Confirmar</Text>
-        </TouchableHighlight>
-        <Avatar
-          rounded
-          size="xlarge"
-          overlayContainerStyle={{backgroundColor: 'transparent'}}
-          containerStyle={{
-            alignSelf: 'center',
-            flexDirection: 'column',
-            marginTop: 20,
-          }}
-          source={{uri: 'http://test.itsontheway.com.ve/api/imgVerde'}}
-        />
+        </ImageBackground>
       </View>
     );
   }
@@ -107,9 +116,9 @@ export default class VerifyClientView extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    padding: 20,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'white',
     fontFamily: 'QUICKSAND-LIGHT',
   },
 
@@ -118,6 +127,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
+    fontFamily: 'Moon',
     color: '#373535',
   },
   inputContainer: {
@@ -125,16 +135,19 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     borderRadius: 30,
     borderBottomWidth: 1,
-    width: 350,
+    width: '100%',
     height: 55,
     marginBottom: 20,
     flexDirection: 'row',
     alignItems: 'center',
   },
   inputs: {
-    height: 50,
-    marginLeft: 12,
-    borderBottomColor: '#FFFFFF',
+    marginTop: 5,
+    borderRadius: 15,
+    textAlignVertical: 'top',
+    paddingHorizontal: 10,
+    borderColor: green,
+    borderWidth: 2,
     flex: 1,
   },
   inputIcon: {

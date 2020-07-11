@@ -11,10 +11,13 @@ import {
   Switch,
   ToastAndroid,
   BackHandler,
+  ImageBackground,
 } from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import {Icon, Avatar, Badge, withBadge} from 'react-native-elements';
 import {createStackNavigator} from 'react-navigation';
+import {green} from '../../colors';
+const background = require('../../assets/background.png');
 
 export default class RegisterClientView extends Component {
   constructor(props) {
@@ -69,41 +72,49 @@ export default class RegisterClientView extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <View>
-          <Text style={styles.loginTitle} h1>
-            Re establece tu clave
-          </Text>
-        </View>
+      <View style={{flex: 1}}>
+        <ImageBackground
+          source={background}
+          style={{flex: 1, resizeMode: 'cover'}}>
+          <View style={styles.container}>
+            <View>
+              <Text style={styles.loginTitle} h1>
+                Restablece tu clave
+              </Text>
+            </View>
 
-        <View style={styles.inputContainer}>
-          <TextInput
-            style={styles.inputs}
-            placeholder="Correo"
-            keyboardType="email-address"
-            underlineColorAndroid="transparent"
-            onChangeText={email => this.setState({email})}
-          />
-        </View>
+            <View style={styles.inputContainer}>
+              <TextInput
+                style={styles.inputs}
+                placeholder="Correo"
+                keyboardType="email-address"
+                underlineColorAndroid="transparent"
+                onChangeText={email => this.setState({email})}
+              />
+            </View>
 
-        <TouchableHighlight
-          style={[styles.buttonContainer, styles.loginButton]}
-          onPress={() => {
-            this.sendResetPasswd();
-          }}>
-          <Text style={styles.loginText}>Enviar</Text>
-        </TouchableHighlight>
-        <Avatar
-          rounded
-          size="xlarge"
-          overlayContainerStyle={{backgroundColor: 'transparent'}}
-          containerStyle={{
-            alignSelf: 'center',
-            flexDirection: 'column',
-            marginTop: 20,
-          }}
-          source={{uri: 'http://test.itsontheway.com.ve/api/imgVerde'}}
-        />
+            <TouchableHighlight
+              style={[styles.buttonContainer, styles.loginButton]}
+              onPress={() => {
+                this.sendResetPasswd();
+              }}>
+              <Text style={styles.loginText}>Enviar</Text>
+            </TouchableHighlight>
+            <Avatar
+              rounded
+              size="xlarge"
+              overlayContainerStyle={{backgroundColor: 'transparent'}}
+              containerStyle={{
+                alignSelf: 'center',
+                flexDirection: 'column',
+                marginTop: 20,
+                backgroundColor: 'white',
+                elevation: 6,
+              }}
+              source={{uri: 'http://test.itsontheway.com.ve/api/imgVerde'}}
+            />
+          </View>
+        </ImageBackground>
       </View>
     );
   }
@@ -114,31 +125,31 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'white',
     fontFamily: 'QUICKSAND-LIGHT',
+    padding: 20,
   },
 
   loginTitle: {
     fontSize: 25,
     flexDirection: 'row',
     color: '#373535',
+    fontFamily: 'Moon',
   },
   inputContainer: {
-    borderBottomColor: '#bdbfc1',
     backgroundColor: '#FFFFFF',
-    borderRadius: 30,
-    borderBottomWidth: 1,
-    width: 350,
-    height: 55,
+    width: '100%',
     marginBottom: 20,
-    flexDirection: 'column',
-    alignItems: 'flex-start',
-    justifyContent: 'center',
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   inputs: {
-    height: 50,
-    marginLeft: 12,
-    borderBottomColor: '#FFFFFF',
+    marginTop: 5,
+    borderRadius: 15,
+    textAlignVertical: 'top',
+    paddingHorizontal: 10,
+    borderColor: green,
+    borderWidth: 2,
+    flex: 1,
   },
   buttonContainer: {
     height: 45,

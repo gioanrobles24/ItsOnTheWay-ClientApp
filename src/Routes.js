@@ -95,9 +95,9 @@ const UnauthApp = props => {
     <Router navBarButtonColor="#a9d046" backAndroidHandler={backAction}>
       <Scene key="root">
         <Scene key="loginClient" hideNavBar={true} component={LoginClient} />
+        <Scene key="verifyClient" component={VerifyClient} />
         <Scene key="registerClient" component={RegisterClient} />
         <Scene key="resetPasswordClient" component={ResetPasswordClient} />
-        <Scene key="verifyClient" component={VerifyClient} />
       </Scene>
     </Router>
   );

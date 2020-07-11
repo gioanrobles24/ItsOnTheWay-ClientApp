@@ -10,9 +10,10 @@ import {
 import {Actions} from 'react-native-router-flux';
 import {Icon} from 'react-native-elements';
 import BottomBar from 'react-native-bottom-bar';
+import {green} from '../../colors';
 
 const mainColor = '#bdbfc1';
-const pnkGradient = ['#ffffff', mainColor];
+const pnkGradient = ['#ffffff', green];
 
 class TabMenuIcons extends Component {
   constructor(props) {

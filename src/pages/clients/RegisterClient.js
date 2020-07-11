@@ -13,11 +13,14 @@ import {
   BackHandler,
   Picker,
   ScrollView,
+  ImageBackground,
 } from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import {Icon, Avatar, Badge, withBadge} from 'react-native-elements';
 import {createStackNavigator} from 'react-navigation';
 import RNPickerSelect from 'react-native-picker-select';
+import {green} from '../../colors';
+const background = require('../../assets/background.png');
 
 export default class RegisterClientView extends Component {
   constructor(props) {
@@ -41,16 +44,6 @@ export default class RegisterClientView extends Component {
           value: 'blue',
         },
       ],
-    };
-    state = {
-      name: '',
-      last_name: '',
-      email: '',
-      phone: '',
-      password: '',
-      password_confirm: '',
-      estado: '',
-      user: 'user_default',
     };
   }
 
@@ -110,105 +103,90 @@ export default class RegisterClientView extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <View>
-          <Text style={styles.loginTitle} h1>
-            Registro
-          </Text>
-        </View>
-        <ScrollView>
-          <View>
-            <Text style={styles.loginTitle2} h3>
-              Registrate para poder empezar
-            </Text>
-          </View>
-          <View style={styles.inputContainer}>
-            <TextInput
-              style={styles.inputs}
-              placeholder="Nombre"
-              keyboardType="default"
-              underlineColorAndroid="transparent"
-              onChangeText={name => this.setState({name})}
-            />
-          </View>
-          <View style={styles.inputContainer}>
-            <TextInput
-              style={styles.inputs}
-              placeholder="Apellido"
-              keyboardType="default"
-              underlineColorAndroid="transparent"
-              onChangeText={last_name => this.setState({last_name})}
-            />
-          </View>
+      <View style={{flex: 1}}>
+        <ImageBackground
+          source={background}
+          style={{flex: 1, resizeMode: 'cover'}}>
+          <View style={styles.container}>
+            <View>
+              <Text style={styles.loginTitle} h1>
+                Registro
+              </Text>
+            </View>
+            <ScrollView style={{width: '100%'}}>
+              <View style={styles.inputContainer}>
+                <TextInput
+                  style={styles.inputs}
+                  placeholder="Nombre"
+                  keyboardType="default"
+                  underlineColorAndroid="transparent"
+                  onChangeText={name => this.setState({name})}
+                />
+              </View>
+              <View style={styles.inputContainer}>
+                <TextInput
+                  style={styles.inputs}
+                  placeholder="Apellido"
+                  keyboardType="default"
+                  underlineColorAndroid="transparent"
+                  onChangeText={last_name => this.setState({last_name})}
+                />
+              </View>
 
-          <View style={styles.inputContainer}>
-            <TextInput
-              style={styles.inputs}
-              placeholder="Teléfono"
-              keyboardType="phone-pad"
-              underlineColorAndroid="transparent"
-              onChangeText={phone => this.setState({phone})}
-            />
-          </View>
-          <View style={styles.inputContainer}>
-            <TextInput
-              style={styles.inputs}
-              placeholder="Email"
-              keyboardType="email-address"
-              underlineColorAndroid="transparent"
-              onChangeText={email => this.setState({email})}
-            />
-          </View>
-          <View style={styles.inputContainer}>
-            <TextInput
-              style={styles.inputs}
-              placeholderTextColor="gray"
-              placeholder="Clave"
-              secureTextEntry={this.state.showPassword}
-              onChangeText={password => this.setState({password})}
-            />
-            <Icon
-              name={this.state.icon}
-              onPress={() => this.toggleSwitch()}
-              value={!this.state.showPassword}
-            />
-          </View>
-          <View style={styles.inputContainer}>
-            <TextInput
-              style={styles.inputs}
-              placeholderTextColor="gray"
-              placeholder="Repetir Clave"
-              secureTextEntry={this.state.showPassword}
-              onChangeText={password_confirm =>
-                this.setState({password_confirm})
-              }
-            />
-          </View>
-          <RNPickerSelect
-            placeholder={{
-              label: 'Seleciona un estado',
-              value: null,
-            }}
-            items={this.state.items}
-            onValueChange={value => {
-              this.setState({
-                favColor: value,
-              });
-            }}
-            style={{marginLeft: 10}}
-            value={this.state.favColor}
-            useNativeAndroidPickerStyle={true}
-            hideIcon={true}
-          />
-        </ScrollView>
+              <View style={styles.inputContainer}>
+                <TextInput
+                  style={styles.inputs}
+                  placeholder="Teléfono"
+                  keyboardType="phone-pad"
+                  underlineColorAndroid="transparent"
+                  onChangeText={phone => this.setState({phone})}
+                />
+              </View>
+              <View style={styles.inputContainer}>
+                <TextInput
+                  style={styles.inputs}
+                  placeholder="Email"
+                  keyboardType="email-address"
+                  underlineColorAndroid="transparent"
+                  onChangeText={email => this.setState({email})}
+                />
+              </View>
+              <View style={styles.inputContainer}>
+                <TextInput
+                  style={styles.inputs}
+                  placeholderTextColor="gray"
+                  placeholder="Clave"
+                  secureTextEntry={this.state.showPassword}
+                  onChangeText={password => this.setState({password})}
+                />
+                <Icon
+                  name={this.state.icon}
+                  onPress={() => this.toggleSwitch()}
+                  value={!this.state.showPassword}
+                />
+              </View>
+              <View style={styles.inputContainer}>
+                <TextInput
+                  style={styles.inputs}
+                  placeholderTextColor="gray"
+                  placeholder="Repetir Clave"
+                  secureTextEntry={this.state.showPassword}
+                  onChangeText={password_confirm =>
+                    this.setState({password_confirm})
+                  }
+                />
+              </View>
+            </ScrollView>
 
-        <TouchableHighlight
-          style={[styles.buttonContainer, styles.loginButton]}
-          onPress={() => {
-            this.Verification();
-          }}>
-          <Text style={styles.loginText}>Continuar</Text>
-        </TouchableHighlight>
+            <TouchableHighlight
+              style={[styles.buttonContainer, styles.loginButton]}
+              onPress={() => {
+                this.Verification();
+              }}>
+              <Text style={styles.loginText}>Continuar</Text>
+            </TouchableHighlight>
+          </View>
+        </ImageBackground>
       </View>
     );
   }
@@ -217,10 +195,9 @@ export default class RegisterClientView extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    padding: 20,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'white',
-    fontFamily: 'QUICKSAND-LIGHT',
   },
 
   loginTitle: {
@@ -229,6 +206,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     color: '#373535',
+    fontFamily: 'Moon',
   },
   loginTitle2: {
     fontSize: 15,
@@ -241,18 +219,18 @@ const styles = StyleSheet.create({
   inputContainer: {
     borderBottomColor: '#bdbfc1',
     backgroundColor: '#FFFFFF',
-    borderRadius: 30,
-    borderBottomWidth: 1,
-    width: 400,
-    height: 55,
     marginBottom: 20,
     flexDirection: 'row',
     alignItems: 'center',
+    width: '100%',
   },
   inputs: {
-    height: 50,
-    marginLeft: 12,
-    borderBottomColor: '#FFFFFF',
+    marginTop: 5,
+    borderRadius: 15,
+    textAlignVertical: 'top',
+    paddingHorizontal: 10,
+    borderColor: green,
+    borderWidth: 2,
     flex: 1,
   },
   inputIcon: {

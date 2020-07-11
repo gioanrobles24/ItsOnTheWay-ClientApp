@@ -96,7 +96,9 @@ class NewAddressClientView extends Component {
     if (description) {
       Alert.alert(
         'Hola! Por favor confirma: ',
-        '¿Estás seguro agregar esta dirección?',
+        this.props.address
+          ? '¿Estas seguro de actualizar esta dirección?'
+          : '¿Estás seguro de agregar esta dirección?',
         [
           {
             text: 'Cancelar',
@@ -138,7 +140,7 @@ class NewAddressClientView extends Component {
                   if (resp.error) {
                     Alert.alert(resp.error);
                   } else {
-                    Actions.addressClient();
+                    Actions.pop();
                   }
                 })
                 .catch(e => Alert.alert('Error'));

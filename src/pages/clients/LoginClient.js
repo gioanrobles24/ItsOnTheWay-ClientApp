@@ -6,6 +6,7 @@ import {
   TextInput,
   TouchableHighlight,
   Alert,
+  ImageBackground,
 } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import {Actions} from 'react-native-router-flux';
@@ -13,7 +14,9 @@ import {Icon, Avatar, Badge, withBadge} from 'react-native-elements';
 import {createStackNavigator} from 'react-navigation';
 import {setUser} from '../../reducers/session';
 import {connect} from 'react-redux';
+import {green} from '../../colors';
 const imageverde = {uri: 'http://test.itsontheway.com.ve/api/imgVerde'};
+const background = require('../../assets/background.png');
 
 class LoginClientView extends Component {
   constructor(props) {
@@ -84,88 +87,96 @@ class LoginClientView extends Component {
     const {loading} = this.state;
     return (
       <View style={styles.container}>
-        <View>
-          <Text style={styles.loginTitle} h1>
-            Login
-          </Text>
-        </View>
-        <View>
-          <Text style={styles.loginSubTitle} h3>
-            Inicie sesión para continuar
-          </Text>
-        </View>
-        <View style={styles.inputContainer}>
-          <TextInput
-            style={styles.inputs}
-            placeholder="Correo"
-            keyboardType="email-address"
-            underlineColorAndroid="transparent"
-            onChangeText={email => this.setState({email})}
-          />
-        </View>
+        <ImageBackground
+          source={background}
+          style={{flex: 1, resizeMode: 'cover'}}>
+          <View style={styles.container}>
+            <View>
+              <Text style={styles.loginTitle} h1>
+                Login
+              </Text>
+            </View>
+            <View>
+              <Text style={styles.loginSubTitle} h3>
+                Inicie sesión para continuar
+              </Text>
+            </View>
+            <View style={styles.inputContainer}>
+              <TextInput
+                style={styles.inputs}
+                placeholder="Correo"
+                keyboardType="email-address"
+                underlineColorAndroid="transparent"
+                onChangeText={email => this.setState({email})}
+              />
+            </View>
 
-        <View style={styles.inputContainer}>
-          <TextInput
-            style={styles.inputs}
-            placeholderTextColor="gray"
-            placeholder="Contraseña"
-            secureTextEntry={this.state.showPassword}
-            onChangeText={password => this.setState({password})}
-          />
-          <Icon
-            name={this.state.icon}
-            onPress={() => this.toggleSwitch()}
-            value={!this.state.showPassword}
-          />
-        </View>
+            <View style={styles.inputContainer}>
+              <TextInput
+                style={styles.inputs}
+                placeholderTextColor="gray"
+                placeholder="Contraseña"
+                secureTextEntry={this.state.showPassword}
+                onChangeText={password => this.setState({password})}
+              />
+              <Icon
+                name={this.state.icon}
+                onPress={() => this.toggleSwitch()}
+                value={!this.state.showPassword}
+              />
+            </View>
 
-        <View>
-          <Text
-            style={styles.reset}
-            onPress={() => {
-              this.resetPassword();
-            }}>
-            ¿olvidó la clave?
-          </Text>
-        </View>
+            <View>
+              <Text
+                style={styles.reset}
+                onPress={() => {
+                  this.resetPassword();
+                }}>
+                ¿olvidó la clave?
+              </Text>
+            </View>
 
-        <TouchableHighlight
-          disabled={loading}
-          style={[styles.buttonContainer, styles.loginButton]}
-          onPress={() => {
-            this.Login();
-          }}>
-          {!loading ? (
-            <Text style={styles.loginText}>Ingresar</Text>
-          ) : (
-            <Text style={styles.loginText}>Cargando...</Text>
-          )}
-        </TouchableHighlight>
+            <TouchableHighlight
+              disabled={loading}
+              style={[styles.buttonContainer, styles.loginButton]}
+              onPress={() => {
+                this.Login();
+              }}>
+              {!loading ? (
+                <Text style={styles.loginText}>Ingresar</Text>
+              ) : (
+                <Text style={styles.loginText}>Cargando...</Text>
+              )}
+            </TouchableHighlight>
 
-        <View style={styles.registerContainer}>
-          <Text style={styles.registertext} h5>
-            Nuevo en It's?
-          </Text>
-          <Text
-            style={styles.registertext2}
-            onPress={() => {
-              this.register();
-            }}
-            h5>
-            Registrate
-          </Text>
-        </View>
-        <Avatar
-          rounded
-          size="xlarge"
-          overlayContainerStyle={{backgroundColor: 'transparent'}}
-          containerStyle={{
-            alignSelf: 'center',
-            flexDirection: 'column',
-            marginTop: 20,
-          }}
-          source={imageverde}
-        />
+            <View style={styles.registerContainer}>
+              <Text style={styles.registertext} h5>
+                Nuevo en It's?
+              </Text>
+              <Text
+                style={styles.registertext2}
+                onPress={() => {
+                  this.register();
+                }}
+                h5>
+                Registrate
+              </Text>
+            </View>
+            <Avatar
+              rounded
+              size="xlarge"
+              overlayContainerStyle={{backgroundColor: 'transparent'}}
+              containerStyle={{
+                alignSelf: 'center',
+                flexDirection: 'column',
+                marginTop: 20,
+                elevation: 6,
+                backgroundColor: 'white',
+              }}
+              source={imageverde}
+            />
+          </View>
+        </ImageBackground>
       </View>
     );
   }
@@ -187,9 +198,18 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'white',
     fontFamily: 'QUICKSAND-LIGHT',
   },
+  inputs: {
+    marginTop: 5,
+    borderRadius: 15,
+    textAlignVertical: 'top',
+    paddingHorizontal: 10,
+    borderColor: green,
+    borderWidth: 2,
+    flex: 1,
+  },
+
   inputContainer: {
     borderBottomColor: '#bdbfc1',
     backgroundColor: '#FFFFFF',
@@ -201,12 +221,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
-  inputs: {
-    height: 50,
-    marginLeft: 12,
-    borderBottomColor: '#FFFFFF',
-    flex: 1,
-  },
+  // inputs: {
+  //   height: 50,
+  //   marginLeft: 12,
+  //   borderBottomColor: '#FFFFFF',
+  //   flex: 1,
+  // },
   inputIcon: {
     width: 30,
     height: 30,
@@ -242,6 +262,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     color: '#373535',
+    fontFamily: 'Moon',
   },
 
   loginSubTitle: {
@@ -251,11 +272,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 20,
     marginBottom: 20,
-    color: '#bdbfc1',
+    color: '#373535',
   },
 
   reset: {
-    color: '#a9d046',
+    color: '#373535',
     height: 30,
     marginBottom: 35,
     fontSize: 16,
@@ -273,11 +294,11 @@ const styles = StyleSheet.create({
     width: 400,
   },
   registertext: {
-    color: '#bdbfc1',
+    color: '#373535',
     height: 30,
     fontSize: 16,
   },
   registertext2: {
-    color: '#a9d046',
+    color: '#373535',
   },
 });
