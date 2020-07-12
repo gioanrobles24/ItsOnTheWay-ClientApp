@@ -22,6 +22,7 @@ import MapboxGL from '@react-native-mapbox-gl/maps';
 import GetLocation from 'react-native-get-location';
 import {green} from '../../colors';
 import {isPointInPolygon} from 'geolib';
+import {setAddresses} from '../../reducers/addresses';
 const markerIcon = require('../../assets/marker.png');
 
 const image = {uri: 'http://test.itsontheway.com.ve/api/imgBlanca'};
@@ -46,10 +47,31 @@ class NewAddressClientView extends Component {
     });
   }
 
-  componentDidMount() {
+  fetchAddresses() {
+    fetch(
+      `http://test.itsontheway.com.ve/api/clients/address_client/${
+        this.props.user.response.client_info.id
+      }`,
+    )
+      .then(resp => resp.json())
+      .then(resp => {
+        this.props.setAddresses(resp.response.address_client);
+      })
+      .catch(console.log);
+  }
+
+  fetchZones() {
     fetch('http://test.itsontheway.com.ve/api/aviable_zones')
       .then(resp => resp.json())
-      .then(resp => this.setState({zones: resp.zones_aviables}));
+      .then(resp => {
+        this.setState({zones: resp.zones_aviables});
+      })
+      .catch(e => {
+        Alert.alert('Error');
+      });
+  }
+  componentDidMount() {
+    this.fetchZones();
 
     GetLocation.getCurrentPosition({
       enableHighAccuracy: true,
@@ -86,7 +108,7 @@ class NewAddressClientView extends Component {
             longitude: m.marker_lon,
           })),
         }))
-        .find(zone => !isPointInPolygon(coordinate, zone.coordinates));
+        .find(zone => isPointInPolygon(coordinate, zone.coordinates));
       if (!zone) {
         Alert.alert('No enviamos a esta dirección');
         return;
@@ -102,7 +124,7 @@ class NewAddressClientView extends Component {
         [
           {
             text: 'Cancelar',
-            onPress: () => console.log('Cancel Pressed'),
+            onPress: () => {},
             style: 'cancel',
           },
           {
@@ -136,10 +158,10 @@ class NewAddressClientView extends Component {
                   return resp.json();
                 })
                 .then(resp => {
-                  console.log(JSON.stringify(resp, undefined, 2));
                   if (resp.error) {
                     Alert.alert(resp.error);
                   } else {
+                    this.fetchAddresses();
                     Actions.pop();
                   }
                 })
@@ -155,7 +177,6 @@ class NewAddressClientView extends Component {
   };
 
   render() {
-    console.log(this.state);
     const marker = {
       type: 'FeatureCollection',
       features:
@@ -235,10 +256,15 @@ const mapStateToProps = (state, ownProps) => {
     user: state.session.user,
   };
 };
+const mapDispatchToProps = dispatch => {
+  return {
+    setAddresses: addresses => dispatch(setAddresses(addresses)),
+  };
+};
 
 export default connect(
   mapStateToProps,
-  null,
+  mapDispatchToProps,
 )(NewAddressClientView);
 
 const styles = StyleSheet.create({

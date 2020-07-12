@@ -8,6 +8,6 @@ import {name as appName} from './app.json';
 import MapboxGL from '@react-native-mapbox-gl/maps';
 
 MapboxGL.setAccessToken(
-  'pk.eyJ1Ijoid3VsZnN5c3RlbXMiLCJhIjoiY2tibDB4aDJkMTNjNjJzbXlwdGd4bjVrZSJ9.lfBKMJjxa9t9cN7jMY0DDQ',
+  'pk.eyJ1IjoiaXRzb250aGV3YXkiLCJhIjoiY2tjYXBvZDNnMDBzZTJycWU0NXBtcjU3cyJ9.RzVCBNzfGW9lqmcZmTA40Q',
 );
 AppRegistry.registerComponent(appName, () => App);

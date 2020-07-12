@@ -22,7 +22,6 @@ class PaymentTypeClientView extends Component {
     )
       .then(resp => resp.json())
       .then(resp => {
-        console.log(resp);
         this.setState({
           deliveryPrice: parseFloat(resp.response.d_price.delivery_price_usd),
           loading: false,

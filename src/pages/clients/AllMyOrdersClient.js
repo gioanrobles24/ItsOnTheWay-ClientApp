@@ -28,7 +28,6 @@ export default function AllMyOrdersClientView(props) {
         if (obj.response.error) {
           Alert.alert('Error');
         } else {
-          console.log(obj.response.orders);
           setOrders(obj.response.orders);
         }
       })

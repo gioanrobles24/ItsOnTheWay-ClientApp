@@ -13,7 +13,7 @@ import BottomBar from 'react-native-bottom-bar';
 import {green} from '../../colors';
 
 const mainColor = '#bdbfc1';
-const pnkGradient = ['#ffffff', green];
+const pnkGradient = [green, green];
 
 class TabMenuIcons extends Component {
   constructor(props) {
@@ -35,11 +35,10 @@ class TabMenuIcons extends Component {
   renderMainIcon() {
     return (
       <Icon
-        raised
         name="home"
         type="font-awesome"
         size={29}
-        color="#d3e38c"
+        color="white"
         onPress={() => {
           this.MisPedios();
         }}
@@ -168,9 +167,10 @@ class TabMenuIcons extends Component {
       <SafeAreaView style={styles.menutab}>
         <View style={styles.menutab}>
           <BottomBar
-            shapeColor="#ffffff"
-            miniButtonsColor="#ffffff"
-            mainIconGradient={pnkGradient}
+            // shapeColor="#ffffff"
+            // miniButtonsColor="#ffffff"
+            mainIconGradient={[green, green]}
+            // mainIconColor={green}
             mainIcon={this.renderMainIcon()}
             mainIconOnPress={this.mainIconOnPress}
             firstIconComponent={this.renderFirstIconComponent()}

@@ -117,7 +117,6 @@ export function BankPayment({address, description}) {
           return resp.json();
         })
         .then(resp => {
-          console.log(resp);
           if (resp.error) {
             Alert.alert(resp.error);
           } else {

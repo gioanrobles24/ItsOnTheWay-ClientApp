@@ -9,16 +9,11 @@ class Recomendations extends Component {
   goToPartner(product) {
     Actions.productView({
       product,
-      onBack: () => {
-        Actions.replace('partnerView', {
-          p_id: product.prod_partner_id,
-        });
-      },
+      fromHome: true,
     });
   }
 
   render() {
-    console.log(this.props.products);
     return (
       <View style={styles.container}>
         <ScrollView horizontal={true}>

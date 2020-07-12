@@ -15,6 +15,7 @@ import {
   SafeAreaView,
   TouchableOpacity,
   ScrollView,
+  FlatList,
 } from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import {Icon, Avatar, Badge, withBadge, Input} from 'react-native-elements';
@@ -51,7 +52,6 @@ export default class SearchStoreTypeView extends Component {
         if (responseData.error) {
           alert(' por favor intenta nuevamente');
         } else {
-          console.log(responseData);
           this.setState(
             {
               partnersByCat: responseData.response.parterByCat,
@@ -96,8 +96,33 @@ export default class SearchStoreTypeView extends Component {
   CurrentOrder() {
     Actions.orderClient();
   }
+  keyExtractor(item) {
+    return item.id;
+  }
+  renderItem = ({item: partner}) => (
+    <View style={styles.cardOrdercontainer}>
+      <TouchableHighlight
+        underlayColor="transparent"
+        onPress={() => {
+          this.ThisPartnerView(partner.id);
+        }}>
+        <Card style={styles.cardOrder}>
+          <Avatar
+            rounded
+            size="medium"
+            source={{
+              uri: `http://test.itsontheway.com.ve/images/socios/${
+                partner.id
+              }/${partner.profile_pic}`,
+            }}
+          />
+          <Text style={styles.cardOrderSubTitle}>{partner.p_user}</Text>
+        </Card>
+      </TouchableHighlight>
+    </View>
+  );
+
   render() {
-    console.log(this.state.partnersByCat);
     return (
       <View style={styles.container}>
         <View style={styles.header}>
@@ -119,10 +144,17 @@ export default class SearchStoreTypeView extends Component {
             }}
           />
         </View>
-        <ScrollView>
+        <View style={styles.productscontainer}>
+          <FlatList
+            keyExtractor={this.keyExtractor}
+            data={this.state.partnersByCat}
+            renderItem={this.renderItem}
+          />
+        </View>
+        {/* <ScrollView>
           <View style={styles.productscontainer}>
             {this.state.partnersByCat.map(partner => (
-              <View style={styles.cardOrdercontainer}>
+              <View style={styles.cardOrdercontainer} key={partner.id}>
                 <TouchableHighlight
                   underlayColor="transparent"
                   onPress={() => {
@@ -146,7 +178,7 @@ export default class SearchStoreTypeView extends Component {
               </View>
             ))}
           </View>
-        </ScrollView>
+        </ScrollView> */}
         <SafeAreaView style={{height: 80}} />
         <SafeAreaView style={styles.menutab}>
           <TabMenuIcons />

@@ -35,7 +35,6 @@ export function OrderDetail({orderId, navigation}) {
           Alert.alert('Error');
           Actions.pop();
         } else {
-          console.log(JSON.stringify(obj.response, undefined, 2));
           setOrder({
             ...obj.response.order,
             products: obj.response.order_productos.map(p => ({

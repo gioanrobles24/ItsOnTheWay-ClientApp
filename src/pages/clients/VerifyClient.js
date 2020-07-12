@@ -52,7 +52,7 @@ export default class VerifyClientView extends Component {
             [
               {
                 text: 'Cancel',
-                onPress: () => console.log('Cancel Pressed'),
+                onPress: () => {},
                 style: 'cancel',
               },
               {text: 'OK', onPress: () => Actions.loginClient()},

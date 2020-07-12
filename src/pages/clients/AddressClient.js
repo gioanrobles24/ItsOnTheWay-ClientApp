@@ -4,6 +4,7 @@ import {Actions} from 'react-native-router-flux';
 import {Icon, ListItem} from 'react-native-elements';
 import {connect} from 'react-redux';
 import {address} from 'faker';
+import {setAddresses} from '../../reducers/addresses';
 const image = {uri: 'http://test.itsontheway.com.ve/api/imgBlanca'};
 
 class AllmyOrdersClientView extends Component {
@@ -29,8 +30,7 @@ class AllmyOrdersClientView extends Component {
     )
       .then(resp => resp.json())
       .then(resp => {
-        console.log(JSON.stringify(resp, undefined, 2));
-        this.setState({addresses: resp.response.address_client});
+        this.props.setAddresses(resp.response.address_client);
       })
       .catch(console.log);
   }
@@ -101,9 +101,9 @@ class AllmyOrdersClientView extends Component {
             }}
           />
         </View>
-        <View>
-          <ScrollView>
-            {this.state.addresses.map(addr => (
+        <View style={{flex: 1}}>
+          <ScrollView contentContainerStyle={{flexGrow: 1}}>
+            {this.props.addresses.map(addr => (
               <ListItem
                 title={addr.zone_name}
                 subtitle={addr.description}
@@ -128,12 +128,19 @@ class AllmyOrdersClientView extends Component {
 const mapStateToProps = (state, ownProps) => {
   return {
     user: state.session.user,
+    addresses: state.addresses.addresses,
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    setAddresses: addresses => dispatch(setAddresses(addresses)),
   };
 };
 
 export default connect(
   mapStateToProps,
-  null,
+  mapDispatchToProps,
 )(AllmyOrdersClientView);
 
 const styles = StyleSheet.create({

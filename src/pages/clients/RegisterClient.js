@@ -80,7 +80,7 @@ export default class RegisterClientView extends Component {
             [
               {
                 text: 'Cancelar',
-                onPress: () => console.log('Cancel Pressed'),
+                onPress: () => {},
                 style: 'cancel',
               },
               {text: 'Ir a login', onPress: () => Actions.pop()},

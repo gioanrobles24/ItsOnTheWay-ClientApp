@@ -17,8 +17,6 @@ function ProductDetail(props) {
   const [sizes, setSizes] = useState([]);
   const [selectedSize, setSelectedSize] = useState(null);
 
-  console.log(product);
-
   const dispatch = useDispatch();
   const [comment, setComment] = useState('');
 
@@ -30,7 +28,6 @@ function ProductDetail(props) {
     )
       .then(resp => resp.json())
       .then(resp => {
-        console.log(resp.response.prod_extras);
         const extras = [];
         const sizes = [];
         if (!resp.error) {
@@ -71,7 +68,15 @@ function ProductDetail(props) {
             }),
           style: 'cancel',
         },
-        {text: 'Ir a tu pedido', onPress: () => Actions.orderClient()},
+        {
+          text: 'Ir a tu pedido',
+          onPress: () => {
+            Actions.replace('partnerView', {
+              p_id: product.prod_partner_id,
+            });
+            Actions.orderClient();
+          },
+        },
       ],
       {cancelable: false},
     );

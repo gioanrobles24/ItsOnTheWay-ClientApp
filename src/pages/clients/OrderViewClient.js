@@ -42,7 +42,6 @@ class OrderViewClient extends Component {
     )
       .then(resp => resp.json())
       .then(resp => {
-        console.log(resp.response.address_client);
         this.setState({addresses: resp.response.address_client});
       });
   }

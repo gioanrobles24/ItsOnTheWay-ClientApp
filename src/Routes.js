@@ -82,6 +82,7 @@ export default connect(
 )(Routes);
 
 function backAction(params) {
+  console.log('ENTRE');
   if (Actions.state.index === 0) {
     BackHandler.exitApp();
     return false;
@@ -118,7 +119,6 @@ const AuthApp = props => {
             fetch('http://test.itsontheway.com.ve/api/currency_value')
               .then(response => response.json())
               .then(dollar => {
-                console.log(dollar);
                 dispatch(changeDollarPrice(dollar.response.c_price.cur_value));
               });
           }}
@@ -128,7 +128,13 @@ const AuthApp = props => {
           component={SearchStoreType}
           renderBackButton={() => {}}
         />
-        <Scene key="addressClient" component={AddressClient} />
+        <Scene
+          key="addressClient"
+          component={AddressClient}
+          onEnter={function() {
+            AddressClient.onEnter();
+          }}
+        />
         <Scene key="generalSearch" component={GeneralSearch} />
         <Scene key="newAddressClient" component={NewAddressClient} />
         <Scene key="allmyOrders" component={AllMyOrders} />

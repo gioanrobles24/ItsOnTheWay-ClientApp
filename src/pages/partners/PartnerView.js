@@ -10,6 +10,7 @@ import {
   TouchableHighlight,
   Image,
   Alert,
+  FlatList,
   ImageBackground,
   Dimensions,
   BackHandler,
@@ -54,8 +55,6 @@ class PartnerView extends Component {
             title: responseData.response.partner.p_user,
           });
 
-          console.log(responseData);
-
           this.setState(
             {
               partner_products: responseData.response.partner_products,
@@ -71,6 +70,11 @@ class PartnerView extends Component {
       });
   }
   backAction = () => {
+    console.log('Entre partner view back');
+    if (Actions.currentScene !== 'partnerView') {
+      return false;
+    }
+
     if (this.props.cartItems.length > 0) {
       Alert.alert(
         'Se perderea el carrito actual',
@@ -90,7 +94,6 @@ class PartnerView extends Component {
         {cancelable: true},
       );
     } else {
-      console.log('ENTRE aqui');
       Actions.pop();
     }
     return true;
@@ -105,6 +108,7 @@ class PartnerView extends Component {
       onBack: this.backAction,
     });
   }
+
   componentWillUnmount() {
     this.backHandler.remove();
   }
@@ -115,11 +119,32 @@ class PartnerView extends Component {
     Actions.productView({product});
   }
 
+  keyExtractor = (item, index) => item.id;
+
+  renderItem = ({item}) => (
+    <ListItem
+      key={item.id}
+      title={item.prod_name}
+      rightTitle={`$${item.prod_price_usd}`}
+      titleStyle={{
+        fontWeight: 'bold',
+        ...styles.grayText,
+      }}
+      leftAvatar={{
+        source: {
+          uri: `http://test.itsontheway.com.ve/images/productos/${
+            item.prod_partner_id
+          }/${item.prod_image}`,
+        },
+      }}
+      chevron
+      onPress={() => this.productView(item)}
+      bottomDivider
+    />
+  );
+
   render() {
-    console.log(this.state.partner_banner);
-    console.log(!!this.state.partner_banner);
     let partner_profile_pic = {uri: this.state.partner_banner};
-    console.log(partner_profile_pic);
 
     return (
       <View style={styles.container}>
@@ -136,34 +161,18 @@ class PartnerView extends Component {
             Productos
           </Text>
         </View>
-        <ScrollView>
-          <View style={styles.productscontainer}>
-            {this.state.partner_products.map(item => {
-              return (
-                <ListItem
-                  title={item.prod_name}
-                  rightTitle={`$${item.prod_price_usd}`}
-                  titleStyle={{
-                    fontWeight: 'bold',
-                    ...styles.grayText,
-                  }}
-                  leftAvatar={{
-                    source: {
-                      uri: `http://test.itsontheway.com.ve/images/productos/${
-                        item.prod_partner_id
-                      }/${item.prod_image}`,
-                    },
-                  }}
-                  chevron
-                  onPress={() => this.productView(item)}
-                  bottomDivider
-                />
-              );
-            })}
-          </View>
-        </ScrollView>
-
-        <PayBoton />
+        {/* <ScrollView> */}
+        <View style={styles.productscontainer}>
+          {/* {this.state.partner_products.map(this.renderItem)} */}
+          <FlatList
+            initialNumToRender={10}
+            keyExtractor={this.keyExtractor}
+            data={this.state.partner_products}
+            renderItem={this.renderItem}
+          />
+          <PayBoton />
+        </View>
+        {/* </ScrollView> */}
       </View>
     );
   }
@@ -258,6 +267,6 @@ const styles = StyleSheet.create({
   },
   productscontainer: {
     marginTop: 50,
-    flexDirection: 'column',
+    flex: 1,
   },
 });

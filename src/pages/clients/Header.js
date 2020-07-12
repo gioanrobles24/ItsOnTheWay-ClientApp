@@ -83,7 +83,6 @@ function SidebarMenu(props) {
     <View style={styles.animatedMenuBox}>
       <TouchableOpacity
         onPress={() => {
-          console.log('Cerrando Sidebar');
           props.toggle();
         }}>
         <Icon
@@ -160,7 +159,7 @@ function SidebarMenu(props) {
               Actions.addressClient();
             }}
           />
-          <Text style={styles.menubarItemText}>Mis dirreciones</Text>
+          <Text style={styles.menubarItemText}>Mis direcciónes</Text>
           <Icon
             name="chevron-right"
             type="evilicon"
