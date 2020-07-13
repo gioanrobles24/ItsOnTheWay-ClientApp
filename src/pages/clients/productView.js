@@ -34,30 +34,10 @@ class ProductClientView extends Component {
     };
   }
 
-  backAction = () => {
-    console.log('Entre product back');
-    if (this.props.fromHome) {
-      Actions.replace('partnerView', {
-        p_id: this.state.product.prod_partner_id,
-      });
-    } else {
-      Actions.pop();
-    }
-    return true;
-  };
-
   componentDidMount() {
     this.props.navigation.setParams({
       title: this.props.product.prod_name,
     });
-
-    this.backHandler = BackHandler.addEventListener(
-      'hardwareBackPress',
-      this.backAction,
-    );
-  }
-  componentWillUnmount() {
-    this.backHandler.remove();
   }
 
   render() {

@@ -25,6 +25,9 @@ import store from '../../store';
 import {connect} from 'react-redux';
 import {electronics} from '../components/Data';
 import {green} from '../../colors';
+import AutoHeightImage from 'react-native-auto-height-image';
+
+const prueba = require('../../assets/prueba.jpg');
 
 class PartnerView extends Component {
   constructor(props) {
@@ -147,33 +150,33 @@ class PartnerView extends Component {
     let partner_profile_pic = {uri: this.state.partner_banner};
 
     return (
-      <View style={styles.container}>
+      <>
         {!!this.state.partner_banner && (
-          <View style={{flex: 1.1, backgroundColor: 'red'}}>
-            <Image
-              source={partner_profile_pic}
-              style={{flex: 1, height: undefined, width: '100%'}}
-            />
-          </View>
-        )}
-        <View style={{marginTop: 30}}>
-          <Text style={{textAlign: 'center', color: green, fontSize: 24}}>
-            Productos
-          </Text>
-        </View>
-        {/* <ScrollView> */}
-        <View style={styles.productscontainer}>
-          {/* {this.state.partner_products.map(this.renderItem)} */}
-          <FlatList
-            initialNumToRender={10}
-            keyExtractor={this.keyExtractor}
-            data={this.state.partner_products}
-            renderItem={this.renderItem}
+          <AutoHeightImage
+            source={partner_profile_pic}
+            width={Dimensions.get('window').width}
           />
-          <PayBoton />
+        )}
+        <View style={styles.container}>
+          <View style={{marginTop: 15}}>
+            <Text style={{textAlign: 'center', color: green, fontSize: 24}}>
+              Productos
+            </Text>
+          </View>
+          {/* <ScrollView> */}
+          <View style={styles.productscontainer}>
+            {/* {this.state.partner_products.map(this.renderItem)} */}
+            <FlatList
+              initialNumToRender={10}
+              keyExtractor={this.keyExtractor}
+              data={this.state.partner_products}
+              renderItem={this.renderItem}
+            />
+            <PayBoton />
+          </View>
+          {/* </ScrollView> */}
         </View>
-        {/* </ScrollView> */}
-      </View>
+      </>
     );
   }
 }
@@ -266,7 +269,7 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   productscontainer: {
-    marginTop: 50,
+    marginTop: 20,
     flex: 1,
   },
 });

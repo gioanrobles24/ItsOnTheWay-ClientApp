@@ -7,9 +7,14 @@ export const image = {uri: 'http://test.itsontheway.com.ve/api/parnetBanner1'};
 
 class Recomendations extends Component {
   goToPartner(product) {
+    // console.log(product);
+    Actions.partnerView({
+      p_id: product.prod_partner_id,
+    });
+
     Actions.productView({
       product,
-      fromHome: true,
+      // fromHome: true,
     });
   }
 

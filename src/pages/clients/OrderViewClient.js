@@ -27,6 +27,7 @@ import ProductsInCart from '../components/ProductToCart';
 import Recomendations from '../components/ProductHorizontalCarousel';
 import HomeInfo from '../components/HomeComponent';
 import {gray, green} from '../../colors';
+import {setAddresses} from '../../reducers/addresses';
 class OrderViewClient extends Component {
   constructor(props) {
     super(props);
@@ -42,6 +43,7 @@ class OrderViewClient extends Component {
     )
       .then(resp => resp.json())
       .then(resp => {
+        this.props.setAddresses(resp.response.address_client);
         this.setState({addresses: resp.response.address_client});
       });
   }
@@ -49,18 +51,22 @@ class OrderViewClient extends Component {
   ratingCompleted(rating) {}
 
   goTypePayment() {
-    if (this.state.address) {
-      let pedido = this.props.cartItems;
-      Actions.paymentType({
-        pedido,
-        description: this.state.ord_description,
-        address: this.state.addresses.find(
-          ad => ad.client_address_id === this.state.address,
-        ),
-      });
-    } else {
+    if (!this.state.address) {
       Alert.alert('Selecciona una direccion');
+      return;
+    } else if (this.props.cartItems.length === 0) {
+      Alert.alert('No ha seleccionado ningun producto');
+      return;
     }
+
+    let pedido = this.props.cartItems;
+    Actions.paymentType({
+      pedido,
+      description: this.state.ord_description,
+      address: this.state.addresses.find(
+        ad => ad.client_address_id === this.state.address,
+      ),
+    });
   }
   getProductPrice(item) {
     let extraPrice = 0;
@@ -128,7 +134,7 @@ class OrderViewClient extends Component {
                     label: 'Seleciona una dirección existente`',
                     color: 'black',
                   }}
-                  items={this.state.addresses.map(z => ({
+                  items={this.props.addresses.map(z => ({
                     label: `${z.zone_name} ${z.description}`,
                     value: z.client_address_id,
                   }))}
@@ -197,6 +203,7 @@ const mapStateToProps = state => {
     cartItems: state.cart,
     client_info: state.session,
     dollarPrice: state.dollarPrice.price,
+    addresses: state.addresses.addresses,
   };
 };
 
@@ -204,6 +211,7 @@ const mapDispatchToProps = dispatch => {
   return {
     removeItem: product =>
       dispatch({type: 'REMOVE_FROM_CART', payload: product}),
+    setAddresses: addresses => dispatch(setAddresses(addresses)),
   };
 };
 

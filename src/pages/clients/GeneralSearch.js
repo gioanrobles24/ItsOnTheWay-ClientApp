@@ -7,6 +7,7 @@ import {
   Alert,
   SafeAreaView,
   ScrollView,
+  FlatList,
 } from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import {Icon, Avatar, Input} from 'react-native-elements';
@@ -21,6 +22,11 @@ export default class GeneralSearch extends Component {
       partners: [],
       param: props.param,
     };
+  }
+  ThisPartnerView(id) {
+    let p_id = id;
+
+    Actions.partnerView({p_id});
   }
 
   search(param) {
@@ -51,6 +57,32 @@ export default class GeneralSearch extends Component {
   componentDidMount() {
     this.search(this.state.param);
   }
+  keyExtractor(item) {
+    return item.id;
+  }
+  renderItem = ({item: partner}) => (
+    <View style={styles.cardOrdercontainer}>
+      <TouchableHighlight
+        underlayColor="transparent"
+        onPress={() => {
+          console.log(partner);
+          this.ThisPartnerView(partner.p_id);
+        }}>
+        <Card style={styles.cardOrder}>
+          <Avatar
+            rounded
+            size="medium"
+            source={{
+              uri: `http://test.itsontheway.com.ve/images/socios/${
+                partner.id
+              }/${partner.profile_pic}`,
+            }}
+          />
+          <Text style={styles.cardOrderSubTitle}>{partner.p_user}</Text>
+        </Card>
+      </TouchableHighlight>
+    </View>
+  );
 
   render() {
     return (
@@ -77,26 +109,13 @@ export default class GeneralSearch extends Component {
             }}
           />
         </View>
-        <ScrollView>
-          <View style={styles.productscontainer}>
-            {this.state.partners.map(partner => (
-              <View style={styles.cardOrdercontainer}>
-                <TouchableHighlight
-                  underlayColor="transparent"
-                  onPress={() => {
-                    Actions.partnerView({p_id: partner.p_id});
-                  }}>
-                  <Card style={styles.cardOrder}>
-                    <Avatar rounded size="medium" source={image2} />
-                    <Text style={styles.cardOrderSubTitle}>
-                      {partner.p_user}
-                    </Text>
-                  </Card>
-                </TouchableHighlight>
-              </View>
-            ))}
-          </View>
-        </ScrollView>
+        <View style={styles.productscontainer}>
+          <FlatList
+            keyExtractor={this.keyExtractor}
+            data={this.state.partners}
+            renderItem={this.renderItem}
+          />
+        </View>
         <SafeAreaView style={{height: 80}} />
         <SafeAreaView style={styles.menutab}>
           <TabMenuIcons />
@@ -140,6 +159,7 @@ const styles = StyleSheet.create({
   },
   productscontainer: {
     marginTop: 50,
+    flex: 1,
     flexDirection: 'column',
     alignItems: 'flex-start',
   },

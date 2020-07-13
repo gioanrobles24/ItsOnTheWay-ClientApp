@@ -179,10 +179,9 @@ export default class SearchStoreTypeView extends Component {
             ))}
           </View>
         </ScrollView> */}
-        <SafeAreaView style={{height: 80}} />
-        <SafeAreaView style={styles.menutab}>
+        <View style={{height: 150}}>
           <TabMenuIcons />
-        </SafeAreaView>
+        </View>
       </View>
     );
   }
@@ -191,8 +190,8 @@ export default class SearchStoreTypeView extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
-    fontFamily: 'QUICKSAND-LIGHT',
+    // paddingBottom: 100,
+    // flexGrow: 1,
   },
   header: {
     flexDirection: 'row',
@@ -222,8 +221,10 @@ const styles = StyleSheet.create({
   },
   productscontainer: {
     marginTop: 50,
-    flexDirection: 'column',
-    alignItems: 'flex-start',
+    flex: 1,
+    // marginBottom: 250,
+    // backgroundColor: 'red',
+    // flexDirection: 'column',
   },
   cardOrderSubTitle: {
     fontSize: 19,

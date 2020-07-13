@@ -62,19 +62,14 @@ function ProductDetail(props) {
       [
         {
           text: 'Seguir comprando',
-          onPress: () =>
-            Actions.replace('partnerView', {
-              p_id: product.prod_partner_id,
-            }),
+          onPress: () => Actions.pop(),
           style: 'cancel',
         },
         {
           text: 'Ir a tu pedido',
           onPress: () => {
-            Actions.replace('partnerView', {
-              p_id: product.prod_partner_id,
-            });
-            Actions.orderClient();
+            Actions.replace('orderClient');
+            // Actions.orderClient();
           },
         },
       ],
