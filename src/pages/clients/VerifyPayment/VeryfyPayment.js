@@ -27,15 +27,46 @@ import {createStackNavigator} from 'react-navigation';
 import {BankPayment} from './BankPayment';
 import {MobilePayment} from './MobilePayment';
 import {ZellePayment} from './ZellePayment';
+import {connect} from 'react-redux';
+import {config} from '../../../config';
 
-export default class VerifyPaymentClientView extends Component {
+class VerifyPaymentClientView extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      banks: [],
+    };
+    props.navigation.setParams({
+      title: 'Verificacion de pago',
+    });
+  }
+
+  componentDidMount() {
+    fetch(`${config.apiUrl}/its_banks`)
+      .then(resp => resp.json())
+      .then(resp => {
+        this.setState({banks: resp.response.banks});
+      });
+  }
   render() {
     switch (this.props.opType) {
       case 'P1': {
-        return <MobilePayment {...this.props} />;
+        return (
+          <MobilePayment
+            {...this.props}
+            price={this.props.price * this.props.dollarPrice}
+            banks={this.state.banks}
+          />
+        );
       }
       case 'P2': {
-        return <BankPayment {...this.props} />;
+        return (
+          <BankPayment
+            {...this.props}
+            price={this.props.price * this.props.dollarPrice}
+            banks={this.state.banks}
+          />
+        );
       }
       case 'P3': {
         return <ZellePayment {...this.props} />;
@@ -43,6 +74,19 @@ export default class VerifyPaymentClientView extends Component {
     }
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    cartItems: state.cart,
+    client_info: state.session,
+    dollarPrice: state.dollarPrice.price,
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  null,
+)(VerifyPaymentClientView);
 
 const styles = StyleSheet.create({
   container: {

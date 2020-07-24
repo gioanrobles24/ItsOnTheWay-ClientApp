@@ -27,8 +27,11 @@ import {
 import {createStackNavigator} from 'react-navigation';
 import ImagePicker from 'react-native-image-picker';
 import {useSelector} from 'react-redux';
+import {inputStyle, green} from '../../../colors';
+import Autocomplete from 'react-native-autocomplete-input';
+import RNPickerSelect from 'react-native-picker-select';
 
-export function BankPayment({address, description}) {
+export function BankPayment({address, description, price, ...props}) {
   const banks = [
     {
       name: 'Bancaribe',
@@ -53,6 +56,7 @@ export function BankPayment({address, description}) {
     },
   ];
   const [selectedPayment, setSelectedPayment] = useState(null);
+  const [selectedBank, setSelectedBank] = useState(null);
   const [photo, setPhoto] = useState();
   const [ref, setRef] = useState();
   const [loading, setLoading] = useState(false);
@@ -69,8 +73,8 @@ export function BankPayment({address, description}) {
   }
 
   function confirmOrder() {
-    if (!ref) {
-      Alert.alert('Indique el numero de referencia');
+    if (!ref || !selectedBank) {
+      Alert.alert('Indique el numero de referencia y el banco');
     } else if (!selectedPayment) {
       Alert.alert('Seleccione un banco');
     } else {
@@ -79,6 +83,7 @@ export function BankPayment({address, description}) {
         ord_address: address.client_address_id,
         ord_description: description,
         bank_name: selectedPayment,
+        bank_id: selectedBank,
         ref_pay: ref,
         products: JSON.stringify(
           cartItems.map(item => ({
@@ -134,14 +139,40 @@ export function BankPayment({address, description}) {
 
   return (
     <View style={styles.container}>
-      <View>
-        <Text style={styles.ConfirTitle} h1>
-          Verificación de pago
-        </Text>
-      </View>
+      <RNPickerSelect
+        Icon={() => (
+          <Icon
+            type="font-awesome"
+            name="chevron-down"
+            color={green}
+            style={{textAlignVertical: 'center'}}
+          />
+        )}
+        placeholder={{
+          label: 'Seleciona una dirección existente`',
+          color: 'black',
+        }}
+        items={props.banks.map(bank => ({
+          label: bank.bank_name,
+          value: bank.id,
+        }))}
+        onValueChange={value => {
+          setSelectedBank(value);
+        }}
+        useNativeAndroidPickerStyle={false}
+        style={{
+          inputAndroid: inputStyle,
+          iconContainer: {
+            top: 20,
+            right: 12,
+          },
+          // placeholder: {color: 'black'},
+        }}
+      />
+
       <View style={styles.inputContainer}>
         <TextInput
-          style={styles.inputs}
+          style={inputStyle}
           value={ref}
           onChangeText={setRef}
           placeholder="ingrese el numero referencia"
@@ -149,7 +180,8 @@ export function BankPayment({address, description}) {
           underlineColorAndroid="transparent"
         />
       </View>
-      <View style={{flexDirection: 'row'}}>
+
+      <View style={{flexDirection: 'row', alignSelf: 'center', marginTop: 20}}>
         <TouchableHighlight
           style={[styles.buttonContainer, styles.loginButton, {flex: 0.7}]}
           onPress={() => {
@@ -171,6 +203,12 @@ export function BankPayment({address, description}) {
           </View>
         )}
       </View>
+      <View style={{alignSelf: 'center'}}>
+        <Text style={{fontSize: 18}}>
+          Total <Text style={{color: green}}>Bs. {price.toLocaleString()}</Text>
+        </Text>
+      </View>
+
       <Text style={styles.loginSubTitle} h1>
         Bancos
       </Text>
@@ -219,12 +257,9 @@ export function BankPayment({address, description}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'white',
-    fontFamily: 'QUICKSAND-LIGHT',
+    paddingHorizontal: 30,
+    marginTop: 20,
   },
-
   ConfirTitle: {
     fontSize: 34,
     flexDirection: 'row',
@@ -232,16 +267,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     color: '#373535',
   },
+  autocompleteContainer: {
+    flex: 1,
+    left: 0,
+    position: 'absolute',
+    right: 0,
+    zIndex: 1,
+  },
   inputContainer: {
-    borderBottomColor: '#bdbfc1',
-    backgroundColor: '#FFFFFF',
-    borderRadius: 30,
-    borderBottomWidth: 1,
-    width: 350,
-    height: 55,
-    marginBottom: 20,
-    flexDirection: 'row',
-    alignItems: 'center',
+    width: '100%',
   },
   inputs: {
     height: 50,
@@ -271,6 +305,8 @@ const styles = StyleSheet.create({
     shadowOffset: {width: 1, height: 13},
   },
   loginButton: {
+    zIndex: 0,
+    alignSelf: 'center',
     backgroundColor: '#a9d046',
   },
   loginText: {

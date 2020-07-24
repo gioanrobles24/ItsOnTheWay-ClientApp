@@ -54,6 +54,7 @@ class PartnerView extends Component {
         if (responseData.error) {
           alert(' por favor intenta nuevamente');
         } else {
+          console.log(JSON.stringify(responseData, undefined, 2));
           this.props.navigation.setParams({
             title: responseData.response.partner.p_user,
           });
@@ -75,7 +76,8 @@ class PartnerView extends Component {
   backAction = () => {
     console.log('Entre partner view back');
     if (Actions.currentScene !== 'partnerView') {
-      return false;
+      Actions.pop();
+      return true;
     }
 
     if (this.props.cartItems.length > 0) {

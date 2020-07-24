@@ -13,7 +13,7 @@ import VerifyClient from './pages/clients/VerifyClient';
 import NewAddressClient from './pages/clients/newAddressClient';
 import PaymentTypeClient from './pages/clients/PaymentType';
 
-import {BackHandler, Alert} from 'react-native';
+import {BackHandler, Alert, StatusBar} from 'react-native';
 import ProductClientView from './pages/clients/productView';
 import PartnerView from './pages/partners/PartnerView';
 import PromoAndSugesClient from './pages/clients/PromosAndSuges';
@@ -25,6 +25,7 @@ import {Header} from './pages/clients/Header';
 import {changeDollarPrice} from './reducers/dollarPrice';
 import GeneralSearch from './pages/clients/GeneralSearch';
 import {OrderDetail} from './pages/clients/OrderDetail';
+import {green} from './colors';
 
 class Routes extends Component {
   constructor() {
@@ -108,48 +109,54 @@ const AuthApp = props => {
   const dispatch = useDispatch();
 
   return (
-    <Router navBarButtonColor="#a9d046" backAndroidHandler={backAction}>
-      <Scene key="root" headerLayoutPreset="center">
-        <Scene
-          key="homeClient"
-          hideNavBar
-          component={HomeClient}
-          onEnter={() => {
-            dispatch({type: 'CLEAR_CART'});
-            fetch('http://test.itsontheway.com.ve/api/currency_value')
-              .then(response => response.json())
-              .then(dollar => {
-                dispatch(changeDollarPrice(dollar.response.c_price.cur_value));
-              });
-          }}
-        />
-        <Scene
-          key="searchStoreType"
-          component={SearchStoreType}
-          renderBackButton={() => {}}
-        />
-        <Scene
-          key="addressClient"
-          component={AddressClient}
-          onEnter={function() {
-            AddressClient.onEnter();
-          }}
-        />
-        <Scene key="generalSearch" component={GeneralSearch} />
-        <Scene key="newAddressClient" component={NewAddressClient} />
-        <Scene key="allmyOrders" component={AllMyOrders} />
-        <Scene key="orderDetail" component={OrderDetail} />
-        <Scene key="orderClient" component={OrderClient} title="Tu Pedido" />
-        <Scene key="paymentType" component={PaymentTypeClient} />
-        <Scene
-          key="productView"
-          component={ProductClientView}
-          renderBackButton={() => {}}
-        />
-        <Scene key="partnerView" component={PartnerView} back />
-        <Scene key="promoAndSuges" component={PromoAndSugesClient} />
-        <Scene key="verifyPaymentClient" component={VerifyPaymentClient} />
-      </Scene>
-    </Router>
+    <>
+      <StatusBar backgroundColor={green} />
+
+      <Router navBarButtonColor="#a9d06" backAndroidHandler={backAction}>
+        <Scene key="root" headerLayoutPreset="center">
+          <Scene
+            key="homeClient"
+            hideNavBar
+            component={HomeClient}
+            onEnter={() => {
+              dispatch({type: 'CLEAR_CART'});
+              fetch('http://test.itsontheway.com.ve/api/currency_value')
+                .then(response => response.json())
+                .then(dollar => {
+                  dispatch(
+                    changeDollarPrice(dollar.response.c_price.cur_value),
+                  );
+                });
+            }}
+          />
+          <Scene
+            key="searchStoreType"
+            component={SearchStoreType}
+            renderBackButton={() => {}}
+          />
+          <Scene
+            key="addressClient"
+            component={AddressClient}
+            onEnter={function() {
+              AddressClient.onEnter();
+            }}
+          />
+          <Scene key="generalSearch" component={GeneralSearch} />
+          <Scene key="newAddressClient" component={NewAddressClient} />
+          <Scene key="allmyOrders" component={AllMyOrders} />
+          <Scene key="orderDetail" component={OrderDetail} />
+          <Scene key="orderClient" component={OrderClient} title="Tu Pedido" />
+          <Scene key="paymentType" component={PaymentTypeClient} />
+          <Scene
+            key="productView"
+            component={ProductClientView}
+            renderBackButton={() => {}}
+          />
+          <Scene key="partnerView" component={PartnerView} back />
+          <Scene key="promoAndSuges" component={PromoAndSugesClient} />
+          <Scene key="verifyPaymentClient" component={VerifyPaymentClient} />
+        </Scene>
+      </Router>
+    </>
   );
 };

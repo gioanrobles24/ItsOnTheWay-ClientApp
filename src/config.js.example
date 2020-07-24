@@ -1,0 +1,4 @@
+export const config = {
+  apiUrl: 'http://test.itsontheway.com.ve/api',
+  mapboxKey: 'asdasdasdsad',
+};

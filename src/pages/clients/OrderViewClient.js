@@ -104,7 +104,8 @@ class OrderViewClient extends Component {
                   alignSelf: 'flex-end',
                 }}>
                 <Text style={{fontWeight: 'bold'}}>Subtotal: </Text>
-                Bs {subTotal * this.props.dollarPrice} (${subTotal})
+                Bs {(subTotal * this.props.dollarPrice).toLocaleString()} ($
+                {subTotal.toLocaleString()})
               </Text>
               <Text style={styles.SubTitle}>Nota de pedido:</Text>
               <TextInput

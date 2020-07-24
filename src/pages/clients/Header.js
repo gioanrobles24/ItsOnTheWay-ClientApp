@@ -14,8 +14,9 @@ import {Actions} from 'react-native-router-flux';
 import {useDispatch} from 'react-redux';
 import {unsetUser} from '../../reducers/session';
 import AsyncStorage from '@react-native-community/async-storage';
-
-const image = {uri: 'http://test.itsontheway.com.ve/api/parnetBanner1'};
+import {green} from '../../colors';
+const image = {uri: 'http://test.itsontheway.com.ve/api/imgBlanca'};
+// const image = {uri: 'http://test.itsontheway.com.ve/api/parnetBanner1'};
 
 export function Header(props) {
   const [open, setOpen] = useState(false);
@@ -101,11 +102,12 @@ function SidebarMenu(props) {
       <Avatar
         rounded
         size="xlarge"
-        overlayContainerStyle={{backgroundColor: '#bdbfc1'}}
+        overlayContainerStyle={{backgroundColor: green}}
         containerStyle={{
           alignSelf: 'center',
           flexDirection: 'column',
           marginTop: 20,
+          backgroundColor: 'white',
         }}
         source={image}
       />

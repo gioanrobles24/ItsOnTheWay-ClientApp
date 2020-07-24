@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
     fontSize: 25,
     flexDirection: 'row',
     color: '#373535',
-    fontFamily: 'Moon',
+    fontFamily: '[z] Arista Light',
   },
   inputContainer: {
     backgroundColor: '#FFFFFF',

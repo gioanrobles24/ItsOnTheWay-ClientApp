@@ -90,7 +90,6 @@ export default class SearchStoreTypeView extends Component {
   };
   ThisPartnerView(id) {
     let p_id = id;
-
     Actions.partnerView({p_id});
   }
   CurrentOrder() {

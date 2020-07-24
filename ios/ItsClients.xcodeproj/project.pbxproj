@@ -35,6 +35,9 @@
 		E85050D9F3794893A7757CED /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = F9B7E50EE67A410E82870268 /* background.png */; };
 		391FC05B8211407F970E7966 /* marker.png in Resources */ = {isa = PBXBuildFile; fileRef = EB00BB6C7E0B4B9A99479E9C /* marker.png */; };
 		D423C6259CA54EF8874E1459 /* Moon.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 24897819C91344CD98A70B89 /* Moon.ttf */; };
+		7A62333F730C44748DB8A79F /* prueba.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B0010F5B7A004B9F9E56958A /* prueba.jpg */; };
+		F4B9D69912D34F79A2BBC144 /* Arista Light Trial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DC3FD080131441298C07E348 /* Arista Light Trial.ttf */; };
+		7409DFD7F024490DB2D2EB37 /* [z] Arista Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 100625FD63E64A8FA8080F60 /* [z] Arista Light.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -89,6 +92,9 @@
 		F9B7E50EE67A410E82870268 /* background.png */ = {isa = PBXFileReference; name = "background.png"; path = "../src/assets/background.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		EB00BB6C7E0B4B9A99479E9C /* marker.png */ = {isa = PBXFileReference; name = "marker.png"; path = "../src/assets/marker.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		24897819C91344CD98A70B89 /* Moon.ttf */ = {isa = PBXFileReference; name = "Moon.ttf"; path = "../src/assets/Moon.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		B0010F5B7A004B9F9E56958A /* prueba.jpg */ = {isa = PBXFileReference; name = "prueba.jpg"; path = "../src/assets/prueba.jpg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		DC3FD080131441298C07E348 /* Arista Light Trial.ttf */ = {isa = PBXFileReference; name = "Arista Light Trial.ttf"; path = "../src/assets/Arista Light Trial.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		100625FD63E64A8FA8080F60 /* [z] Arista Light.ttf */ = {isa = PBXFileReference; name = "[z] Arista Light.ttf"; path = "../src/assets/[z] Arista Light.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -218,6 +224,9 @@
 				F9B7E50EE67A410E82870268 /* background.png */,
 				EB00BB6C7E0B4B9A99479E9C /* marker.png */,
 				24897819C91344CD98A70B89 /* Moon.ttf */,
+				B0010F5B7A004B9F9E56958A /* prueba.jpg */,
+				DC3FD080131441298C07E348 /* Arista Light Trial.ttf */,
+				100625FD63E64A8FA8080F60 /* [z] Arista Light.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -380,6 +389,9 @@
 				E85050D9F3794893A7757CED /* background.png in Resources */,
 				391FC05B8211407F970E7966 /* marker.png in Resources */,
 				D423C6259CA54EF8874E1459 /* Moon.ttf in Resources */,
+				7A62333F730C44748DB8A79F /* prueba.jpg in Resources */,
+				F4B9D69912D34F79A2BBC144 /* Arista Light Trial.ttf in Resources */,
+				7409DFD7F024490DB2D2EB37 /* [z] Arista Light.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

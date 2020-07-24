@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    fontFamily: 'Moon',
+    fontFamily: '[z] Arista Light',
     color: '#373535',
   },
   inputContainer: {

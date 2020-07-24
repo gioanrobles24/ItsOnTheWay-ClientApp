@@ -104,7 +104,8 @@ export function OrderDetail({orderId, navigation}) {
                 marginTop: 10,
               }}>
               <Text style={{fontWeight: 'bold'}}>Total: </Text>
-              Bs {subTotal * dollarPrice} (${subTotal})
+              Bs {(subTotal * dollarPrice).toLocaleString()} ($
+              {subTotal.toLocaleString()})
             </Text>
           </View>
         </ScrollView>

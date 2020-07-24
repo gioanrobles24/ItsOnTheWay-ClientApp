@@ -81,7 +81,7 @@ class ProductsInCart extends Component {
               </Text>
               <Text style={{color: green}}>
                 <Text style={styles.grayText}>Precio: </Text>
-                Bs {bsPrice} (${price})
+                Bs {bsPrice.toLocaleString()} (${price.toLocaleString()})
               </Text>
             </View>
           }

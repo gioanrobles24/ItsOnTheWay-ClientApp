@@ -27,8 +27,10 @@ import {
 import {createStackNavigator} from 'react-navigation';
 import ImagePicker from 'react-native-image-picker';
 import {useSelector} from 'react-redux';
+import {inputStyle, green} from '../../../colors';
+import RNPickerSelect from 'react-native-picker-select';
 
-export function MobilePayment({address, description}) {
+export function MobilePayment({address, description, price, ...props}) {
   const banks = [
     {
       name: 'Bancaribe',
@@ -42,6 +44,7 @@ export function MobilePayment({address, description}) {
     },
   ];
   const [selectedPayment, setSelectedPayment] = useState(null);
+  const [selectedBank, setSelectedBank] = useState(null);
   const [photo, setPhoto] = useState();
   const [ref, setRef] = useState();
   const [phone, setPhone] = useState();
@@ -60,8 +63,8 @@ export function MobilePayment({address, description}) {
   }
 
   function confirmOrder() {
-    if (!ref || !phone) {
-      Alert.alert('Indique el numero de referencia y el telefono');
+    if (!ref || !phone || !selectedBank) {
+      Alert.alert('Indique el numero de referencia, el banco y el telefono');
     } else if (!selectedPayment) {
       Alert.alert('Seleccione un banco');
     } else {
@@ -69,6 +72,7 @@ export function MobilePayment({address, description}) {
       const body = {
         ord_address: address.client_address_id,
         ord_description: description,
+        bank_id: selectedBank,
         bank_name: `${selectedPayment} - ${phone}`,
         ref_pay: ref,
         products: JSON.stringify(
@@ -126,14 +130,40 @@ export function MobilePayment({address, description}) {
 
   return (
     <View style={styles.container}>
-      <View>
-        <Text style={styles.ConfirTitle} h1>
-          Verificación de pago
-        </Text>
-      </View>
+      <RNPickerSelect
+        Icon={() => (
+          <Icon
+            type="font-awesome"
+            name="chevron-down"
+            color={green}
+            style={{textAlignVertical: 'center'}}
+          />
+        )}
+        placeholder={{
+          label: 'Seleciona una dirección existente`',
+          color: 'black',
+        }}
+        items={props.banks.map(bank => ({
+          label: bank.bank_name,
+          value: bank.id,
+        }))}
+        onValueChange={value => {
+          setSelectedBank(value);
+        }}
+        useNativeAndroidPickerStyle={false}
+        style={{
+          inputAndroid: inputStyle,
+          iconContainer: {
+            top: 20,
+            right: 12,
+          },
+          // placeholder: {color: 'black'},
+        }}
+      />
+
       <View style={styles.inputContainer}>
         <TextInput
-          style={styles.inputs}
+          style={inputStyle}
           value={ref}
           onChangeText={setRef}
           placeholder="ingrese el numero referencia"
@@ -143,7 +173,7 @@ export function MobilePayment({address, description}) {
       </View>
       <View style={styles.inputContainer}>
         <TextInput
-          style={styles.inputs}
+          style={inputStyle}
           value={phone}
           onChangeText={setPhone}
           placeholder="ingrese el numero de telefono"
@@ -151,7 +181,8 @@ export function MobilePayment({address, description}) {
           underlineColorAndroid="transparent"
         />
       </View>
-      <View style={{flexDirection: 'row'}}>
+
+      <View style={{flexDirection: 'row', alignSelf: 'center', marginTop: 20}}>
         <TouchableHighlight
           style={[styles.buttonContainer, styles.loginButton, {flex: 0.7}]}
           onPress={() => {
@@ -172,6 +203,11 @@ export function MobilePayment({address, description}) {
             />
           </View>
         )}
+      </View>
+      <View style={{alignSelf: 'center'}}>
+        <Text style={{fontSize: 18}}>
+          Total <Text style={{color: green}}>Bs. {price.toLocaleString()}</Text>
+        </Text>
       </View>
 
       <Text style={styles.loginSubTitle} h1>
@@ -216,10 +252,8 @@ export function MobilePayment({address, description}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'white',
-    fontFamily: 'QUICKSAND-LIGHT',
+    paddingHorizontal: 30,
+    marginTop: 20,
   },
 
   ConfirTitle: {
@@ -230,15 +264,7 @@ const styles = StyleSheet.create({
     color: '#373535',
   },
   inputContainer: {
-    borderBottomColor: '#bdbfc1',
-    backgroundColor: '#FFFFFF',
-    borderRadius: 30,
-    borderBottomWidth: 1,
-    width: 350,
-    height: 55,
-    marginBottom: 20,
-    flexDirection: 'row',
-    alignItems: 'center',
+    width: '100%',
   },
   inputs: {
     height: 50,
@@ -269,6 +295,7 @@ const styles = StyleSheet.create({
   },
   loginButton: {
     backgroundColor: '#a9d046',
+    alignSelf: 'center',
   },
   loginText: {
     fontFamily: 'QUICKSAND-LIGHT',

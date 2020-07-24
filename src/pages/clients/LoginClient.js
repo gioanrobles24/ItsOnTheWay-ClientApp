@@ -261,7 +261,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     color: '#373535',
-    fontFamily: 'Moon',
+    fontFamily: '[z] Arista Light',
   },
 
   loginSubTitle: {

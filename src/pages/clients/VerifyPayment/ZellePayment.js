@@ -27,8 +27,9 @@ import {
 import {createStackNavigator} from 'react-navigation';
 import ImagePicker from 'react-native-image-picker';
 import {useSelector} from 'react-redux';
+import {green, inputStyle} from '../../../colors';
 
-export function ZellePayment({address, description}) {
+export function ZellePayment({address, description, price}) {
   const banks = [
     {
       name: 'Zelle',
@@ -126,14 +127,9 @@ export function ZellePayment({address, description}) {
 
   return (
     <View style={styles.container}>
-      <View>
-        <Text style={styles.ConfirTitle} h1>
-          Verificación de pago
-        </Text>
-      </View>
       <View style={styles.inputContainer}>
         <TextInput
-          style={styles.inputs}
+          style={inputStyle}
           value={ref}
           onChangeText={setRef}
           placeholder="ingrese el numero referencia"
@@ -143,7 +139,7 @@ export function ZellePayment({address, description}) {
       </View>
       <View style={styles.inputContainer}>
         <TextInput
-          style={styles.inputs}
+          style={inputStyle}
           value={email}
           onChangeText={setEmail}
           placeholder="Correo que envia el pago"
@@ -153,7 +149,7 @@ export function ZellePayment({address, description}) {
       </View>
       <View style={styles.inputContainer}>
         <TextInput
-          style={styles.inputs}
+          style={inputStyle}
           value={name}
           onChangeText={setName}
           placeholder="Nombre de la persona que envia el pago"
@@ -162,14 +158,14 @@ export function ZellePayment({address, description}) {
         />
       </View>
 
-      <View style={{flexDirection: 'row'}}>
-        <TouchableHighlight
+      <View style={{flexDirection: 'row', marginTop: 20, alignSelf: 'center'}}>
+        <TouchableOpacity
           style={[styles.buttonContainer, styles.loginButton, {flex: 0.7}]}
           onPress={() => {
             selectRef();
           }}>
           <Text style={styles.loginText}>Agregar Captura</Text>
-        </TouchableHighlight>
+        </TouchableOpacity>
         {photo && (
           <View style={{flex: 0.2}}>
             <Image
@@ -183,6 +179,12 @@ export function ZellePayment({address, description}) {
             />
           </View>
         )}
+      </View>
+
+      <View style={{alignSelf: 'center'}}>
+        <Text style={{fontSize: 18}}>
+          Total <Text style={{color: green}}>${price.toLocaleString()}</Text>
+        </Text>
       </View>
 
       <Text style={styles.loginSubTitle} h1>
@@ -211,14 +213,14 @@ export function ZellePayment({address, description}) {
           </TouchableOpacity>
         ))}
       </ScrollView>
-      <TouchableHighlight
+      <TouchableOpacity
         disabled={loading}
         style={[styles.buttonContainer, styles.loginButton]}
         onPress={() => {
           confirmOrder();
         }}>
         <Text style={styles.loginText}>Confirmar</Text>
-      </TouchableHighlight>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -226,10 +228,8 @@ export function ZellePayment({address, description}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'white',
-    fontFamily: 'QUICKSAND-LIGHT',
+    paddingHorizontal: 30,
+    marginTop: 20,
   },
 
   ConfirTitle: {
@@ -240,22 +240,26 @@ const styles = StyleSheet.create({
     color: '#373535',
   },
   inputContainer: {
-    borderBottomColor: '#bdbfc1',
-    backgroundColor: '#FFFFFF',
-    borderRadius: 30,
-    borderBottomWidth: 1,
-    width: 350,
-    height: 55,
-    marginBottom: 20,
-    flexDirection: 'row',
-    alignItems: 'center',
+    width: '100%',
+    // borderBottomColor: '#bdbfc1',
+    // backgroundColor: '#FFFFFF',
+    // borderRadius: 30,
+    // borderBottomWidth: 1,
+    // width: 350,
+    // height: 55,
+    // marginBottom: 20,
+    // flexDirection: 'row',
+    // alignItems: 'center',
   },
   inputs: {
-    height: 50,
-    marginLeft: 12,
-    borderBottomColor: '#FFFFFF',
-    flex: 1,
+    marginTop: 5,
+    borderRadius: 15,
+    textAlignVertical: 'top',
+    paddingHorizontal: 10,
+    borderColor: green,
+    borderWidth: 2,
   },
+
   inputIcon: {
     width: 30,
     height: 30,
@@ -279,6 +283,7 @@ const styles = StyleSheet.create({
   },
   loginButton: {
     backgroundColor: '#a9d046',
+    alignSelf: 'center',
   },
   loginText: {
     fontFamily: 'QUICKSAND-LIGHT',

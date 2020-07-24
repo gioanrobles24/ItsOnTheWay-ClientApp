@@ -35,7 +35,14 @@ class PaymentTypeClientView extends Component {
     let description = this.props.description;
     let opType = viewId;
 
-    Actions.verifyPaymentClient({address, description, pedido, opType});
+    Actions.verifyPaymentClient({
+      address,
+      description,
+      pedido,
+      opType,
+      price:
+        this.state.deliveryPrice + this.getSubTotal() / this.props.dollarPrice,
+    });
   };
 
   getProductPrice(item) {
@@ -69,12 +76,13 @@ class PaymentTypeClientView extends Component {
             <ScrollView>
               {this.props.cartItems.map(item => (
                 <ListItem
-                  title={`${item.quantity} ${item.prod_name}`}
+                  title={`(${item.quantity}) ${item.prod_name}`}
                   bottomDivider
                   rightContentContainerStyle={{flex: 1}}
                   rightTitle={`Bs ${this.getProductPrice(
                     item,
-                  )} ($${this.getProductPrice(item) / this.props.dollarPrice})`}
+                  ).toLocaleString()} ($${this.getProductPrice(item) /
+                    this.props.dollarPrice})`}
                 />
               ))}
             </ScrollView>
@@ -85,15 +93,16 @@ class PaymentTypeClientView extends Component {
             rightContentContainerStyle={{flex: 1}}
             bottomDivider
             title="Sub Total"
-            rightTitle={`Bs ${this.getSubTotal()} ($${this.getSubTotal() /
+            rightTitle={`Bs ${this.getSubTotal().toLocaleString()} ($${this.getSubTotal() /
               this.props.dollarPrice})`}
           />
           <ListItem
             bottomDivider
             rightContentContainerStyle={{flex: 1}}
             title="Delivery"
-            rightTitle={`Bs ${this.state.deliveryPrice *
-              this.props.dollarPrice} ($${this.state.deliveryPrice})`}
+            rightTitle={`Bs ${(
+              this.state.deliveryPrice * this.props.dollarPrice
+            ).toLocaleString()} ($${this.state.deliveryPrice})`}
           />
           <ListItem
             bottomDivider
@@ -101,9 +110,10 @@ class PaymentTypeClientView extends Component {
             rightTitleStyle={{fontWeight: 'bold'}}
             rightContentContainerStyle={{flex: 1}}
             title="Total"
-            rightTitle={`Bs ${this.state.deliveryPrice *
-              this.props.dollarPrice +
-              this.getSubTotal()} ($${this.state.deliveryPrice +
+            rightTitle={`Bs ${(
+              this.state.deliveryPrice * this.props.dollarPrice +
+              this.getSubTotal()
+            ).toLocaleString()} ($${this.state.deliveryPrice +
               this.getSubTotal() / this.props.dollarPrice})`}
           />
         </View>
@@ -143,7 +153,7 @@ class PaymentTypeClientView extends Component {
               onPress={() => this.VerifyPaymentClient('P3')}
             />
           </View>
-          <View style={styles.platformName}>
+          {/* <View style={styles.platformName}>
             <Text style={styles.platformNameTD}>
               4. Crédito - Débito internacional
             </Text>
@@ -156,7 +166,7 @@ class PaymentTypeClientView extends Component {
                 this.setState({tddchecked: !this.state.tddchecked})
               }
             />
-          </View>
+          </View> */}
         </View>
       </View>
     );

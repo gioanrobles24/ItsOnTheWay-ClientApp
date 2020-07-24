@@ -13,6 +13,7 @@ import {
   ToastAndroid,
   BackHandler,
   Picker,
+  TouchableOpacity,
 } from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import RNPickerSelect from 'react-native-picker-select';
@@ -23,6 +24,9 @@ import GetLocation from 'react-native-get-location';
 import {green} from '../../colors';
 import {isPointInPolygon} from 'geolib';
 import {setAddresses} from '../../reducers/addresses';
+import Autocomplete from 'react-native-autocomplete-input';
+import {config} from '../../config';
+import AwesomeDebouncePromise from 'awesome-debounce-promise';
 const markerIcon = require('../../assets/marker.png');
 
 const image = {uri: 'http://test.itsontheway.com.ve/api/imgBlanca'};
@@ -33,6 +37,7 @@ class NewAddressClientView extends Component {
     //  this.toggleSwitch = this.toggleSwitch.bind(this);
     this.state = {
       zones: [],
+      searchOptions: [],
       coordinates: props.address
         ? [
             parseFloat(props.address.address_lat),
@@ -193,9 +198,55 @@ class NewAddressClientView extends Component {
             ]
           : [],
     };
-
+    const searchPlace = text =>
+      fetch(
+        `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURI(
+          text,
+        )}.json?access_token=${config.mapboxKey}&country=VE`,
+      ).then(resp => resp.json());
+    const debouncedSearch = AwesomeDebouncePromise(searchPlace, 1000);
     return (
       <View style={styles.container}>
+        <View style={styles.autocompleteContainer}>
+          <Autocomplete
+            containerStyle={{width: '95%', alignSelf: 'center'}}
+            inputContainerStyle={{padding: 5, backgroundColor: 'white'}}
+            placeholder="Busca una dirección"
+            data={this.state.searchOptions}
+            onEndEditing={() => {
+              this.setState({
+                searchOptions: [],
+              });
+            }}
+            renderItem={({index, item}) => {
+              return (
+                <TouchableOpacity
+                  onPress={() => {
+                    this.setState({
+                      coordinates: item.center,
+                      searchOptions: [],
+                    });
+                  }}
+                  style={{
+                    paddingHorizontal: 15,
+                    paddingVertical: 10,
+                    borderBottomWidth: 1,
+                    borderBottomColor: green,
+                  }}>
+                  <Text>{item.place_name}</Text>
+                </TouchableOpacity>
+              );
+            }}
+            onChangeText={async text => {
+              const result = await debouncedSearch(text);
+              if (result) {
+                console.log('ENTRE');
+                console.log(JSON.stringify(result, undefined, 2));
+                this.setState({searchOptions: result.features});
+              }
+            }}
+          />
+        </View>
         <MapboxGL.MapView
           style={{flex: 1, flexGrow: 1}}
           onPress={e => {
@@ -277,6 +328,14 @@ const styles = StyleSheet.create({
     fontSize: 15,
     marginLeft: 10,
     fontWeight: 'bold',
+  },
+  autocompleteContainer: {
+    flex: 1,
+    left: 0,
+    position: 'absolute',
+    right: 0,
+    top: 15,
+    zIndex: 1,
   },
   Text: {
     color: '#bdbfc1',

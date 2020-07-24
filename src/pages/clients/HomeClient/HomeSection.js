@@ -9,13 +9,13 @@ export function HomeSection(props) {
         <Text
           style={{
             marginBottom: 15,
-            fontSize: 18,
+            fontSize: 24,
             color: '#404040',
             padding: 7,
             borderRadius: 3,
             borderBottomWidth: 3,
             borderBottomColor: '#a9d046',
-            fontFamily: 'Moon',
+            fontFamily: '[z] Arista Light',
             textShadowOffset: {width: 0.5, height: 0.5},
             textShadowColor: '#FFFFFF',
             textShadowRadius: 1,

@@ -65,12 +65,12 @@ export function ProductPrice({product, extras, quantity}) {
       <Text
         style={{
           width: '45%',
-          fontSize: 40,
+          fontSize: showDollar ? 40 : 30,
           marginLeft: 50,
           fontWeight: 'bold',
           color: '#031f30',
         }}>
-        {parseFloat(price.toFixed(2)).toLocaleString('es-VE')}
+        {parseFloat(price.toFixed(2)).toLocaleString()}
       </Text>
     </View>
   );
