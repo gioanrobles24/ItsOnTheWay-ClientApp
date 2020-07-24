@@ -160,10 +160,33 @@ class PartnerView extends Component {
           />
         )}
         <View style={styles.container}>
-          <View style={{marginTop: 15}}>
-            <Text style={{textAlign: 'center', color: green, fontSize: 24}}>
+          <View
+            style={{
+              marginTop: 15,
+              paddingHorizontal: 20,
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+            }}>
+            <Text
+              style={{
+                textAlign: 'left',
+                color: green,
+                fontSize: 24,
+                fontWeight: 'bold',
+              }}>
               Productos
             </Text>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <Text style={{textAlign: 'right', fontSize: 18}}>Horario: </Text>
+              {this.state.partner.p_open_time && (
+                <Badge
+                  value={`${this.state.partner.p_open_time} - ${
+                    this.state.partner.p_close_time
+                  }`}
+                  badgeStyle={{backgroundColor: green, color: 'white'}}
+                />
+              )}
+            </View>
           </View>
           {/* <ScrollView> */}
           <View style={styles.productscontainer}>

@@ -9,7 +9,7 @@ export function ProductCard(props) {
     <View>
       <TouchableOpacity
         onPress={() => {
-          handlePress();
+          handlePress(product);
         }}>
         <Card
           containerStyle={{
@@ -20,9 +20,9 @@ export function ProductCard(props) {
           }}
           imageStyle={{width: 249, height: 130}}
           image={{
-            uri: `http://test.itsontheway.com.ve/images/productos/${
-              product.prod_partner_id
-            }/${product.prod_image}`,
+            uri: `http://test.itsontheway.com.ve/images/${
+              !props.partner ? 'productos' : 'socios'
+            }/${product.prod_partner_id}/${product.prod_image}`,
           }}>
           <Text style={{fontSize: 20, marginLeft: 5}}>{product.prod_name}</Text>
           <Text style={{fontSize: 15, color: '#bdbfc1', marginLeft: 5}}>
@@ -30,7 +30,7 @@ export function ProductCard(props) {
           </Text>
 
           <View style={{flexDirection: 'row', marginLeft: 5}}>
-            <AirbnbRating
+            {/* <AirbnbRating
               isDisabled={true}
               showRating={false}
               defaultRating={4}
@@ -38,7 +38,7 @@ export function ProductCard(props) {
             />
             <Text style={{fontSize: 10, marginLeft: 30}}>
               Bs.: {product.prod_price_bs}
-            </Text>
+            </Text> */}
           </View>
         </Card>
       </TouchableOpacity>

@@ -14,6 +14,7 @@ import TabMenuIcons from '../../components/TabMenuIcons';
 import {unsetUser} from '../../../reducers/session';
 import {Header} from '../Header';
 import {HomeSection} from './HomeSection';
+import {Actions} from 'react-native-router-flux';
 const background = require('../../../assets/background.png');
 
 class HomeClientView extends Component {
@@ -24,7 +25,9 @@ class HomeClientView extends Component {
       open: false,
       data: this.props.user.response.client_info,
       products: this.props.user.response.all_products,
+      partners: this.props.user.response.partners_home,
     };
+    console.log(this.props.user);
   }
 
   render() {
@@ -45,14 +48,47 @@ class HomeClientView extends Component {
                       marginTop: -30,
                     }}>
                     <Recomedantions
-                      products={this.state.products.filter(
+                      items={this.state.products.filter(
                         p => p.prod_recome === '1',
                       )}
+                      onPress={product => {
+                        Actions.partnerView({
+                          p_id: product.prod_partner_id,
+                        });
+                        Actions.productView({
+                          product,
+                        });
+                      }}
                     />
                   </View>
                 </SafeAreaView>
               </HomeSection>
               <HomeSection title="Promociones">
+                <SafeAreaView style={{flex: 1}}>
+                  <View
+                    style={{
+                      flex: 1,
+                      flexDirection: 'row',
+                      justifyContent: 'center',
+                      marginTop: -30,
+                    }}>
+                    <Recomedantions
+                      items={this.state.products.filter(
+                        p => p.prod_suges === '1',
+                      )}
+                      onPress={product => {
+                        Actions.partnerView({
+                          p_id: product.prod_partner_id,
+                        });
+                        Actions.productView({
+                          product,
+                        });
+                      }}
+                    />
+                  </View>
+                </SafeAreaView>
+              </HomeSection>
+              <HomeSection title="Restaurantes">
                 <SafeAreaView style={{flex: 1, marginBottom: 150}}>
                   <View
                     style={{
@@ -62,9 +98,23 @@ class HomeClientView extends Component {
                       marginTop: -30,
                     }}>
                     <Recomedantions
-                      products={this.state.products.filter(
-                        p => p.prod_suges === '1',
-                      )}
+                      items={this.state.partners.map(p => ({
+                        prod_image: p.profile_pic,
+                        prod_partner_id: p.p_id,
+                        prod_name: p.p_user,
+                      }))}
+                      partner
+                      onPress={product => {
+                        Actions.partnerView({
+                          p_id: product.prod_partner_id,
+                        });
+                      }}
+
+                      // onPress={product => {
+                      //   Actions.productView({
+                      //     product,
+                      //   });
+                      // }}
                     />
                   </View>
                 </SafeAreaView>
