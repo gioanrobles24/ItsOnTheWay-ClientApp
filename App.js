@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {StyleSheet, View, StatusBar} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 
 import Routes from './src/Routes';
 import {Provider} from 'react-redux';

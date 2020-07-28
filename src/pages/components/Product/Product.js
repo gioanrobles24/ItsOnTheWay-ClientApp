@@ -8,6 +8,47 @@ import {ProductExtras} from './ProductExtras';
 import {ProductPrice} from './ProductPrice';
 import {styles} from './styles';
 import {useDispatch} from 'react-redux';
+import {config} from '../../../config';
+
+function getPartner(partnerId) {
+  return fetch(`${config.apiUrl}/clients/showPartner/${partnerId}`, {
+    method: 'GET',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+  })
+    .then(response => response.json())
+    .then(responseData => {
+      if (responseData.error) {
+        throw new Error(responseData.error);
+      } else {
+        return responseData.response.partner;
+      }
+    });
+}
+
+function getStatus() {
+  return fetch(`${config.apiUrl}/working_status`, {
+    method: 'GET',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+  })
+    .then(response => response.json())
+    .then(responseData => {
+      if (responseData.error) {
+        alert(' por favor intenta nuevamente');
+      } else {
+        try {
+          return responseData.success.status;
+        } catch (e) {
+          return false;
+        }
+      }
+    });
+}
 
 function ProductDetail(props) {
   const {products: product} = props;
@@ -44,7 +85,14 @@ function ProductDetail(props) {
       });
   }, [product.id]);
 
-  function onAddPress() {
+  async function onAddPress() {
+    const partner = await getPartner(product.prod_partner_id);
+    const status = await getStatus();
+
+    if (!partner.is_open || !status) {
+      Alert.alert('Tienda cerrada');
+      return;
+    }
     dispatch({
       type: 'ADD_TO_CART',
       payload: {

@@ -26,6 +26,7 @@ import {connect} from 'react-redux';
 import {electronics} from '../components/Data';
 import {green} from '../../colors';
 import AutoHeightImage from 'react-native-auto-height-image';
+import {config} from '../../config';
 
 const prueba = require('../../assets/prueba.jpg');
 
@@ -36,6 +37,7 @@ class PartnerView extends Component {
       partner_products: [],
       partner_banner: '',
       partner: [],
+      appStatus: false,
     };
 
     fetch(
@@ -72,7 +74,32 @@ class PartnerView extends Component {
       .catch(error => {
         console.error(error);
       });
+
+    fetch(`${config.apiUrl}/working_status`, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+    })
+      .then(response => response.json())
+      .then(responseData => {
+        if (responseData.error) {
+          alert(' por favor intenta nuevamente');
+        } else {
+          try {
+            this.setState({
+              appStatus: responseData.success.status,
+            });
+          } catch (e) {
+            this.setState({
+              appStatus: false,
+            });
+          }
+        }
+      });
   }
+
   backAction = () => {
     console.log('Entre partner view back');
     if (Actions.currentScene !== 'partnerView') {
@@ -176,6 +203,13 @@ class PartnerView extends Component {
               }}>
               Productos
             </Text>
+            {!this.state.partner.is_open && (
+              <Badge
+                status="error"
+                value="CERRADO"
+                containerStyle={{alignSelf: 'center'}}
+              />
+            )}
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
               <Text style={{textAlign: 'right', fontSize: 18}}>Horario: </Text>
               {this.state.partner.p_open_time && (
@@ -197,7 +231,7 @@ class PartnerView extends Component {
               data={this.state.partner_products}
               renderItem={this.renderItem}
             />
-            <PayBoton />
+            {this.state.partner.is_open && this.state.appStatus && <PayBoton />}
           </View>
           {/* </ScrollView> */}
         </View>
