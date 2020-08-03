@@ -1,28 +1,5 @@
 import React, {Component} from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  TextInput,
-  Button,
-  ScrollView,
-  TouchableHighlight,
-  Image,
-  Alert,
-  Switch,
-  ToastAndroid,
-  BackHandler,
-  Picker,
-} from 'react-native';
-import {Actions} from 'react-native-router-flux';
-import {Icon, Avatar, Badge, withBadge} from 'react-native-elements';
-import {createStackNavigator} from 'react-navigation';
-import RNPickerSelect from 'react-native-picker-select';
-import {Card} from 'react-native-shadow-cards';
-import NumericInput from 'react-native-numeric-input';
-const image = {uri: 'http://test.itsontheway.com.ve/api/imgBlanca'};
-import {Provider} from 'react-redux';
-import store from '../../store';
+import {StyleSheet} from 'react-native';
 import {connect} from 'react-redux';
 import Product from '../components/Product/Product';
 

@@ -40,8 +40,8 @@ class NewAddressClientView extends Component {
       searchOptions: [],
       coordinates: props.address
         ? [
-            parseFloat(props.address.address_lat),
             parseFloat(props.address.address_lon),
+            parseFloat(props.address.address_lat),
           ]
         : [0, 0],
       description: props.address ? props.address.description : '',
@@ -66,7 +66,7 @@ class NewAddressClientView extends Component {
   }
 
   fetchZones() {
-    fetch('http://test.itsontheway.com.ve/api/aviable_zones')
+    fetch(`${config.apiUrl}/aviable_zones`)
       .then(resp => resp.json())
       .then(resp => {
         this.setState({zones: resp.zones_aviables});
@@ -97,8 +97,8 @@ class NewAddressClientView extends Component {
     let zone;
 
     const coordinate = {
-      latitude: this.state.coordinates[0],
-      longitude: this.state.coordinates[1],
+      latitude: this.state.coordinates[1],
+      longitude: this.state.coordinates[0],
     };
 
     if (this.state.zones.length === 0) {
@@ -240,8 +240,6 @@ class NewAddressClientView extends Component {
             onChangeText={async text => {
               const result = await debouncedSearch(text);
               if (result) {
-                console.log('ENTRE');
-                console.log(JSON.stringify(result, undefined, 2));
                 this.setState({searchOptions: result.features});
               }
             }}

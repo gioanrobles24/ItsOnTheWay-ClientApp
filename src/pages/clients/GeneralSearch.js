@@ -37,7 +37,6 @@ export default class GeneralSearch extends Component {
           this.setState({partners: []});
         } else {
           const result = [];
-          console.log(JSON.stringify(responseData, undefined, 2));
           responseData.response.results.forEach(partner => {
             if (!result.find(p => p.p_id === partner.p_id)) {
               result.push(partner);
@@ -65,7 +64,6 @@ export default class GeneralSearch extends Component {
       <TouchableHighlight
         underlayColor="transparent"
         onPress={() => {
-          console.log(partner);
           this.ThisPartnerView(partner.p_id);
         }}>
         <Card style={styles.cardOrder}>

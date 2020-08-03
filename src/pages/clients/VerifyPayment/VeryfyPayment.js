@@ -69,7 +69,9 @@ class VerifyPaymentClientView extends Component {
         );
       }
       case 'P3': {
-        return <ZellePayment {...this.props} />;
+        return (
+          <ZellePayment {...this.props} price={this.props.price.toFixed(2)} />
+        );
       }
     }
   }
@@ -79,7 +81,7 @@ const mapStateToProps = state => {
   return {
     cartItems: state.cart,
     client_info: state.session,
-    dollarPrice: state.dollarPrice.price,
+    dollarPrice: state.parameters.dollarPrice,
   };
 };
 

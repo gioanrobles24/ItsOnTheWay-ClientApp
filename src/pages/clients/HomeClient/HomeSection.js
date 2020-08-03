@@ -1,6 +1,6 @@
 import React from 'react';
 import {Text, View} from 'react-native';
-import {styles} from './HomeClient';
+import {styles} from './styles';
 
 export function HomeSection(props) {
   return (

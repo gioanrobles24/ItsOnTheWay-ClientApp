@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, StyleSheet, ScrollView} from 'react-native';
+import {View, StyleSheet, FlatList} from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import {ProductCard} from './ProductCard';
 
@@ -19,16 +19,18 @@ class Recomendations extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <ScrollView horizontal={true}>
-          {this.props.items.map(product => (
+        <FlatList
+          horizontal
+          data={this.props.items}
+          renderItem={product => (
             <ProductCard
               partner={this.props.partner}
-              product={product}
+              product={product.item}
               onPress={this.props.onPress}
-              key={product.id}
+              key={`${product.item.id}-${product.index}`}
             />
-          ))}
-        </ScrollView>
+          )}
+        />
       </View>
     );
   }

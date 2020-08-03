@@ -2,7 +2,9 @@ import React, {useState} from 'react';
 import {Text, View, TouchableOpacity} from 'react-native';
 import {useSelector} from 'react-redux';
 export function ProductPrice({product, extras, quantity}) {
-  const dollarPrice = parseFloat(useSelector(state => state.dollarPrice.price));
+  const dollarPrice = parseFloat(
+    useSelector(state => state.parameters.dollarPrice),
+  );
   const [showDollar, setShowDollar] = useState(true);
   let price = parseFloat(product.prod_price_usd);
   extras.forEach(e => {

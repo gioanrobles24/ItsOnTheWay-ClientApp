@@ -4,30 +4,20 @@ import {
   Text,
   View,
   TextInput,
-  Button,
-  TouchableHighlight,
-  Image,
   Alert,
-  ImageBackground,
   ScrollView,
   TouchableOpacity,
   Dimensions,
 } from 'react-native';
 import {Actions} from 'react-native-router-flux';
-import {AirbnbRating, Rating} from 'react-native-ratings';
-import {Badge, Avatar, ListItem, Icon} from 'react-native-elements';
-const image = {uri: 'http://test.itsontheway.com.ve/api/parnetBanner'};
-import {Card} from 'react-native-shadow-cards';
+import {Icon} from 'react-native-elements';
 import RNPickerSelect from 'react-native-picker-select';
 
-import store from '../../store';
 import {connect} from 'react-redux';
-import {address} from '../components/Data';
 import ProductsInCart from '../components/ProductToCart';
-import Recomendations from '../components/ProductHorizontalCarousel';
-import HomeInfo from '../components/HomeComponent';
 import {gray, green} from '../../colors';
 import {setAddresses} from '../../reducers/addresses';
+
 class OrderViewClient extends Component {
   constructor(props) {
     super(props);
@@ -44,7 +34,6 @@ class OrderViewClient extends Component {
       .then(resp => resp.json())
       .then(resp => {
         this.props.setAddresses(resp.response.address_client);
-        this.setState({addresses: resp.response.address_client});
       });
   }
 
@@ -63,7 +52,7 @@ class OrderViewClient extends Component {
     Actions.paymentType({
       pedido,
       description: this.state.ord_description,
-      address: this.state.addresses.find(
+      address: this.props.addresses.find(
         ad => ad.client_address_id === this.state.address,
       ),
     });
@@ -203,7 +192,7 @@ const mapStateToProps = state => {
   return {
     cartItems: state.cart,
     client_info: state.session,
-    dollarPrice: state.dollarPrice.price,
+    dollarPrice: state.parameters.dollarPrice,
     addresses: state.addresses.addresses,
   };
 };

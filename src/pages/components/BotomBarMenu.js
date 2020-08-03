@@ -1,41 +1,7 @@
-import React, {Component} from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  TextInput,
-  Button,
-  TouchableHighlight,
-  ScrollView,
-  Alert,
-  Switch,
-  ToastAndroid,
-  BackHandler,
-  Picker,
-  SafeAreaView,
-  Dimensions,
-  TouchableOpacity,
-  ImageBackground,
-  Platform,
-} from 'react-native';
+import React from 'react';
+import {StyleSheet, Text, TouchableHighlight} from 'react-native';
 import {Actions} from 'react-native-router-flux';
-import {
-  Icon,
-  Avatar,
-  Badge,
-  withBadge,
-  Image,
-  Input,
-  Card,
-} from 'react-native-elements';
-import BottomBar from 'react-native-bottom-bar';
 import {connect} from 'react-redux';
-import {Provider} from 'react-redux';
-import store from '../../store';
-
-const mainColor = '#bdbfc1';
-const url = 'www.freakycoder.com';
-const pnkGradient = ['#ffffff', '#ffffff'];
 
 const PayBoton = props => (
   <TouchableHighlight

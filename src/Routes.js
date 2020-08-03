@@ -22,10 +22,13 @@ import AsyncStorage from '@react-native-community/async-storage';
 import {setUser} from './reducers/session';
 import {connect, useDispatch} from 'react-redux';
 import {Header} from './pages/clients/Header';
-import {changeDollarPrice} from './reducers/dollarPrice';
+import {changeDollarPrice, changeUsagePercentage} from './reducers/parameters';
 import GeneralSearch from './pages/clients/GeneralSearch';
 import {OrderDetail} from './pages/clients/OrderDetail';
 import {green} from './colors';
+import {resetPartner} from './reducers/partner';
+import {config} from './config';
+import request from './utils/request';
 
 class Routes extends Component {
   constructor() {
@@ -83,7 +86,6 @@ export default connect(
 )(Routes);
 
 function backAction(params) {
-  console.log('ENTRE');
   if (Actions.state.index === 0) {
     BackHandler.exitApp();
     return false;
@@ -119,14 +121,23 @@ const AuthApp = props => {
             hideNavBar
             component={HomeClient}
             onEnter={() => {
+              dispatch(resetPartner());
               dispatch({type: 'CLEAR_CART'});
-              fetch('http://test.itsontheway.com.ve/api/currency_value')
+              fetch(`${config.apiUrl}/currency_value`)
                 .then(response => response.json())
                 .then(dollar => {
                   dispatch(
                     changeDollarPrice(dollar.response.c_price.cur_value),
                   );
                 });
+
+              request(`${config.apiUrl}/percent_app`).then(resp => {
+                dispatch(
+                  changeUsagePercentage(
+                    parseFloat(resp.response.app_percentage.use_percentage),
+                  ),
+                );
+              });
             }}
           />
           <Scene

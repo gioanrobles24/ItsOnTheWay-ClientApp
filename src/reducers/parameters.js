@@ -7,16 +7,22 @@ import produce from 'immer';
 const scope = '[Dollar Price]';
 
 export const SET_PRICE = `${scope} SET PRICE`;
+export const SET_PERCENTAGE = `${scope} SET PERCENTAGE`;
 
 const defaultState = {
-  price: 0,
+  dollarPrice: 0,
+  usagePercentage: 0,
 };
 
-const dollarPriceReducer = (state = defaultState, action) =>
+const parametersReducer = (state = defaultState, action) =>
   produce(state, draft => {
     switch (action.type) {
       case SET_PRICE: {
-        draft.price = action.payload;
+        draft.dollarPrice = action.payload;
+        break;
+      }
+      case SET_PERCENTAGE: {
+        draft.usagePercentage = action.payload;
         break;
       }
       default:
@@ -30,5 +36,11 @@ export const changeDollarPrice = price => {
     payload: price,
   };
 };
+export const changeUsagePercentage = percentage => {
+  return {
+    type: SET_PERCENTAGE,
+    payload: percentage,
+  };
+};
 
-export default dollarPriceReducer;
+export default parametersReducer;

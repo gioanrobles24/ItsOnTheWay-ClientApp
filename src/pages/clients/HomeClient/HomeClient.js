@@ -7,6 +7,7 @@ import {
   SafeAreaView,
   Platform,
   ImageBackground,
+  Alert,
 } from 'react-native';
 import {connect} from 'react-redux';
 import Recomedantions from '../../components/ProductHorizontalCarousel';
@@ -16,6 +17,10 @@ import {Header} from '../Header';
 import {HomeSection} from './HomeSection';
 import {Actions} from 'react-native-router-flux';
 const background = require('../../../assets/background.png');
+import {styles} from './styles';
+import {config} from '../../../config';
+import request from '../../../utils/request';
+import {changeSegments} from '../../../reducers/segments';
 
 class HomeClientView extends Component {
   constructor(props) {
@@ -27,7 +32,18 @@ class HomeClientView extends Component {
       products: this.props.user.response.all_products,
       partners: this.props.user.response.partners_home,
     };
-    console.log(this.props.user);
+  }
+
+  componentDidMount() {
+    this.fetchSegmentations();
+  }
+
+  fetchSegmentations() {
+    return request(`${config.apiUrl}/clients/segmentatios`)
+      .then(resp => {
+        this.props.setSegments(resp.response.segmentos);
+      })
+      .catch(e => Alert.alert(e.message));
   }
 
   render() {
@@ -102,6 +118,7 @@ class HomeClientView extends Component {
                         prod_image: p.profile_pic,
                         prod_partner_id: p.p_id,
                         prod_name: p.p_user,
+                        id: p.p_id,
                       }))}
                       partner
                       onPress={product => {
@@ -109,12 +126,6 @@ class HomeClientView extends Component {
                           p_id: product.prod_partner_id,
                         });
                       }}
-
-                      // onPress={product => {
-                      //   Actions.productView({
-                      //     product,
-                      //   });
-                      // }}
                     />
                   </View>
                 </SafeAreaView>
@@ -133,6 +144,7 @@ const mapDispatchToProps = dispatch => {
     client_info: client_info =>
       dispatch({type: 'ADD_USER_INFO', payload: client_info}),
     logout: () => dispatch(unsetUser()),
+    setSegments: segments => dispatch(changeSegments(segments)),
     clearCart: () => dispatch({type: 'CLEAR_CART'}),
   };
 };
@@ -146,38 +158,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps,
 )(HomeClientView);
-
-export const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'white',
-    fontFamily: 'QUICKSAND-LIGHT',
-  },
-  container1Title: {
-    fontSize: 15,
-    fontWeight: 'bold',
-  },
-  container2Title: {
-    fontSize: 15,
-    color: '#d3e38c',
-  },
-  container4: {
-    flexDirection: 'row',
-    marginLeft: 15,
-    marginTop: 10,
-  },
-
-  imageContainer: {
-    flex: 1,
-    marginBottom: Platform.select({ios: 0, android: 1}),
-    backgroundColor: 'white',
-    borderRadius: 8,
-  },
-  imagenes: {
-    resizeMode: 'cover',
-  },
-
-  menutab: {
-    flex: 1,
-  },
-});

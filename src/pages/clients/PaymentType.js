@@ -4,6 +4,8 @@ import {Actions} from 'react-native-router-flux';
 import {CheckBox, ListItem} from 'react-native-elements';
 import {connect} from 'react-redux';
 import {ScrollView} from 'react-native-gesture-handler';
+import request from '../../utils/request';
+import {config} from '../../config';
 
 class PaymentTypeClientView extends Component {
   constructor(props) {
@@ -15,6 +17,20 @@ class PaymentTypeClientView extends Component {
   }
 
   componentDidMount() {
+    console.log(JSON.stringify(this.props.partner, undefined, 2));
+    request(
+      `https://api.mapbox.com/directions/v5/mapbox/driving/${
+        this.props.partner.p_lng
+      },${this.props.partner.p_lat};${this.props.address.address_lon},${
+        this.props.address.address_lat
+      }?access_token=${config.mapboxKey}`,
+    )
+      .then(resp => {
+        console.log(JSON.stringify(resp, undefined, 2));
+      })
+      .catch(e => {
+        console.log(e);
+      });
     fetch(
       `http://test.itsontheway.com.ve/api/delivery_price/${
         this.props.address.zone_id
@@ -41,7 +57,8 @@ class PaymentTypeClientView extends Component {
       pedido,
       opType,
       price:
-        this.state.deliveryPrice + this.getSubTotal() / this.props.dollarPrice,
+        this.state.deliveryPrice +
+        (this.getSubTotal() + this.getUsagePrice()) / this.props.dollarPrice,
     });
   };
 
@@ -63,6 +80,11 @@ class PaymentTypeClientView extends Component {
       price += this.getProductPrice(item);
     });
     return price;
+  }
+
+  getUsagePrice() {
+    const subtotal = this.getSubTotal();
+    return (subtotal * this.props.usagePercentage) / 100;
   }
 
   render() {
@@ -99,6 +121,15 @@ class PaymentTypeClientView extends Component {
           <ListItem
             bottomDivider
             rightContentContainerStyle={{flex: 1}}
+            title="Uso de la aplicacion"
+            rightTitle={`Bs ${this.getUsagePrice().toLocaleString()} ($${(
+              this.getUsagePrice() / this.props.dollarPrice
+            ).toFixed(2)})`}
+          />
+
+          <ListItem
+            bottomDivider
+            rightContentContainerStyle={{flex: 1}}
             title="Delivery"
             rightTitle={`Bs ${(
               this.state.deliveryPrice * this.props.dollarPrice
@@ -112,9 +143,13 @@ class PaymentTypeClientView extends Component {
             title="Total"
             rightTitle={`Bs ${(
               this.state.deliveryPrice * this.props.dollarPrice +
-              this.getSubTotal()
-            ).toLocaleString()} ($${this.state.deliveryPrice +
-              this.getSubTotal() / this.props.dollarPrice})`}
+              this.getSubTotal() +
+              this.getUsagePrice()
+            ).toLocaleString()} ($${(
+              this.state.deliveryPrice +
+              this.getSubTotal() / this.props.dollarPrice +
+              this.getUsagePrice() / this.props.dollarPrice
+            ).toFixed(2)})`}
           />
         </View>
 
@@ -153,20 +188,6 @@ class PaymentTypeClientView extends Component {
               onPress={() => this.VerifyPaymentClient('P3')}
             />
           </View>
-          {/* <View style={styles.platformName}>
-            <Text style={styles.platformNameTD}>
-              4. Crédito - Débito internacional
-            </Text>
-            <Text style={styles.platformNamePrice5}>---</Text>
-            <CheckBox
-              checkedIcon="dot-circle-o"
-              uncheckedIcon="circle-o"
-              checked={this.state.tddchecked}
-              onPress={() =>
-                this.setState({tddchecked: !this.state.tddchecked})
-              }
-            />
-          </View> */}
         </View>
       </View>
     );
@@ -174,9 +195,11 @@ class PaymentTypeClientView extends Component {
 }
 const mapStateToProps = state => {
   return {
+    partner: state.partner.selectedPartner,
     cartItems: state.cart,
     client_info: state.session,
-    dollarPrice: state.dollarPrice.price,
+    dollarPrice: state.parameters.dollarPrice,
+    usagePercentage: state.parameters.usagePercentage,
   };
 };
 export default connect(

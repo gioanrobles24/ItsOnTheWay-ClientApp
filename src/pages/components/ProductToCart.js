@@ -1,27 +1,7 @@
 import React, {Component} from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  Button,
-  TouchableHighlight,
-  TouchableOpacity,
-  ScrollView,
-  Alert,
-} from 'react-native';
-import {
-  Icon,
-  Avatar,
-  Badge,
-  withBadge,
-  Image,
-  Input,
-  Card,
-  ListItem,
-} from 'react-native-elements';
+import {View, Text, StyleSheet, ScrollView, Alert} from 'react-native';
+import {ListItem} from 'react-native-elements';
 const image = {uri: 'http://test.itsontheway.com.ve/api/parnetBanner1'};
-import {AirbnbRating} from 'react-native-ratings';
-import {Actions} from 'react-native-router-flux';
 import {connect} from 'react-redux';
 import {gray, green} from '../../colors';
 

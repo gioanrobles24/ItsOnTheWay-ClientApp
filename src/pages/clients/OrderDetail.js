@@ -21,7 +21,9 @@ function getProductPrice(item) {
 
 export function OrderDetail({orderId, navigation}) {
   const [order, setOrder] = useState({products: []});
-  const dollarPrice = parseFloat(useSelector(state => state.dollarPrice.price));
+  const dollarPrice = parseFloat(
+    useSelector(state => state.parameters.dollarPrice),
+  );
 
   useEffect(() => {
     navigation.setParams({
@@ -35,6 +37,17 @@ export function OrderDetail({orderId, navigation}) {
           Alert.alert('Error');
           Actions.pop();
         } else {
+          const order = obj.response.order;
+          order.products = obj.response.order_productos.map(p => ({
+            ...p,
+            quantity: p.prod_quantity,
+            prod_price_usd: p.prod_price_usd.replace(',', '.'),
+            extras: p.extras.map(e => ({
+              ...e,
+              extra_name: e.pe_name,
+              extra_price_usd: e.extra_price.replace(',', '.'),
+            })),
+          }));
           setOrder({
             ...obj.response.order,
             products: obj.response.order_productos.map(p => ({

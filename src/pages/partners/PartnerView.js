@@ -1,34 +1,25 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, {Component} from 'react';
 import {
   StyleSheet,
   Text,
   View,
-  TextInput,
-  Button,
-  ScrollView,
-  SafeAreaView,
-  TouchableHighlight,
-  Image,
   Alert,
   FlatList,
-  ImageBackground,
   Dimensions,
   BackHandler,
 } from 'react-native';
 import {Actions} from 'react-native-router-flux';
-import {AirbnbRating, Rating} from 'react-native-ratings';
-import {Badge, Avatar, Card, ListItem} from 'react-native-elements';
+import {Badge, ListItem, Tile} from 'react-native-elements';
 // const image = { uri: "http://test.itsontheway.com.ve/api/parnetBanner" }
 import PayBoton from '../components/BotomBarMenu';
-import {Provider} from 'react-redux';
-import store from '../../store';
 import {connect} from 'react-redux';
-import {electronics} from '../components/Data';
 import {green} from '../../colors';
 import AutoHeightImage from 'react-native-auto-height-image';
 import {config} from '../../config';
-
-const prueba = require('../../assets/prueba.jpg');
+import request from '../../utils/request';
+import {changePartner, changePartnerSegment} from '../../reducers/partner';
+import {ScrollView} from 'react-native-gesture-handler';
 
 class PartnerView extends Component {
   constructor(props) {
@@ -40,27 +31,15 @@ class PartnerView extends Component {
       appStatus: false,
     };
 
-    fetch(
-      'http://test.itsontheway.com.ve/api/clients/showPartner/' +
-        this.props.p_id,
-      {
-        method: 'GET',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-      },
-    )
-      .then(response => response.json())
+    request(`${config.apiUrl}/clients/showPartner/${this.props.p_id}`)
       .then(responseData => {
         if (responseData.error) {
-          alert(' por favor intenta nuevamente');
+          Alert.alert(' por favor intenta nuevamente');
         } else {
-          console.log(JSON.stringify(responseData, undefined, 2));
           this.props.navigation.setParams({
             title: responseData.response.partner.p_user,
           });
-
+          console.log(responseData.response.partner_products, undefined, 2);
           this.setState(
             {
               partner_products: responseData.response.partner_products,
@@ -69,6 +48,7 @@ class PartnerView extends Component {
             },
             () => {},
           );
+          this.props.setPartner(responseData.response.partner);
         }
       })
       .catch(error => {
@@ -85,7 +65,7 @@ class PartnerView extends Component {
       .then(response => response.json())
       .then(responseData => {
         if (responseData.error) {
-          alert(' por favor intenta nuevamente');
+          Alert.alert(' por favor intenta nuevamente');
         } else {
           try {
             this.setState({
@@ -101,7 +81,15 @@ class PartnerView extends Component {
   }
 
   backAction = () => {
-    console.log('Entre partner view back');
+    if (
+      Actions.currentScene === 'partnerView' &&
+      this.props.partner.selectedSegment !== null
+    ) {
+      this.props.setSelectedSegment(null);
+      // Actions.pop();
+      return true;
+    }
+
     if (Actions.currentScene !== 'partnerView') {
       Actions.pop();
       return true;
@@ -159,7 +147,7 @@ class PartnerView extends Component {
       title={item.prod_name}
       rightTitle={`$${item.prod_price_usd}`}
       titleStyle={{
-        fontWeight: 'bold',
+        // fontWeight: 'bold',
         ...styles.grayText,
       }}
       leftAvatar={{
@@ -177,6 +165,26 @@ class PartnerView extends Component {
 
   render() {
     let partner_profile_pic = {uri: this.state.partner_banner};
+    let segments = [];
+
+    this.state.partner_products.forEach(product => {
+      if (
+        product.prod_seg_id &&
+        !segments.find(s => s.id === parseInt(product.prod_seg_id, 10))
+      ) {
+        console.log(product.prod_seg_id);
+        segments.push({
+          ...this.props.segments.find(
+            s => s.id === parseInt(product.prod_seg_id, 10),
+          ),
+          product,
+        });
+      }
+    });
+
+    console.log(segments);
+
+    console.log(segments);
 
     return (
       <>
@@ -210,6 +218,13 @@ class PartnerView extends Component {
                 containerStyle={{alignSelf: 'center'}}
               />
             )}
+            {!this.state.appStatus && (
+              <Badge
+                status="error"
+                value="CIERRE TOTAL"
+                containerStyle={{alignSelf: 'center'}}
+              />
+            )}
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
               <Text style={{textAlign: 'right', fontSize: 18}}>Horario: </Text>
               {this.state.partner.p_open_time && (
@@ -222,18 +237,60 @@ class PartnerView extends Component {
               )}
             </View>
           </View>
-          {/* <ScrollView> */}
           <View style={styles.productscontainer}>
-            {/* {this.state.partner_products.map(this.renderItem)} */}
-            <FlatList
-              initialNumToRender={10}
-              keyExtractor={this.keyExtractor}
-              data={this.state.partner_products}
-              renderItem={this.renderItem}
-            />
-            {this.state.partner.is_open && this.state.appStatus && <PayBoton />}
+            {this.props.partner.selectedSegment === null ? (
+              <ScrollView
+                contentContainerStyle={{
+                  flexWrap: 'wrap',
+                  flexDirection: 'row',
+                }}>
+                {segments.map(s => (
+                  <Tile
+                    title={s.seg_description}
+                    onPress={() => {
+                      this.props.setSelectedSegment(s.id);
+                    }}
+                    titleStyle={
+                      {
+                        // color: green,
+                        // fontFamily: '[z] Arista Light',
+                        // backgroundColor: 'white',
+                        // padding: 10,
+                        // borderRadius: 50,
+                      }
+                    }
+                    featured
+                    width={Dimensions.get('window').width / 2}
+                    height={Dimensions.get('window').width / 2}
+                    imageContainerStyle={{
+                      backgroundColor: 'rgba(0,0,0,.5)',
+                    }}
+                    imageSrc={{
+                      uri: `http://test.itsontheway.com.ve/images/productos/${
+                        s.product.prod_partner_id
+                      }/${s.product.prod_image}`,
+                    }}
+                  />
+                ))}
+              </ScrollView>
+            ) : (
+              <FlatList
+                initialNumToRender={10}
+                keyExtractor={this.keyExtractor}
+                data={this.state.partner_products.filter(
+                  p =>
+                    parseInt(p.prod_seg_id, 10) ===
+                    this.props.partner.selectedSegment,
+                )}
+                renderItem={this.renderItem}
+              />
+            )}
+            {this.state.partner.is_open && this.state.appStatus && (
+              <View style={{marginTop: 20}}>
+                <PayBoton />
+              </View>
+            )}
           </View>
-          {/* </ScrollView> */}
         </View>
       </>
     );
@@ -244,13 +301,17 @@ const mapStateToProps = state => {
   return {
     cartItems: state.cart,
     client_info: state.session,
-    dollarPrice: state.dollarPrice.price,
+    dollarPrice: state.parameters.dollarPrice,
+    partner: state.partner,
+    segments: state.segments,
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     addItemToCart: product => dispatch({type: 'ADD_TO_CART', payload: product}),
+    setPartner: partner => dispatch(changePartner(partner)),
+    setSelectedSegment: segmentId => dispatch(changePartnerSegment(segmentId)),
     clearCart: () => dispatch({type: 'CLEAR_CART'}),
   };
 };

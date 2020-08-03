@@ -1,29 +1,17 @@
-import React, {Component, useState} from 'react';
+import React, {useState} from 'react';
 import {
   StyleSheet,
   Text,
   View,
   TextInput,
-  Button,
-  TouchableHighlight,
   Image,
   Alert,
-  Switch,
-  ToastAndroid,
-  BackHandler,
   ScrollView,
   TouchableOpacity,
   Platform,
 } from 'react-native';
 import {Actions} from 'react-native-router-flux';
-import {
-  Icon,
-  Avatar,
-  Badge,
-  withBadge,
-  Card,
-  CheckBox,
-} from 'react-native-elements';
+import {Card, CheckBox} from 'react-native-elements';
 import {createStackNavigator} from 'react-navigation';
 import ImagePicker from 'react-native-image-picker';
 import {useSelector} from 'react-redux';
@@ -97,6 +85,8 @@ export function ZellePayment({address, description, price}) {
         }
       });
 
+      console.log(data);
+
       setLoading(true);
       fetch('http://test.itsontheway.com.ve/api/clients/neworder', {
         method: 'POST',
@@ -143,8 +133,6 @@ export function ZellePayment({address, description, price}) {
           value={email}
           onChangeText={setEmail}
           placeholder="Correo que envia el pago"
-          keyboardType="phone-pad"
-          underlineColorAndroid="transparent"
         />
       </View>
       <View style={styles.inputContainer}>
@@ -153,8 +141,6 @@ export function ZellePayment({address, description, price}) {
           value={name}
           onChangeText={setName}
           placeholder="Nombre de la persona que envia el pago"
-          keyboardType="phone-pad"
-          underlineColorAndroid="transparent"
         />
       </View>
 
@@ -183,7 +169,8 @@ export function ZellePayment({address, description, price}) {
 
       <View style={{alignSelf: 'center'}}>
         <Text style={{fontSize: 18}}>
-          Total <Text style={{color: green}}>${price.toLocaleString()}</Text>
+          <Text style={{color: green, fontWeight: 'bold'}}>Total </Text>$
+          {price.toLocaleString()}
         </Text>
       </View>
 

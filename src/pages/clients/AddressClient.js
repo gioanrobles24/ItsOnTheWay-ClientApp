@@ -23,6 +23,7 @@ class AllmyOrdersClientView extends Component {
   };
 
   fetchAddresses() {
+    console.log(this.props.user.response.client_info.id);
     fetch(
       `http://test.itsontheway.com.ve/api/clients/address_client/${
         this.props.user.response.client_info.id

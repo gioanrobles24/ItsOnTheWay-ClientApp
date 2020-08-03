@@ -121,7 +121,6 @@ export function MobilePayment({address, description, price, ...props}) {
           }
         })
         .catch(e => {
-          console.log(e);
           Alert.alert('Error');
         })
         .finally(() => setLoading(false));
@@ -206,7 +205,8 @@ export function MobilePayment({address, description, price, ...props}) {
       </View>
       <View style={{alignSelf: 'center'}}>
         <Text style={{fontSize: 18}}>
-          Total <Text style={{color: green}}>Bs. {price.toLocaleString()}</Text>
+          <Text style={{color: green, fontWeight: 'bold'}}>Total </Text>
+          Bs. {price.toLocaleString()}
         </Text>
       </View>
 
