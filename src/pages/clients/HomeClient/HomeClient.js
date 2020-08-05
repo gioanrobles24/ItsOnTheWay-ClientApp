@@ -131,8 +131,8 @@ class HomeClientView extends Component {
                 </SafeAreaView>
               </HomeSection>
             </ScrollView>
+            <TabMenuIcons containerStyle={{top: -25}} />
           </Header>
-          <TabMenuIcons />
         </ImageBackground>
       </View>
     );

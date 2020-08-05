@@ -17,7 +17,6 @@ class PaymentTypeClientView extends Component {
   }
 
   componentDidMount() {
-    console.log(JSON.stringify(this.props.partner, undefined, 2));
     request(
       `https://api.mapbox.com/directions/v5/mapbox/driving/${
         this.props.partner.p_lng
@@ -26,22 +25,20 @@ class PaymentTypeClientView extends Component {
       }?access_token=${config.mapboxKey}`,
     )
       .then(resp => {
+        return request(`${config.apiUrl}/delivery_price`, {
+          method: 'POST',
+          body: JSON.stringify({distance: resp.routes[0].distance / 1000}),
+        });
+      })
+      .then(resp => {
         console.log(JSON.stringify(resp, undefined, 2));
+        this.setState({
+          deliveryPrice: parseFloat(resp.response.d_price.delivery_price),
+          loading: false,
+        });
       })
       .catch(e => {
         console.log(e);
-      });
-    fetch(
-      `http://test.itsontheway.com.ve/api/delivery_price/${
-        this.props.address.zone_id
-      }`,
-    )
-      .then(resp => resp.json())
-      .then(resp => {
-        this.setState({
-          deliveryPrice: parseFloat(resp.response.d_price.delivery_price_usd),
-          loading: false,
-        });
       });
   }
 
@@ -121,7 +118,7 @@ class PaymentTypeClientView extends Component {
           <ListItem
             bottomDivider
             rightContentContainerStyle={{flex: 1}}
-            title="Uso de la aplicacion"
+            title="Servicio"
             rightTitle={`Bs ${this.getUsagePrice().toLocaleString()} ($${(
               this.getUsagePrice() / this.props.dollarPrice
             ).toFixed(2)})`}

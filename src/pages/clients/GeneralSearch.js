@@ -114,10 +114,7 @@ export default class GeneralSearch extends Component {
             renderItem={this.renderItem}
           />
         </View>
-        <SafeAreaView style={{height: 80}} />
-        <SafeAreaView style={styles.menutab}>
-          <TabMenuIcons />
-        </SafeAreaView>
+        <TabMenuIcons containerStyle={{paddingTop: 100}} />
       </View>
     );
   }

@@ -1,11 +1,12 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   TouchableHighlight,
   StyleSheet,
   Text,
   TouchableOpacity,
+  BackHandler,
 } from 'react-native';
 import {Icon, Image, Input, Avatar} from 'react-native-elements';
 import MenuDrawer from 'react-native-side-drawer';
@@ -27,6 +28,23 @@ export function Header(props) {
       Actions.generalSearch({param: search});
     }
   }
+
+  useEffect(() => {
+    function backAction() {
+      if (open) {
+        setOpen(false);
+        return true;
+      }
+    }
+
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      backAction,
+    );
+    return () => {
+      backHandler.remove();
+    };
+  }, [open]);
 
   return (
     <MenuDrawer

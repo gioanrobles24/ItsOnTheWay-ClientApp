@@ -164,22 +164,19 @@ class TabMenuIcons extends Component {
 
   render() {
     return (
-      <SafeAreaView style={styles.menutab}>
-        <View style={styles.menutab}>
-          <BottomBar
-            // shapeColor="#ffffff"
-            // miniButtonsColor="#ffffff"
-            mainIconGradient={[green, green]}
-            // mainIconColor={green}
-            mainIcon={this.renderMainIcon()}
-            mainIconOnPress={this.mainIconOnPress}
-            firstIconComponent={this.renderFirstIconComponent()}
-            secondIconComponent={this.renderSecondIconComponent()}
-            thirdIconComponent={this.renderThirdIconComponent()}
-            fourthIconComponent={this.renderFourthIconComponent()}
-          />
-        </View>
-      </SafeAreaView>
+      // <SafeAreaView style={styles.menutab}>
+      <View style={this.props.containerStyle}>
+        <BottomBar
+          mainIconGradient={[green, green]}
+          mainIcon={this.renderMainIcon()}
+          mainIconOnPress={this.MisPedios}
+          firstIconComponent={this.renderFirstIconComponent()}
+          secondIconComponent={this.renderSecondIconComponent()}
+          thirdIconComponent={this.renderThirdIconComponent()}
+          fourthIconComponent={this.renderFourthIconComponent()}
+        />
+      </View>
+      // </SafeAreaView>
     );
   }
 }
@@ -188,6 +185,11 @@ export default TabMenuIcons;
 
 const styles = StyleSheet.create({
   menutab: {
-    flex: 1,
+    // marginTop: 50,
+    // paddingTop: 100,
+    // flex: 1,
+    // bottom: 30,
+    // zIndex: 1,
+    // flex: 1,
   },
 });

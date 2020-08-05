@@ -1,13 +1,22 @@
+/* eslint-disable react-native/no-inline-styles */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {useState, useEffect} from 'react';
 import {Text, Alert, View} from 'react-native';
-import {Avatar, Badge, ListItem} from 'react-native-elements';
+import {
+  Avatar,
+  Badge,
+  ListItem,
+  AirbnbRating,
+  Rating,
+} from 'react-native-elements';
 import {getStatusText} from './AllMyOrdersClient';
 import {Actions} from 'react-native-router-flux';
 import ProductsInCart from '../components/ProductToCart';
 import {ScrollView} from 'react-native-gesture-handler';
 import {green} from '../../colors';
 import {useSelector} from 'react-redux';
+import {config} from '../../config';
+import request from '../../utils/request';
 
 const image = {uri: 'http://test.itsontheway.com.ve/api/imgBlanca'};
 
@@ -21,6 +30,7 @@ function getProductPrice(item) {
 
 export function OrderDetail({orderId, navigation}) {
   const [order, setOrder] = useState({products: []});
+  const [rating, setRating] = useState(null);
   const dollarPrice = parseFloat(
     useSelector(state => state.parameters.dollarPrice),
   );
@@ -30,24 +40,15 @@ export function OrderDetail({orderId, navigation}) {
       title: `Pedido #${orderId}`,
     });
 
-    fetch(`http://test.itsontheway.com.ve/api/clients/orders_detail/${orderId}`)
+    fetch(`${config.apiUrl}/clients/orders_detail/${orderId}`)
       .then(resp => resp.json())
       .then(obj => {
         if (obj.response.error) {
           Alert.alert('Error');
           Actions.pop();
         } else {
-          const order = obj.response.order;
-          order.products = obj.response.order_productos.map(p => ({
-            ...p,
-            quantity: p.prod_quantity,
-            prod_price_usd: p.prod_price_usd.replace(',', '.'),
-            extras: p.extras.map(e => ({
-              ...e,
-              extra_name: e.pe_name,
-              extra_price_usd: e.extra_price.replace(',', '.'),
-            })),
-          }));
+          console.log(JSON.stringify(obj, undefined, 2));
+          setRating(parseInt(obj.response.order.ord_rate, 10));
           setOrder({
             ...obj.response.order,
             products: obj.response.order_productos.map(p => ({
@@ -69,13 +70,35 @@ export function OrderDetail({orderId, navigation}) {
       });
   }, [orderId]);
 
+  async function sendRating(rating) {
+    try {
+      const result = await request(`${config.apiUrl}/clients/rate_order`, {
+        method: 'POST',
+        body: JSON.stringify({ord_id: orderId, ord_rate: rating}),
+      });
+      if (result.status !== '200') {
+        throw result;
+      }
+    } catch (e) {
+      console.log(e);
+      setRating(null);
+      Alert.alert('Error');
+    }
+  }
+
   let subTotal = 0;
   order.products.forEach(item => {
     subTotal += getProductPrice(item);
   });
 
   return (
-    <View style={{flex: 1, padding: 30, flexGrow: 1}}>
+    <View
+      style={{
+        flex: 1,
+        padding: 30,
+        flexGrow: 1,
+        justifyContent: 'space-between',
+      }}>
       <View
         style={{
           flexDirection: 'row',
@@ -121,22 +144,47 @@ export function OrderDetail({orderId, navigation}) {
               {subTotal.toLocaleString()})
             </Text>
           </View>
+          <View
+            style={{
+              marginTop: 100,
+              flexDirection: 'row',
+              alignItems: 'center',
+            }}>
+            <Text style={{fontSize: 18, color: green, marginRight: 10}}>
+              Calificar:{' '}
+            </Text>
+            <AirbnbRating
+              showRating={false}
+              size={25}
+              defaultRating={rating}
+              isDisabled={rating === null || rating !== 0}
+              onFinishRating={rating => {
+                Alert.alert(
+                  'Calificar',
+                  `¿Seguro quieres calificar esta orden con un ${rating}?`,
+                  [
+                    {
+                      text: 'No',
+                      onPress: () => {},
+                      style: 'cancel',
+                    },
+                    {
+                      text: 'Si',
+                      onPress: () => {
+                        setRating(rating);
+                        sendRating(rating);
+                      },
+                    },
+                  ],
+                  {cancelable: false},
+                );
+              }}
+            />
+          </View>
         </ScrollView>
-
-        {/* {order.products.map(p => (
-          <ListItem
-            leftAvatar={{
-              source: {
-                uri: `http://test.itsontheway.com.ve/images/productos/${
-                  p.prod_partner_id
-                }/${p.prod_image}`,
-              },
-            }}
-            title={p.prod_name}
-            subtitle={p.prod_description}
-            bottomDivider
-          />
-        ))} */}
+      </View>
+      <View>
+        <Text>hola</Text>
       </View>
     </View>
   );

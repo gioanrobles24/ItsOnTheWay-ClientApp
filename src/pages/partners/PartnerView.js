@@ -10,7 +10,7 @@ import {
   BackHandler,
 } from 'react-native';
 import {Actions} from 'react-native-router-flux';
-import {Badge, ListItem, Tile} from 'react-native-elements';
+import {Badge, ListItem, Tile, AirbnbRating} from 'react-native-elements';
 // const image = { uri: "http://test.itsontheway.com.ve/api/parnetBanner" }
 import PayBoton from '../components/BotomBarMenu';
 import {connect} from 'react-redux';
@@ -27,7 +27,7 @@ class PartnerView extends Component {
     this.state = {
       partner_products: [],
       partner_banner: '',
-      partner: [],
+      partner: {},
       appStatus: false,
     };
 
@@ -39,7 +39,7 @@ class PartnerView extends Component {
           this.props.navigation.setParams({
             title: responseData.response.partner.p_user,
           });
-          console.log(responseData.response.partner_products, undefined, 2);
+          console.log(responseData.response.partner);
           this.setState(
             {
               partner_products: responseData.response.partner_products,
@@ -195,6 +195,14 @@ class PartnerView extends Component {
           />
         )}
         <View style={styles.container}>
+          <View style={{position: 'absolute', top: -40, right: 10}}>
+            <AirbnbRating
+              showRating={false}
+              size={25}
+              defaultRating={parseFloat(this.state.partner.p_rate)}
+              isDisabled
+            />
+          </View>
           <View
             style={{
               marginTop: 15,

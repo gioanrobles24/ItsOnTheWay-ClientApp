@@ -178,9 +178,7 @@ export default class SearchStoreTypeView extends Component {
             ))}
           </View>
         </ScrollView> */}
-        <View style={{height: 150}}>
-          <TabMenuIcons />
-        </View>
+        <TabMenuIcons containerStyle={{paddingTop: 100}} />
       </View>
     );
   }
