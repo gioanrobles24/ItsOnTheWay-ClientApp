@@ -31,6 +31,8 @@ class PartnerView extends Component {
       appStatus: false,
     };
 
+    console.log(`partner id: ${this.props.p_id}`);
+
     request(`${config.apiUrl}/clients/showPartner/${this.props.p_id}`)
       .then(responseData => {
         if (responseData.error) {
@@ -172,7 +174,6 @@ class PartnerView extends Component {
         product.prod_seg_id &&
         !segments.find(s => s.id === parseInt(product.prod_seg_id, 10))
       ) {
-        console.log(product.prod_seg_id);
         segments.push({
           ...this.props.segments.find(
             s => s.id === parseInt(product.prod_seg_id, 10),
@@ -181,10 +182,6 @@ class PartnerView extends Component {
         });
       }
     });
-
-    console.log(segments);
-
-    console.log(segments);
 
     return (
       <>
@@ -258,15 +255,7 @@ class PartnerView extends Component {
                     onPress={() => {
                       this.props.setSelectedSegment(s.id);
                     }}
-                    titleStyle={
-                      {
-                        // color: green,
-                        // fontFamily: '[z] Arista Light',
-                        // backgroundColor: 'white',
-                        // padding: 10,
-                        // borderRadius: 50,
-                      }
-                    }
+                    titleStyle={{backgroundColor: 'red'}}
                     featured
                     width={Dimensions.get('window').width / 2}
                     height={Dimensions.get('window').width / 2}

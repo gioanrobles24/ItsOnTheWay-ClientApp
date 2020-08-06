@@ -183,9 +183,6 @@ export function OrderDetail({orderId, navigation}) {
           </View>
         </ScrollView>
       </View>
-      <View>
-        <Text>hola</Text>
-      </View>
     </View>
   );
 }

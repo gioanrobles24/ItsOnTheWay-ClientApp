@@ -7,16 +7,17 @@ import {
   Text,
   TouchableOpacity,
   BackHandler,
+  Dimensions,
 } from 'react-native';
 import {Icon, Image, Input, Avatar} from 'react-native-elements';
 import MenuDrawer from 'react-native-side-drawer';
-import {} from 'react-native-gesture-handler';
 import {Actions} from 'react-native-router-flux';
 import {useDispatch} from 'react-redux';
 import {unsetUser} from '../../reducers/session';
 import AsyncStorage from '@react-native-community/async-storage';
 import {green} from '../../colors';
-const image = {uri: 'http://test.itsontheway.com.ve/api/imgBlanca'};
+const image = {uri: 'http://test.itsontheway.com.ve/api/simgBlanca'};
+
 // const image = {uri: 'http://test.itsontheway.com.ve/api/parnetBanner1'};
 
 export function Header(props) {
@@ -54,44 +55,46 @@ export function Header(props) {
       animationTime={450}
       overlay={true}
       opacity={0.8}>
-      <View style={styles.headerBarContainer}>
-        <View style={styles.headerBar}>
-          <Image
-            source={{uri: 'http://test.itsontheway.com.ve/api/imgBlanca'}}
-            style={{width: 150, height: 80, marginRight: 80}}
-          />
-          <TouchableHighlight
-            underlayColor={'transparent'}
-            onPress={() => setOpen(true)}>
-            <Icon
-              name="navicon"
-              type="evilicon"
-              color="#ffffff"
-              size={35}
-              iconStyle={{marginRight: 15, marginTop: 10}}
+      <View style={{flex: 1, height: '100%'}}>
+        <View style={styles.headerBarContainer}>
+          <View style={styles.headerBar}>
+            <Image
+              source={{uri: 'http://test.itsontheway.com.ve/api/imgBlanca'}}
+              style={{width: 150, height: 80, marginRight: 80}}
             />
-          </TouchableHighlight>
+            <TouchableHighlight
+              underlayColor={'transparent'}
+              onPress={() => setOpen(true)}>
+              <Icon
+                name="navicon"
+                type="evilicon"
+                color="#ffffff"
+                size={35}
+                iconStyle={{marginRight: 15, marginTop: 10}}
+              />
+            </TouchableHighlight>
+          </View>
+          <View style={styles.headerBar}>
+            <Input
+              onEndEditing={handleSearch}
+              value={search}
+              onChangeText={setSearch}
+              leftIcon={<Icon name="search" type="evilicon" color="black" />}
+              inputContainerStyle={{
+                borderRadius: 20,
+                borderBottomColor: 'transparent',
+                width: 330,
+                height: 35,
+                backgroundColor: 'white',
+                alignSelf: 'center',
+                marginBottom: 5,
+                justifyContent: 'center',
+              }}
+            />
+          </View>
         </View>
-        <View style={styles.headerBar}>
-          <Input
-            onEndEditing={handleSearch}
-            value={search}
-            onChangeText={setSearch}
-            leftIcon={<Icon name="search" type="evilicon" color="black" />}
-            inputContainerStyle={{
-              borderRadius: 20,
-              borderBottomColor: 'transparent',
-              width: 330,
-              height: 35,
-              backgroundColor: 'white',
-              alignSelf: 'center',
-              marginBottom: 5,
-              justifyContent: 'center',
-            }}
-          />
-        </View>
+        {props.children}
       </View>
-      {props.children}
     </MenuDrawer>
   );
 }
@@ -130,9 +133,6 @@ function SidebarMenu(props) {
         source={image}
       />
 
-      <Text style={styles.animatedBoxTextSpecial} h3>
-        {/* {this.state.data.cl_name} */}
-      </Text>
       <View style={styles.MenubarContainer}>
         <TouchableOpacity
           style={styles.menubarItemContainer}
@@ -207,7 +207,6 @@ function SidebarMenu(props) {
 
 const styles = StyleSheet.create({
   headerBarContainer: {
-    marginTop: -5,
     flexDirection: 'column',
     backgroundColor: '#a9d046',
     height: 130,
@@ -219,9 +218,10 @@ const styles = StyleSheet.create({
   },
 
   animatedMenuBox: {
-    flex: 1,
-    backgroundColor: '#ffffff',
-    marginTop: -5,
+    // flex: 1,
+    height: Dimensions.get('screen').height,
+    backgroundColor: 'white',
+    // marginTop: -5,
   },
   animatedBoxTextSpecial: {
     flexDirection: 'column',
@@ -238,7 +238,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    flex: 0.7,
+    flex: 1,
   },
 
   menubarItemContainer: {

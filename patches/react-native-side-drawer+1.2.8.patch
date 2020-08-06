@@ -1,0 +1,23 @@
+diff --git a/node_modules/react-native-side-drawer/index.js b/node_modules/react-native-side-drawer/index.js
+index 6a0504b..5a723a4 100644
+--- a/node_modules/react-native-side-drawer/index.js
++++ b/node_modules/react-native-side-drawer/index.js
+@@ -226,16 +226,10 @@ MenuDrawer.propTypes = {
+ 
+ const styles = StyleSheet.create({
+   main: {
+-    position: "absolute",
+-    left: 0,
+-    top: 0,
++    flex: 1
+   },
+   container: {
+-    position: "absolute",
+-    left: 0,
+-    width: SCREEN_WIDTH,
+-    height: SCREEN_HEIGHT,
+-    zIndex: 0,
++    flex: 1
+   },
+   drawer: {
+     position: "absolute",

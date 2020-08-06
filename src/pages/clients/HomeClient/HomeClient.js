@@ -8,6 +8,7 @@ import {
   Platform,
   ImageBackground,
   Alert,
+  Text,
 } from 'react-native';
 import {connect} from 'react-redux';
 import Recomedantions from '../../components/ProductHorizontalCarousel';
@@ -53,86 +54,90 @@ class HomeClientView extends Component {
           source={background}
           style={{flex: 1, resizeMode: 'cover'}}>
           <Header>
-            <ScrollView contentContainerStyle={{flexGrow: 1}}>
-              <HomeSection title="Recomendaciones">
-                <SafeAreaView style={{flex: 1}}>
-                  <View
-                    style={{
-                      flex: 1,
-                      flexDirection: 'row',
-                      justifyContent: 'center',
-                      marginTop: -30,
-                    }}>
-                    <Recomedantions
-                      items={this.state.products.filter(
-                        p => p.prod_recome === '1',
-                      )}
-                      onPress={product => {
-                        Actions.partnerView({
-                          p_id: product.prod_partner_id,
-                        });
-                        Actions.productView({
-                          product,
-                        });
-                      }}
-                    />
-                  </View>
-                </SafeAreaView>
-              </HomeSection>
-              <HomeSection title="Promociones">
-                <SafeAreaView style={{flex: 1}}>
-                  <View
-                    style={{
-                      flex: 1,
-                      flexDirection: 'row',
-                      justifyContent: 'center',
-                      marginTop: -30,
-                    }}>
-                    <Recomedantions
-                      items={this.state.products.filter(
-                        p => p.prod_suges === '1',
-                      )}
-                      onPress={product => {
-                        Actions.partnerView({
-                          p_id: product.prod_partner_id,
-                        });
-                        Actions.productView({
-                          product,
-                        });
-                      }}
-                    />
-                  </View>
-                </SafeAreaView>
-              </HomeSection>
-              <HomeSection title="Restaurantes">
-                <SafeAreaView style={{flex: 1, marginBottom: 150}}>
-                  <View
-                    style={{
-                      flex: 1,
-                      flexDirection: 'row',
-                      justifyContent: 'center',
-                      marginTop: -30,
-                    }}>
-                    <Recomedantions
-                      items={this.state.partners.map(p => ({
-                        prod_image: p.profile_pic,
-                        prod_partner_id: p.p_id,
-                        prod_name: p.p_user,
-                        id: p.p_id,
-                      }))}
-                      partner
-                      onPress={product => {
-                        Actions.partnerView({
-                          p_id: product.prod_partner_id,
-                        });
-                      }}
-                    />
-                  </View>
-                </SafeAreaView>
-              </HomeSection>
-            </ScrollView>
-            <TabMenuIcons containerStyle={{top: -25}} />
+            <View style={{flex: 1}}>
+              <ScrollView>
+                <HomeSection title="Recomendaciones">
+                  <SafeAreaView style={{flex: 1}}>
+                    <View
+                      style={{
+                        flex: 1,
+                        flexDirection: 'row',
+                        justifyContent: 'center',
+                        marginTop: -30,
+                      }}>
+                      <Recomedantions
+                        items={this.state.products.filter(
+                          p => p.prod_recome === '1',
+                        )}
+                        onPress={product => {
+                          Actions.partnerView({
+                            p_id: product.prod_partner_id,
+                          });
+                          Actions.productView({
+                            product,
+                          });
+                        }}
+                      />
+                    </View>
+                  </SafeAreaView>
+                </HomeSection>
+                <HomeSection title="Promociones">
+                  <SafeAreaView style={{flex: 1}}>
+                    <View
+                      style={{
+                        flex: 1,
+                        flexDirection: 'row',
+                        justifyContent: 'center',
+                        marginTop: -30,
+                      }}>
+                      <Recomedantions
+                        items={this.state.products.filter(
+                          p => p.prod_suges === '1',
+                        )}
+                        onPress={product => {
+                          Actions.partnerView({
+                            p_id: product.prod_partner_id,
+                          });
+                          Actions.productView({
+                            product,
+                          });
+                        }}
+                      />
+                    </View>
+                  </SafeAreaView>
+                </HomeSection>
+                <HomeSection title="Restaurantes">
+                  <SafeAreaView style={{flex: 1}}>
+                    <View
+                      style={{
+                        flex: 1,
+                        flexDirection: 'row',
+                        justifyContent: 'center',
+                        marginTop: -30,
+                        marginBottom: 100,
+                      }}>
+                      <Recomedantions
+                        items={this.state.partners.map(p => ({
+                          prod_image: p.profile_pic,
+                          prod_partner_id: p.p_id,
+                          prod_name: p.p_user,
+                          id: p.p_id,
+                        }))}
+                        partner
+                        onPress={product => {
+                          Actions.partnerView({
+                            p_id: product.prod_partner_id,
+                          });
+                        }}
+                      />
+                    </View>
+                  </SafeAreaView>
+                </HomeSection>
+              </ScrollView>
+              <TabMenuIcons />
+            </View>
           </Header>
+          {/* <Text> Hola</Text> */}
         </ImageBackground>
       </View>
     );

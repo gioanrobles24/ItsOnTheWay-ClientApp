@@ -148,7 +148,7 @@ export function BankPayment({address, description, price, ...props}) {
           />
         )}
         placeholder={{
-          label: 'Seleciona una dirección existente`',
+          label: 'Seleciona el banco emisor',
           color: 'black',
         }}
         items={props.banks.map(bank => ({

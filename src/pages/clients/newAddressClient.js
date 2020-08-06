@@ -198,12 +198,24 @@ class NewAddressClientView extends Component {
             ]
           : [],
     };
-    const searchPlace = text =>
-      fetch(
-        `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURI(
-          text,
-        )}.json?access_token=${config.mapboxKey}&country=VE`,
+    /**
+     *
+     * @param {string} text
+     */
+    const searchPlace = text => {
+      let result = text.toLowerCase().trim();
+      console.log(result.match('maracay'));
+      if (!result.match('maracay')) {
+        result += ' maracay';
+      }
+
+      return fetch(
+        `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURI(
+          result,
+        )}&key=${config.googleMapsKey}`,
       ).then(resp => resp.json());
+    };
+
     const debouncedSearch = AwesomeDebouncePromise(searchPlace, 1000);
     return (
       <View style={styles.container}>
@@ -219,11 +231,12 @@ class NewAddressClientView extends Component {
               });
             }}
             renderItem={({index, item}) => {
+              const {lat, lng} = item.geometry.location;
               return (
                 <TouchableOpacity
                   onPress={() => {
                     this.setState({
-                      coordinates: item.center,
+                      coordinates: [lng, lat],
                       searchOptions: [],
                     });
                   }}
@@ -233,14 +246,15 @@ class NewAddressClientView extends Component {
                     borderBottomWidth: 1,
                     borderBottomColor: green,
                   }}>
-                  <Text>{item.place_name}</Text>
+                  <Text>{item.formatted_address}</Text>
                 </TouchableOpacity>
               );
             }}
             onChangeText={async text => {
               const result = await debouncedSearch(text);
               if (result) {
-                this.setState({searchOptions: result.features});
+                console.log(result);
+                this.setState({searchOptions: result.results});
               }
             }}
           />
