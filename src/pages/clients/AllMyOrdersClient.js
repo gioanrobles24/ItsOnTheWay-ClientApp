@@ -51,7 +51,7 @@ export default function AllMyOrdersClientView(props) {
                 // Alert.alert('Click');
               }}>
               <Card style={styles.cardOrder}>
-                <View style={{flexDirection: 'row'}}>
+                <View style={{flexDirection: 'row', flex: 0.8}}>
                   <Avatar rounded size="medium" source={image} />
                   <View
                     style={{

@@ -79,6 +79,9 @@ class PartnerView extends Component {
             });
           }
         }
+      })
+      .catch(e => {
+        this.setSelectedSegment({appStatus: false});
       });
   }
 
@@ -170,10 +173,10 @@ class PartnerView extends Component {
     let segments = [];
 
     this.state.partner_products.forEach(product => {
-      if (
-        product.prod_seg_id &&
-        !segments.find(s => s.id === parseInt(product.prod_seg_id, 10))
-      ) {
+      const segment = segments.find(
+        s => s.id === parseInt(product.prod_seg_id, 10),
+      );
+      if (product.prod_seg_id && !segment) {
         segments.push({
           ...this.props.segments.find(
             s => s.id === parseInt(product.prod_seg_id, 10),
@@ -182,6 +185,8 @@ class PartnerView extends Component {
         });
       }
     });
+
+    console.log(segments);
 
     return (
       <>
@@ -255,7 +260,6 @@ class PartnerView extends Component {
                     onPress={() => {
                       this.props.setSelectedSegment(s.id);
                     }}
-                    titleStyle={{backgroundColor: 'red'}}
                     featured
                     width={Dimensions.get('window').width / 2}
                     height={Dimensions.get('window').width / 2}

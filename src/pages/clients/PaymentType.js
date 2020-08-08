@@ -6,6 +6,7 @@ import {connect} from 'react-redux';
 import {ScrollView} from 'react-native-gesture-handler';
 import request from '../../utils/request';
 import {config} from '../../config';
+import {green} from '../../colors';
 
 class PaymentTypeClientView extends Component {
   constructor(props) {
@@ -87,105 +88,107 @@ class PaymentTypeClientView extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.header}>
+        {/* <View style={styles.header}>
           <Text style={styles.Title}>Método de pago</Text>
-        </View>
-        <View>
-          <View style={{maxHeight: 200}}>
-            <ScrollView>
-              {this.props.cartItems.map(item => (
-                <ListItem
-                  title={`(${item.quantity}) ${item.prod_name}`}
-                  bottomDivider
-                  rightContentContainerStyle={{flex: 1}}
-                  rightTitle={`Bs ${this.getProductPrice(
-                    item,
-                  ).toLocaleString()} ($${this.getProductPrice(item) /
-                    this.props.dollarPrice})`}
-                />
-              ))}
-            </ScrollView>
-          </View>
-          <ListItem
-            titleStyle={{fontWeight: 'bold'}}
-            rightTitleStyle={{fontWeight: 'bold'}}
-            rightContentContainerStyle={{flex: 1}}
-            bottomDivider
-            title="Sub Total"
-            rightTitle={`Bs ${this.getSubTotal().toLocaleString()} ($${this.getSubTotal() /
-              this.props.dollarPrice})`}
-          />
-          <ListItem
-            bottomDivider
-            rightContentContainerStyle={{flex: 1}}
-            title="Servicio"
-            rightTitle={`Bs ${this.getUsagePrice().toLocaleString()} ($${(
-              this.getUsagePrice() / this.props.dollarPrice
-            ).toFixed(2)})`}
-          />
+        </View> */}
+        <ScrollView>
+          <View>
+            <View style={{maxHeight: 200}}>
+              <ScrollView>
+                {this.props.cartItems.map(item => (
+                  <ListItem
+                    title={`(${item.quantity}) ${item.prod_name}`}
+                    bottomDivider
+                    rightContentContainerStyle={{flex: 1}}
+                    rightTitle={`Bs ${this.getProductPrice(
+                      item,
+                    ).toLocaleString()} ($${this.getProductPrice(item) /
+                      this.props.dollarPrice})`}
+                  />
+                ))}
+              </ScrollView>
+            </View>
+            <ListItem
+              titleStyle={{fontWeight: 'bold', color: green}}
+              rightTitleStyle={{fontWeight: 'bold'}}
+              rightContentContainerStyle={{flex: 1}}
+              bottomDivider
+              title="Sub Total"
+              rightTitle={`Bs ${this.getSubTotal().toLocaleString()} ($${this.getSubTotal() /
+                this.props.dollarPrice})`}
+            />
+            <ListItem
+              bottomDivider
+              rightContentContainerStyle={{flex: 1}}
+              title="Servicio"
+              rightTitle={`Bs ${this.getUsagePrice().toLocaleString()} ($${(
+                this.getUsagePrice() / this.props.dollarPrice
+              ).toFixed(2)})`}
+            />
 
-          <ListItem
-            bottomDivider
-            rightContentContainerStyle={{flex: 1}}
-            title="Delivery"
-            rightTitle={`Bs ${(
-              this.state.deliveryPrice * this.props.dollarPrice
-            ).toLocaleString()} ($${this.state.deliveryPrice})`}
-          />
-          <ListItem
-            bottomDivider
-            titleStyle={{fontWeight: 'bold'}}
-            rightTitleStyle={{fontWeight: 'bold'}}
-            rightContentContainerStyle={{flex: 1}}
-            title="Total"
-            rightTitle={`Bs ${(
-              this.state.deliveryPrice * this.props.dollarPrice +
-              this.getSubTotal() +
-              this.getUsagePrice()
-            ).toLocaleString()} ($${(
-              this.state.deliveryPrice +
-              this.getSubTotal() / this.props.dollarPrice +
-              this.getUsagePrice() / this.props.dollarPrice
-            ).toFixed(2)})`}
-          />
-        </View>
+            <ListItem
+              bottomDivider
+              rightContentContainerStyle={{flex: 1}}
+              title="Delivery"
+              rightTitle={`Bs ${(
+                this.state.deliveryPrice * this.props.dollarPrice
+              ).toLocaleString()} ($${this.state.deliveryPrice})`}
+            />
+            <ListItem
+              bottomDivider
+              titleStyle={{fontWeight: 'bold', color: green}}
+              rightTitleStyle={{fontWeight: 'bold'}}
+              rightContentContainerStyle={{flex: 1}}
+              title="Total"
+              rightTitle={`Bs ${(
+                this.state.deliveryPrice * this.props.dollarPrice +
+                this.getSubTotal() +
+                this.getUsagePrice()
+              ).toLocaleString()} ($${(
+                this.state.deliveryPrice +
+                this.getSubTotal() / this.props.dollarPrice +
+                this.getUsagePrice() / this.props.dollarPrice
+              ).toFixed(2)})`}
+            />
+          </View>
 
-        <View style={styles.platformsContainer}>
-          <View style={styles.platformName}>
-            <Text>1. Transferencia</Text>
-            <Text style={styles.platformNamePrice2}>
-              {this.props.pedido[0].prod_price_bs} Bs.
-            </Text>
-            <CheckBox
-              checkedIcon="dot-circle-o"
-              uncheckedIcon="circle-o"
-              checked={this.state.transfchecked}
-              onPress={() => this.VerifyPaymentClient('P2')}
-            />
+          <View style={styles.platformsContainer}>
+            <View style={styles.platformName}>
+              <Text>1. Transferencia</Text>
+              <Text style={styles.platformNamePrice2}>
+                {this.props.pedido[0].prod_price_bs} Bs.
+              </Text>
+              <CheckBox
+                checkedIcon="dot-circle-o"
+                uncheckedIcon="circle-o"
+                checked={this.state.transfchecked}
+                onPress={() => this.VerifyPaymentClient('P2')}
+              />
+            </View>
+            <View style={styles.platformName}>
+              <Text>2. Pago móvil</Text>
+              <Text style={styles.platformNamePrice3}>
+                {this.props.pedido[0].prod_price_bs} Bs.
+              </Text>
+              <CheckBox
+                checkedIcon="dot-circle-o"
+                uncheckedIcon="circle-o"
+                checked={this.state.pagomchecked}
+                onPress={() => this.VerifyPaymentClient('P1')}
+              />
+            </View>
+            <View style={styles.platformName}>
+              <Text>3. Zelle</Text>
+              <Text style={styles.platformNamePrice4}>----</Text>
+              <CheckBox
+                checkedIcon="dot-circle-o"
+                uncheckedIcon="circle-o"
+                checked={this.state.zellechecked}
+                onPress={() => this.VerifyPaymentClient('P3')}
+              />
+            </View>
           </View>
-          <View style={styles.platformName}>
-            <Text>2. Pago móvil</Text>
-            <Text style={styles.platformNamePrice3}>
-              {this.props.pedido[0].prod_price_bs} Bs.
-            </Text>
-            <CheckBox
-              checkedIcon="dot-circle-o"
-              uncheckedIcon="circle-o"
-              checked={this.state.pagomchecked}
-              onPress={() => this.VerifyPaymentClient('P1')}
-            />
-          </View>
-          <View style={styles.platformName}>
-            <Text>3. Zelle</Text>
-            <Text style={styles.platformNamePrice4}>----</Text>
-            <CheckBox
-              checkedIcon="dot-circle-o"
-              uncheckedIcon="circle-o"
-              checked={this.state.zellechecked}
-              onPress={() => this.VerifyPaymentClient('P3')}
-            />
-          </View>
-        </View>
+        </ScrollView>
       </View>
     );
   }

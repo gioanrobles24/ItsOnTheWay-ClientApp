@@ -40,14 +40,13 @@ export function OrderDetail({orderId, navigation}) {
       title: `Pedido #${orderId}`,
     });
 
-    fetch(`${config.apiUrl}/clients/orders_detail/${orderId}`)
-      .then(resp => resp.json())
+    request(`${config.apiUrl}/clients/orders_detail/${orderId}`)
       .then(obj => {
+        console.log(obj);
         if (obj.response.error) {
           Alert.alert('Error');
           Actions.pop();
         } else {
-          console.log(JSON.stringify(obj, undefined, 2));
           setRating(parseInt(obj.response.order.ord_rate, 10));
           setOrder({
             ...obj.response.order,
@@ -147,11 +146,11 @@ export function OrderDetail({orderId, navigation}) {
           <View
             style={{
               marginTop: 100,
-              flexDirection: 'row',
+              flexDirection: 'column',
               alignItems: 'center',
             }}>
             <Text style={{fontSize: 18, color: green, marginRight: 10}}>
-              Calificar:{' '}
+              Calificar a {order.products[0].p_user}:{' '}
             </Text>
             <AirbnbRating
               showRating={false}

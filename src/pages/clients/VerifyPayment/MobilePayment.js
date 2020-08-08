@@ -14,6 +14,7 @@ import {
   ScrollView,
   TouchableOpacity,
   Platform,
+  ActivityIndicator,
 } from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import {
@@ -237,14 +238,24 @@ export function MobilePayment({address, description, price, ...props}) {
           </TouchableOpacity>
         ))}
       </ScrollView>
-      <TouchableHighlight
-        disabled={loading}
-        style={[styles.buttonContainer, styles.loginButton]}
-        onPress={() => {
-          confirmOrder();
-        }}>
-        <Text style={styles.loginText}>Confirmar</Text>
-      </TouchableHighlight>
+      {loading && (
+        <ActivityIndicator
+          size="large"
+          color={green}
+          style={{marginBottom: 20}}
+        />
+      )}
+
+      {!loading && (
+        <TouchableHighlight
+          style={[styles.buttonContainer, styles.loginButton]}
+          disabled={loading}
+          onPress={() => {
+            confirmOrder();
+          }}>
+          <Text style={styles.loginText}>Confirmar</Text>
+        </TouchableHighlight>
+      )}
     </View>
   );
 }

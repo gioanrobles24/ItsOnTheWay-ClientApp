@@ -9,6 +9,8 @@ import {
   ScrollView,
   TouchableOpacity,
   Platform,
+  TouchableHighlight,
+  ActivityIndicator,
 } from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import {Card, CheckBox} from 'react-native-elements';
@@ -200,14 +202,24 @@ export function ZellePayment({address, description, price}) {
           </TouchableOpacity>
         ))}
       </ScrollView>
-      <TouchableOpacity
-        disabled={loading}
-        style={[styles.buttonContainer, styles.loginButton]}
-        onPress={() => {
-          confirmOrder();
-        }}>
-        <Text style={styles.loginText}>Confirmar</Text>
-      </TouchableOpacity>
+      {loading && (
+        <ActivityIndicator
+          size="large"
+          color={green}
+          style={{marginBottom: 20}}
+        />
+      )}
+
+      {!loading && (
+        <TouchableHighlight
+          style={[styles.buttonContainer, styles.loginButton]}
+          disabled={loading}
+          onPress={() => {
+            confirmOrder();
+          }}>
+          <Text style={styles.loginText}>Confirmar</Text>
+        </TouchableHighlight>
+      )}
     </View>
   );
 }

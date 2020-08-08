@@ -157,7 +157,11 @@ const AuthApp = props => {
           <Scene key="allmyOrders" component={AllMyOrders} />
           <Scene key="orderDetail" component={OrderDetail} />
           <Scene key="orderClient" component={OrderClient} title="Tu Pedido" />
-          <Scene key="paymentType" component={PaymentTypeClient} />
+          <Scene
+            key="paymentType"
+            component={PaymentTypeClient}
+            title="Método de pago"
+          />
           <Scene
             key="productView"
             component={ProductClientView}
