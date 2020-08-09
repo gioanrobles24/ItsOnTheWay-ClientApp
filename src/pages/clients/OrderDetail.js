@@ -146,12 +146,15 @@ export function OrderDetail({orderId, navigation}) {
           <View
             style={{
               marginTop: 100,
-              flexDirection: 'column',
               alignItems: 'center',
+              // flexDirection: 'column',
+              // alignItems: 'flex-start',
             }}>
-            <Text style={{fontSize: 18, color: green, marginRight: 10}}>
-              Calificar a {order.products[0].p_user}:{' '}
-            </Text>
+            {order.products[0] && (
+              <Text style={{fontSize: 18, color: green, marginRight: 10}}>
+                Calificar a {order.products[0].p_user}:{' '}
+              </Text>
+            )}
             <AirbnbRating
               showRating={false}
               size={25}
