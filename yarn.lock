@@ -1058,6 +1058,13 @@
     eslint-plugin-react-native "3.6.0"
     prettier "1.16.4"
 
+"@react-native-community/push-notification-ios@^1.4.0":
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/@react-native-community/push-notification-ios/-/push-notification-ios-1.4.0.tgz#e1781e60fb8a2569547e3f1613c62e1c3b46960c"
+  integrity sha512-YnfxtAuHkiuvprh1d9npGZVwOrso6sys8+w8XY6RQAs8kD2LHZg0C8rA5gfX4jW/GrQV7m14Y6ngciE6Rpd91w==
+  dependencies:
+    invariant "^2.2.4"
+
 "@react-native-community/viewpager@^2.0.1":
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/@react-native-community/viewpager/-/viewpager-2.0.2.tgz#622b190294b1310c4825c98daeaee1c8443f7124"
@@ -5678,6 +5685,13 @@ react-native-pixel-perfect@^1.0.1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/react-native-pixel-perfect/-/react-native-pixel-perfect-1.0.2.tgz#8e6dc97e377caa4bd07f9e584ba438d53c0e25e8"
   integrity sha512-0IvYCNkxuQbQC9q4tI+C3i6o38nbx916p7gBRBWuPxDhKBCuTkVV3VukcfW6vtjRlwQm6kwQcF9OtI+yUBt+YA==
+
+react-native-push-notification@^5.0.1:
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/react-native-push-notification/-/react-native-push-notification-5.0.1.tgz#d7d563c8ed7e56335b311702a93aa6f4a9ced97a"
+  integrity sha512-3xRGLgJfUo8tUPFokA3TVC4jE4uo2uVUnxmtQ1pscNn6BjZnx2+kLdsJK4kDRyjxc/CpTEMfUyZ5pkMsqIgdYw==
+  dependencies:
+    "@react-native-community/push-notification-ios" "^1.4.0"
 
 react-native-ratings@^6.3.0, react-native-ratings@^6.5.0:
   version "6.5.0"
