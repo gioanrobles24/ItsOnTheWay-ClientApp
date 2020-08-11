@@ -15,7 +15,9 @@ import {createStackNavigator} from 'react-navigation';
 import {setUser} from '../../reducers/session';
 import {connect} from 'react-redux';
 import {green} from '../../colors';
-const imageverde = {uri: 'http://test.itsontheway.com.ve/api/imgVerde'};
+import {config} from '../../config';
+
+const imageverde = {uri: `${config.apiUrl}/imgVerde`};
 const background = require('../../assets/background.png');
 
 class LoginClientView extends Component {
@@ -47,7 +49,7 @@ class LoginClientView extends Component {
   };
   Login = () => {
     this.setState({loading: true});
-    fetch('http://test.itsontheway.com.ve/api/clients/login', {
+    fetch(`${config.apiUrl}/clients/login`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',

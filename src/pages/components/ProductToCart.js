@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import {View, Text, StyleSheet, ScrollView, Alert} from 'react-native';
 import {ListItem} from 'react-native-elements';
-const image = {uri: 'http://test.itsontheway.com.ve/api/parnetBanner1'};
 import {connect} from 'react-redux';
 import {gray, green} from '../../colors';
+import {config} from '../../config';
 
 class ProductsInCart extends Component {
   confirmRemoveProduct(product) {
@@ -79,7 +79,7 @@ class ProductsInCart extends Component {
             this.props.haveImage
               ? {
                   source: {
-                    uri: `http://test.itsontheway.com.ve/images/productos/${
+                    uri: `${config.imagesUrl}/images/productos/${
                       item.prod_partner_id
                     }/${item.prod_image}`,
                   },

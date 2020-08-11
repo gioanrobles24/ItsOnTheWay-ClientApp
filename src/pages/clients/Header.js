@@ -16,9 +16,8 @@ import {useDispatch} from 'react-redux';
 import {unsetUser} from '../../reducers/session';
 import AsyncStorage from '@react-native-community/async-storage';
 import {green} from '../../colors';
-const image = {uri: 'http://test.itsontheway.com.ve/api/simgBlanca'};
-
-// const image = {uri: 'http://test.itsontheway.com.ve/api/parnetBanner1'};
+import {config} from '../../config';
+const image = {uri: `${config.apiUrl}/simgBlanca`};
 
 export function Header(props) {
   const [open, setOpen] = useState(false);
@@ -59,7 +58,7 @@ export function Header(props) {
         <View style={styles.headerBarContainer}>
           <View style={styles.headerBar}>
             <Image
-              source={{uri: 'http://test.itsontheway.com.ve/api/imgBlanca'}}
+              source={{uri: `${config.apiUrl}/imgBlanca`}}
               style={{width: 150, height: 80, marginRight: 80}}
             />
             <TouchableHighlight

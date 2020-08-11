@@ -18,6 +18,7 @@ import {createStackNavigator} from 'react-navigation';
 import ImagePicker from 'react-native-image-picker';
 import {useSelector} from 'react-redux';
 import {green, inputStyle} from '../../../colors';
+import {config} from '../../../config';
 
 export function ZellePayment({address, description, price}) {
   const banks = [
@@ -90,7 +91,7 @@ export function ZellePayment({address, description, price}) {
       console.log(data);
 
       setLoading(true);
-      fetch('http://test.itsontheway.com.ve/api/clients/neworder', {
+      fetch(`${config.apiUrl}/clients/neworder`, {
         method: 'POST',
         headers: {
           'Content-Type': 'multipart/form-data',

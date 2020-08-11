@@ -18,29 +18,23 @@ import {Actions} from 'react-native-router-flux';
 import {Icon, Avatar, Badge, withBadge} from 'react-native-elements';
 import {createStackNavigator} from 'react-navigation';
 import {green} from '../../colors';
+import {config} from '../../config';
 const background = require('../../assets/background.png');
 
 export default class VerifyClientView extends Component {
   constructor(props) {
     super(props);
     this.state = {};
-    state = {
-      code: '',
-    };
   }
 
   register = viewId => {
-    fetch(
-      'http://test.itsontheway.com.ve/api/clients/register/verify/' +
-        this.state.code,
-      {
-        method: 'GET',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
+    fetch(`${config.apiUrl}/clients/register/verify/${this.state.code}`, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
       },
-    )
+    })
       .then(response => response.json())
       .then(responseData => {
         if (responseData.error) {
@@ -104,7 +98,7 @@ export default class VerifyClientView extends Component {
                 flexDirection: 'column',
                 marginTop: 20,
               }}
-              source={{uri: 'http://test.itsontheway.com.ve/api/imgVerde'}}
+              source={{uri: `${config.apiUrl}/imgVerde`}}
             />
           </View>
         </ImageBackground>

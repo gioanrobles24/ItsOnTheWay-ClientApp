@@ -1,56 +1,9 @@
 import React, {Component} from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  TextInput,
-  Button,
-  TouchableHighlight,
-  ScrollView,
-  Alert,
-  Switch,
-  ToastAndroid,
-  BackHandler,
-  Picker,
-  SafeAreaView,
-  Dimensions,
-  TouchableOpacity,
-  ImageBackground,
-  Platform,
-} from 'react-native';
-import {Actions} from 'react-native-router-flux';
-import {
-  Icon,
-  Avatar,
-  Badge,
-  withBadge,
-  Image,
-  Input,
-  Card,
-} from 'react-native-elements';
-import {createStackNavigator} from 'react-navigation';
-import RNPickerSelect from 'react-native-picker-select';
-import Carousel, {ParallaxImage} from 'react-native-snap-carousel';
-import {SideMenu} from 'react-native-side-menu';
-import MenuDrawer from 'react-native-side-drawer';
-import BottomBar from 'react-native-bottom-bar';
-import BottomBarMenu from '../components/BotomBarMenu';
-import {Provider} from 'react-redux';
-import store from '../../store';
-import {connect} from 'react-redux';
-import Recomedantions from './ProductHorizontalCarousel';
-import TabMenuIcons from '../components/TabMenuIcons';
-import {electronics} from '../components/Data';
-const image = {uri: 'http://test.itsontheway.com.ve/api/parnetBanner1'};
-
-import {AirbnbRating} from 'react-native-ratings';
+import {StyleSheet, Text, View, TouchableHighlight} from 'react-native';
 
 class HomeInfo extends Component {
   constructor(props) {
     super(props);
-    state = {
-      cantidad: '',
-    };
   }
   renderProducts = (client_info, props) => {
     return (

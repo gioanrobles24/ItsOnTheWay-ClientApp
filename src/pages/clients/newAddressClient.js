@@ -29,8 +29,6 @@ import {config} from '../../config';
 import AwesomeDebouncePromise from 'awesome-debounce-promise';
 const markerIcon = require('../../assets/marker.png');
 
-const image = {uri: 'http://test.itsontheway.com.ve/api/imgBlanca'};
-
 class NewAddressClientView extends Component {
   constructor(props) {
     super(props);
@@ -54,7 +52,7 @@ class NewAddressClientView extends Component {
 
   fetchAddresses() {
     fetch(
-      `http://test.itsontheway.com.ve/api/clients/address_client/${
+      `${config.apiUrl}/clients/address_client/${
         this.props.user.response.client_info.id
       }`,
     )
@@ -148,8 +146,8 @@ class NewAddressClientView extends Component {
               });
 
               const url = this.props.address
-                ? 'http://test.itsontheway.com.ve/api/clients/edit_address_client'
-                : 'http://test.itsontheway.com.ve/api/clients/new_address_client';
+                ? `${config.apiUrl}/clients/edit_address_client`
+                : `${config.apiUrl}/clients/new_address_client`;
 
               fetch(url, {
                 method: 'POST',

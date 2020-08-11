@@ -20,6 +20,7 @@ import {Icon, Avatar, Badge, withBadge} from 'react-native-elements';
 import {createStackNavigator} from 'react-navigation';
 import RNPickerSelect from 'react-native-picker-select';
 import {green} from '../../colors';
+import {config} from '../../config';
 const background = require('../../assets/background.png');
 
 export default class RegisterClientView extends Component {
@@ -56,7 +57,7 @@ export default class RegisterClientView extends Component {
   }
 
   Verification = viewId => {
-    fetch('http://test.itsontheway.com.ve/api/clients/register', {
+    fetch(`${config.apiUrl}/clients/register`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',

@@ -62,11 +62,7 @@ function ProductDetail(props) {
   const [comment, setComment] = useState('');
 
   useEffect(() => {
-    fetch(
-      `http://test.itsontheway.com.ve/api/clients/products_extras/${
-        product.id
-      }`,
-    )
+    fetch(`${config.apiUrl}/api/clients/products_extras/${product.id}`)
       .then(resp => resp.json())
       .then(resp => {
         const extras = [];

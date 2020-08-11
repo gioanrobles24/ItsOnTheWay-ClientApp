@@ -94,7 +94,7 @@ class PaymentTypeClientView extends Component {
         <ScrollView>
           <View>
             <View style={{maxHeight: 200}}>
-              <ScrollView>
+              <ScrollView nestedScrollEnabled>
                 {this.props.cartItems.map(item => (
                   <ListItem
                     title={`(${item.quantity}) ${item.prod_name}`}

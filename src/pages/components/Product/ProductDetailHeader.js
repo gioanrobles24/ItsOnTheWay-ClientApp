@@ -4,9 +4,10 @@ import {styles} from './styles';
 import {Avatar, Icon} from 'react-native-elements';
 import {gray} from '../../../colors';
 import ImageViewer from 'react-native-image-zoom-viewer';
+import {config} from '../../../config';
 export function ProductDetailHeader({title, product}) {
   const [imageVisible, setImageVisible] = useState(false);
-  const imageUri = `http://test.itsontheway.com.ve/images/productos/${
+  const imageUri = `${config.imagesUrl}/images/productos/${
     product.prod_partner_id
   }/${product.prod_image}`;
 

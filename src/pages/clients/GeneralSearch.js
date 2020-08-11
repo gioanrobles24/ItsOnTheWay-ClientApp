@@ -5,15 +5,13 @@ import {
   View,
   TouchableHighlight,
   Alert,
-  SafeAreaView,
-  ScrollView,
   FlatList,
 } from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import {Icon, Avatar, Input} from 'react-native-elements';
 import {Card} from 'react-native-shadow-cards';
 import TabMenuIcons from '../components/TabMenuIcons';
-const image2 = {uri: 'http://test.itsontheway.com.ve/api/parnetBanner1'};
+import {config} from '../../config';
 
 export default class GeneralSearch extends Component {
   constructor(props) {
@@ -29,7 +27,7 @@ export default class GeneralSearch extends Component {
   }
 
   search(param) {
-    fetch(`http://test.itsontheway.com.ve/api/clients/searchByParam/${param}`)
+    fetch(`${config.apiUrl}/clients/searchByParam/${param}`)
       .then(response => response.json())
       .then(responseData => {
         if (responseData.error) {
@@ -71,9 +69,9 @@ export default class GeneralSearch extends Component {
             rounded
             size="medium"
             source={{
-              uri: `http://test.itsontheway.com.ve/images/socios/${
-                partner.p_id
-              }/${partner.profile_pic}`,
+              uri: `${config.imagesUrl}/images/socios/${partner.p_id}/${
+                partner.profile_pic
+              }`,
             }}
           />
           <Text style={styles.cardOrderSubTitle}>{partner.p_user}</Text>

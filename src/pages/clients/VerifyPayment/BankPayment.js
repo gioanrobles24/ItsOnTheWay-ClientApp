@@ -31,6 +31,7 @@ import {useSelector} from 'react-redux';
 import {inputStyle, green} from '../../../colors';
 import Autocomplete from 'react-native-autocomplete-input';
 import RNPickerSelect from 'react-native-picker-select';
+import {config} from '../../../config';
 
 export function BankPayment({address, description, price, ...props}) {
   const banks = [
@@ -111,7 +112,7 @@ export function BankPayment({address, description, price, ...props}) {
       });
 
       setLoading(true);
-      fetch('http://test.itsontheway.com.ve/api/clients/neworder', {
+      fetch(`${config.apiUrl}/clients/neworder`, {
         method: 'POST',
         headers: {
           'Content-Type': 'multipart/form-data',

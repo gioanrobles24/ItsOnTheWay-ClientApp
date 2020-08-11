@@ -11,7 +11,6 @@ import {
 } from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import {Badge, ListItem, Tile, AirbnbRating} from 'react-native-elements';
-// const image = { uri: "http://test.itsontheway.com.ve/api/parnetBanner" }
 import PayBoton from '../components/BotomBarMenu';
 import {connect} from 'react-redux';
 import {green} from '../../colors';
@@ -157,9 +156,9 @@ class PartnerView extends Component {
       }}
       leftAvatar={{
         source: {
-          uri: `http://test.itsontheway.com.ve/images/productos/${
-            item.prod_partner_id
-          }/${item.prod_image}`,
+          uri: `${config.imagesUrl}/images/productos/${item.prod_partner_id}/${
+            item.prod_image
+          }`,
         },
       }}
       chevron
@@ -267,7 +266,7 @@ class PartnerView extends Component {
                       backgroundColor: 'rgba(0,0,0,.5)',
                     }}
                     imageSrc={{
-                      uri: `http://test.itsontheway.com.ve/images/productos/${
+                      uri: `${config.imagesUrl}/images/productos/${
                         s.product.prod_partner_id
                       }/${s.product.prod_image}`,
                     }}

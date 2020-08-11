@@ -13,7 +13,8 @@ import {createStackNavigator} from 'react-navigation';
 import RNPickerSelect from 'react-native-picker-select';
 import {Card} from 'react-native-shadow-cards';
 import {useSelector} from 'react-redux';
-const image = {uri: 'http://test.itsontheway.com.ve/api/imgBlanca'};
+import {config} from '../../config';
+const image = {uri: `${config.apiUrl}/imgBlanca`};
 
 export default function AllMyOrdersClientView(props) {
   const userId = useSelector(
@@ -22,7 +23,7 @@ export default function AllMyOrdersClientView(props) {
   const [orders, setOrders] = useState([]);
 
   useEffect(() => {
-    fetch(`http://test.itsontheway.com.ve/api/clients/orders_client/${userId}`)
+    fetch(`${config.apiUrl}/clients/orders_client/${userId}`)
       .then(resp => resp.json())
       .then(obj => {
         if (obj.response.error) {

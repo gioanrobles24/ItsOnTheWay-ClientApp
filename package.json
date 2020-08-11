@@ -4,6 +4,8 @@
   "private": true,
   "scripts": {
     "android": "react-native run-android",
+    "debug-build": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/ && cd android && ./gradlew assembleDebug && cd ..",
+    "release-build": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/build/intermediates/res/merged/release/ && rd /S /Q android\\app\\src\\main\\res\\drawable-* && rd /S /Q android\\app\\src\\main\\res\\raw\\* && cd android && ./gradlew assembleRelease && cd ..",
     "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest",

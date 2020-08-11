@@ -30,6 +30,7 @@ import ImagePicker from 'react-native-image-picker';
 import {useSelector} from 'react-redux';
 import {inputStyle, green} from '../../../colors';
 import RNPickerSelect from 'react-native-picker-select';
+import {config} from '../../../config';
 
 export function MobilePayment({address, description, price, ...props}) {
   const banks = [
@@ -102,7 +103,7 @@ export function MobilePayment({address, description, price, ...props}) {
       });
 
       setLoading(true);
-      fetch('http://test.itsontheway.com.ve/api/clients/neworder', {
+      fetch(`${config.apiUrl}/clients/neworder`, {
         method: 'POST',
         headers: {
           'Content-Type': 'multipart/form-data',

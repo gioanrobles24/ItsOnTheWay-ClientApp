@@ -17,6 +17,7 @@ import {connect} from 'react-redux';
 import ProductsInCart from '../components/ProductToCart';
 import {gray, green} from '../../colors';
 import {setAddresses} from '../../reducers/addresses';
+import {config} from '../../config';
 
 class OrderViewClient extends Component {
   constructor(props) {
@@ -27,7 +28,7 @@ class OrderViewClient extends Component {
   }
   componentDidMount() {
     fetch(
-      `http://test.itsontheway.com.ve/api/clients/address_client/${
+      `${config.apiUrl}/clients/address_client/${
         this.props.client_info.user.response.client_info.id
       }`,
     )

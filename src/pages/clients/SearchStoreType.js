@@ -25,8 +25,7 @@ import BottomBar from 'react-native-bottom-bar';
 import BottomBarMenu from '../components/BotomBarMenu';
 import {Card} from 'react-native-shadow-cards';
 import TabMenuIcons from '../components/TabMenuIcons';
-const image = {uri: 'http://test.itsontheway.com.ve/api/imgBlanca'};
-const image2 = {uri: 'http://test.itsontheway.com.ve/api/parnetBanner1'};
+import {config} from '../../config';
 const mainColor = '#bdbfc1';
 const pnkGradient = ['#ffffff', '#ffffff'];
 export default class SearchStoreTypeView extends Component {
@@ -36,17 +35,13 @@ export default class SearchStoreTypeView extends Component {
       partnersByCat: [],
     };
 
-    fetch(
-      'http://test.itsontheway.com.ve/api/clients/searchByCat/' +
-        this.props.cat_id,
-      {
-        method: 'GET',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
+    fetch(`${config.apiUrl}/clients/searchByCat/${this.props.cat_id}`, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
       },
-    )
+    })
       .then(response => response.json())
       .then(responseData => {
         if (responseData.error) {
@@ -110,9 +105,9 @@ export default class SearchStoreTypeView extends Component {
             rounded
             size="medium"
             source={{
-              uri: `http://test.itsontheway.com.ve/images/socios/${
-                partner.id
-              }/${partner.profile_pic}`,
+              uri: `${config.imagesUrl}/images/socios/${partner.id}/${
+                partner.profile_pic
+              }`,
             }}
           />
           <Text style={styles.cardOrderSubTitle}>{partner.p_user}</Text>
@@ -150,34 +145,6 @@ export default class SearchStoreTypeView extends Component {
             renderItem={this.renderItem}
           />
         </View>
-        {/* <ScrollView>
-          <View style={styles.productscontainer}>
-            {this.state.partnersByCat.map(partner => (
-              <View style={styles.cardOrdercontainer} key={partner.id}>
-                <TouchableHighlight
-                  underlayColor="transparent"
-                  onPress={() => {
-                    this.ThisPartnerView(partner.id);
-                  }}>
-                  <Card style={styles.cardOrder}>
-                    <Avatar
-                      rounded
-                      size="medium"
-                      source={{
-                        uri: `http://test.itsontheway.com.ve/images/socios/${
-                          partner.id
-                        }/${partner.profile_pic}`,
-                      }}
-                    />
-                    <Text style={styles.cardOrderSubTitle}>
-                      {partner.p_user}
-                    </Text>
-                  </Card>
-                </TouchableHighlight>
-              </View>
-            ))}
-          </View>
-        </ScrollView> */}
         <TabMenuIcons containerStyle={{paddingTop: 100}} />
       </View>
     );

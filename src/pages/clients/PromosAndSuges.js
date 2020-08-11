@@ -3,35 +3,16 @@ import {
   StyleSheet,
   Text,
   View,
-  TextInput,
-  Button,
-  TouchableHighlight,
-  Image,
   Alert,
-  Switch,
-  ToastAndroid,
-  BackHandler,
   SafeAreaView,
   TouchableOpacity,
 } from 'react-native';
 import {Actions} from 'react-native-router-flux';
-import {
-  Icon,
-  Avatar,
-  Badge,
-  withBadge,
-  Input,
-  Card,
-} from 'react-native-elements';
-import {createStackNavigator} from 'react-navigation';
-import Carousel, {ParallaxImage} from 'react-native-snap-carousel';
-import {AirbnbRating} from 'react-native-ratings';
+import {Card} from 'react-native-elements';
+import Carousel from 'react-native-snap-carousel';
+import {config} from '../../config';
 
-const image = {uri: 'http://test.itsontheway.com.ve/api/parnetBanner1'};
-const mainColor = '#bdbfc1';
-const url = 'www.freakycoder.com';
-
-const pnkGradient = ['#ffffff', '#ffffff'];
+const image = {uri: `${config.apiUrl}/parnetBanner1`};
 
 export default class PromoAndSugesClientView extends Component {
   constructor(props) {

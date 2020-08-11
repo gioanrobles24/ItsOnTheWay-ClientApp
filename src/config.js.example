@@ -1,5 +1,6 @@
 export const config = {
   apiUrl: 'http://test.itsontheway.com.ve/api',
+  imagesUrl: 'http://test.itsontheway.com.ve',
   mapboxKey: 'asdasdasdsad',
   googleMapsKey: 'aasdasds',
 };

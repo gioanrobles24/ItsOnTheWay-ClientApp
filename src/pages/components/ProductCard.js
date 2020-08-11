@@ -2,6 +2,7 @@ import React from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 import {Card} from 'react-native-elements';
 import {AirbnbRating} from 'react-native-ratings';
+import {config} from '../../config';
 
 export function ProductCard(props) {
   const {product, onPress: handlePress} = props;
@@ -20,7 +21,7 @@ export function ProductCard(props) {
           }}
           imageStyle={{width: 249, height: 130}}
           image={{
-            uri: `http://test.itsontheway.com.ve/images/${
+            uri: `${config.imagesUrl}/images/${
               !props.partner ? 'productos' : 'socios'
             }/${product.prod_partner_id}/${product.prod_image}`,
           }}>

@@ -18,8 +18,6 @@ import {useSelector} from 'react-redux';
 import {config} from '../../config';
 import request from '../../utils/request';
 
-const image = {uri: 'http://test.itsontheway.com.ve/api/imgBlanca'};
-
 function getProductPrice(item) {
   let extraPrice = 0;
   item.extras.forEach(e => {

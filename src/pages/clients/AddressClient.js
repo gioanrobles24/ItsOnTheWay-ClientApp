@@ -5,7 +5,7 @@ import {Icon, ListItem} from 'react-native-elements';
 import {connect} from 'react-redux';
 import {address} from 'faker';
 import {setAddresses} from '../../reducers/addresses';
-const image = {uri: 'http://test.itsontheway.com.ve/api/imgBlanca'};
+import {config} from '../../config';
 
 class AllmyOrdersClientView extends Component {
   constructor(props) {
@@ -25,7 +25,7 @@ class AllmyOrdersClientView extends Component {
   fetchAddresses() {
     console.log(this.props.user.response.client_info.id);
     fetch(
-      `http://test.itsontheway.com.ve/api/clients/address_client/${
+      `${config.apiUrl}/clients/address_client/${
         this.props.user.response.client_info.id
       }`,
     )
@@ -42,7 +42,7 @@ class AllmyOrdersClientView extends Component {
 
   deleteAddress(address) {
     fetch(
-      `http://test.itsontheway.com.ve/api/clients/delete_address_client/${
+      `${config.apiUrl}/clients/delete_address_client/${
         address.client_address_id
       }`,
       {

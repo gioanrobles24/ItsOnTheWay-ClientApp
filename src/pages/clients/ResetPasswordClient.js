@@ -4,27 +4,19 @@ import {
   Text,
   View,
   TextInput,
-  Button,
   TouchableHighlight,
-  Image,
   Alert,
-  Switch,
-  ToastAndroid,
-  BackHandler,
   ImageBackground,
 } from 'react-native';
 import {Actions} from 'react-native-router-flux';
-import {Icon, Avatar, Badge, withBadge} from 'react-native-elements';
-import {createStackNavigator} from 'react-navigation';
+import {Avatar} from 'react-native-elements';
 import {green} from '../../colors';
+import {config} from '../../config';
 const background = require('../../assets/background.png');
 
 export default class RegisterClientView extends Component {
   constructor(props) {
     super(props);
-    state = {
-      email: '',
-    };
   }
 
   sendResetPasswd = viewId => {
@@ -33,7 +25,7 @@ export default class RegisterClientView extends Component {
 
     //      alert( "Button pressed "+ 'correo:' +this.state.email+ 'password'+ this.state.password)
 
-    fetch('http://test.itsontheway.com.ve/api/clients/resetPassword', {
+    fetch(`${config.apiUrl}/clients/resetPassword`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -111,7 +103,7 @@ export default class RegisterClientView extends Component {
                 backgroundColor: 'white',
                 elevation: 6,
               }}
-              source={{uri: 'http://test.itsontheway.com.ve/api/imgVerde'}}
+              source={{uri: `${config.apiUrl}/imgVerde`}}
             />
           </View>
         </ImageBackground>
