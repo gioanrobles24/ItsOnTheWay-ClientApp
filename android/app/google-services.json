@@ -1,40 +1,40 @@
 {
-    "project_info": {
-        "project_number": "999154594281",
-        "firebase_url": "https://prueba-d824f.firebaseio.com",
-        "project_id": "prueba-d824f",
-        "storage_bucket": "prueba-d824f.appspot.com"
-    },
-    "client": [
-        {
-            "client_info": {
-                "mobilesdk_app_id": "1:999154594281:android:44e9384515b5d256ce9b78",
-                "android_client_info": {
-                    "package_name": "com.itsclients"
-                }
-            },
-            "oauth_client": [
-                {
-                    "client_id": "999154594281-jru3gdtk5maon4a7d23dbm31il3tscvu.apps.googleusercontent.com",
-                    "client_type": 3
-                }
-            ],
-            "api_key": [
-                {
-                    "current_key": "AIzaSyBTanS82bo_qGHve9dar2cgQ1K8zXbKztA"
-                }
-            ],
-            "services": {
-                "appinvite_service": {
-                    "other_platform_oauth_client": [
-                        {
-                            "client_id": "999154594281-jru3gdtk5maon4a7d23dbm31il3tscvu.apps.googleusercontent.com",
-                            "client_type": 3
-                        }
-                    ]
-                }
-            }
+  "project_info": {
+    "project_number": "953032608328",
+    "firebase_url": "https://its-on-the-way.firebaseio.com",
+    "project_id": "its-on-the-way",
+    "storage_bucket": "its-on-the-way.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:953032608328:android:9813943fde6115ed4fe67d",
+        "android_client_info": {
+          "package_name": "com.itsclients"
         }
-    ],
-    "configuration_version": "1"
+      },
+      "oauth_client": [
+        {
+          "client_id": "953032608328-uto7rpf22uf8tl4cn92lsjkrkmgs2trt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBE0N_bJNQvE3-3ltb3cK-ns2Kg924nn5Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "953032608328-uto7rpf22uf8tl4cn92lsjkrkmgs2trt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
 }

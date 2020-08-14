@@ -1,6 +1,7 @@
 export const config = {
   apiUrl: 'http://test.itsontheway.com.ve/api',
   imagesUrl: 'http://test.itsontheway.com.ve',
+  pushUrl: 'http://192.168.0.6:7070'
   mapboxKey: 'asdasdasdsad',
   googleMapsKey: 'aasdasds',
 };

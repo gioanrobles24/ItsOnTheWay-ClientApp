@@ -9,12 +9,16 @@ import MapboxGL from '@react-native-mapbox-gl/maps';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
 import PushNotification from 'react-native-push-notification';
 import {config} from './src/config';
+import {store} from './src/redux/store';
+import {setPushToken} from './src/reducers/session';
 
 MapboxGL.setAccessToken(config.mapboxKey);
 PushNotification.configure({
   // (optional) Called when Token is generated (iOS and Android)
   onRegister: function(token) {
-    console.log('TOKEN:', token);
+    console.log('ENTRE');
+    store.dispatch(setPushToken(token.token));
+    console.log('TOKEN:', token.token);
   },
 
   // (required) Called when a remote is received or opened, or local notification is opened

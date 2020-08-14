@@ -25,8 +25,11 @@ function checkStatus(response) {
     return response;
   }
 
+  console.log(response);
+
   const err = new Error(response.statusText);
   return response.json().then(obj => {
+    console.log(obj);
     err.response = response;
     err.body = obj;
     throw err;

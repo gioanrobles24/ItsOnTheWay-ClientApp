@@ -9,8 +9,11 @@ const scope = '[Session]';
 export const SET_USER = `${scope} SET USER`;
 export const UNSET_USER = `${scope} UNSET USER`;
 
+export const SET_TOKEN = `${scope} SET TOKEN`;
+
 const defaultState = {
   user: null,
+  pushToken: null,
 };
 
 const sessionReducer = (state = defaultState, action) =>
@@ -22,6 +25,11 @@ const sessionReducer = (state = defaultState, action) =>
       }
       case UNSET_USER: {
         draft.user = null;
+        break;
+      }
+      case SET_TOKEN: {
+        draft.pushToken = action.payload;
+        break;
       }
       default:
         return draft;
@@ -38,6 +46,13 @@ export const setUser = user => {
 export const unsetUser = () => {
   return {
     type: UNSET_USER,
+  };
+};
+
+export const setPushToken = token => {
+  return {
+    type: SET_TOKEN,
+    payload: token,
   };
 };
 

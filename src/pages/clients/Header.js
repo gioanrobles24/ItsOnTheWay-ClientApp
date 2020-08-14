@@ -12,11 +12,12 @@ import {
 import {Icon, Image, Input, Avatar} from 'react-native-elements';
 import MenuDrawer from 'react-native-side-drawer';
 import {Actions} from 'react-native-router-flux';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {unsetUser} from '../../reducers/session';
 import AsyncStorage from '@react-native-community/async-storage';
 import {green} from '../../colors';
 import {config} from '../../config';
+import request from '../../utils/request';
 const image = {uri: `${config.apiUrl}/simgBlanca`};
 
 export function Header(props) {
@@ -100,6 +101,7 @@ export function Header(props) {
 
 function SidebarMenu(props) {
   const dispatch = useDispatch();
+  const token = useSelector(state => state.session.pushToken);
   return (
     <View style={styles.animatedMenuBox}>
       <TouchableOpacity
@@ -193,8 +195,12 @@ function SidebarMenu(props) {
         <TouchableHighlight
           style={[styles.salirboton, styles.salirbotonButton]}
           onPress={() => {
-            AsyncStorage.removeItem('session').then(() =>
-              dispatch(unsetUser()),
+            request(`${config.pushUrl}/session/${token}`, {
+              method: 'DELETE',
+            }).then(() =>
+              AsyncStorage.removeItem('session').then(() =>
+                dispatch(unsetUser()),
+              ),
             );
           }}>
           <Text style={styles.salirbotonText}>Salir</Text>

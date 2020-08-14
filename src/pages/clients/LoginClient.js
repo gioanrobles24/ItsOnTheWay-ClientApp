@@ -16,6 +16,7 @@ import {setUser} from '../../reducers/session';
 import {connect} from 'react-redux';
 import {green} from '../../colors';
 import {config} from '../../config';
+import request from '../../utils/request';
 
 const imageverde = {uri: `${config.apiUrl}/imgVerde`};
 const background = require('../../assets/background.png');
@@ -49,7 +50,7 @@ class LoginClientView extends Component {
   };
   Login = () => {
     this.setState({loading: true});
-    fetch(`${config.apiUrl}/clients/login`, {
+    request(`${config.apiUrl}/clients/login`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -60,7 +61,16 @@ class LoginClientView extends Component {
         password: this.state.password,
       }),
     })
-      .then(response => response.json())
+      .then(data => {
+        return request(`${config.pushUrl}/session`, {
+          method: 'POST',
+          body: JSON.stringify({
+            userId: data.response.client_info.id,
+            token: this.props.pushToken,
+            type: 'client',
+          }),
+        }).then(() => data);
+      })
       .then(responseData => {
         if (responseData.error) {
           Alert.alert(
@@ -79,7 +89,8 @@ class LoginClientView extends Component {
         Actions.homeClient({responseData: data});
       })
       .catch(error => {
-        console.error(error);
+        console.log(error);
+        // console.error(error);
       })
       .finally(() => this.setState({loading: false}));
   };
@@ -183,6 +194,12 @@ class LoginClientView extends Component {
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    pushToken: state.session.pushToken,
+  };
+};
+
 const mapDispatchToProps = dispatch => {
   return {
     login: user => dispatch(setUser(user)),
@@ -190,7 +207,7 @@ const mapDispatchToProps = dispatch => {
 };
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps,
 )(LoginClientView);
 
