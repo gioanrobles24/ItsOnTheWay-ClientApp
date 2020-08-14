@@ -12,13 +12,18 @@ import {config} from './src/config';
 import {store} from './src/redux/store';
 import {setPushToken} from './src/reducers/session';
 
+// PushNotification.addEventListener('registrationError', console.log);
 MapboxGL.setAccessToken(config.mapboxKey);
 PushNotification.configure({
+  onRegistrationError: function(err) {
+    console.log(err);
+  },
+
   // (optional) Called when Token is generated (iOS and Android)
   onRegister: function(token) {
     console.log('ENTRE');
-    store.dispatch(setPushToken(token.token));
     console.log('TOKEN:', token.token);
+    store.dispatch(setPushToken(token.token));
   },
 
   // (required) Called when a remote is received or opened, or local notification is opened
