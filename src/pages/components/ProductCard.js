@@ -29,18 +29,6 @@ export function ProductCard(props) {
           <Text style={{fontSize: 15, color: '#bdbfc1', marginLeft: 5}}>
             {product.partner_user}
           </Text>
-
-          <View style={{flexDirection: 'row', marginLeft: 5}}>
-            {/* <AirbnbRating
-              isDisabled={true}
-              showRating={false}
-              defaultRating={4}
-              size={15}
-            />
-            <Text style={{fontSize: 10, marginLeft: 30}}>
-              Bs.: {product.prod_price_bs}
-            </Text> */}
-          </View>
         </Card>
       </TouchableOpacity>
     </View>

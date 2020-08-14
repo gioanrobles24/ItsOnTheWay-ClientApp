@@ -62,34 +62,36 @@ class LoginClientView extends Component {
       }),
     })
       .then(data => {
-        return request(`${config.pushUrl}/session`, {
-          method: 'POST',
-          body: JSON.stringify({
-            userId: data.response.client_info.id,
-            token: this.props.pushToken,
-            type: 'client',
-          }),
-        }).then(() => data);
-      })
-      .then(responseData => {
-        if (responseData.error) {
+        if (data.error) {
           Alert.alert(
             'Usuario o contraseña incorrectos, por favor intenta nuevamente',
           );
-          throw new Error(responseData.error);
+          throw new Error(data.error);
         } else {
-          return AsyncStorage.setItem(
-            'session',
-            JSON.stringify(responseData),
-          ).then(() => responseData);
+          return data;
+          // return request(`${config.pushUrl}/session`, {
+          //   method: 'POST',
+          //   body: JSON.stringify({
+          //     userId: data.response.client_info.id,
+          //     token: this.props.pushToken,
+          //     type: 'client',
+          //   }),
+          // }).then(() => data);
         }
+      })
+      .then(responseData => {
+        return AsyncStorage.setItem(
+          'session',
+          JSON.stringify(responseData),
+        ).then(() => responseData);
       })
       .then(data => {
         this.props.login(data);
         Actions.homeClient({responseData: data});
       })
       .catch(error => {
-        console.log(error);
+        Alert.alert(error);
+        // console.log(error);
         // console.error(error);
       })
       .finally(() => this.setState({loading: false}));
