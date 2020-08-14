@@ -16,7 +16,7 @@ export const config = {
   apiUrl: 'http://test.itsontheway.com.ve/api', // Url de la api
   imagesUrl: 'http://test.itsontheway.com.ve', // Url base donde estan las imagenes de los socios, productos, etc.
   pushUrl: 'http://192.168.0.6:7070' // Url del servicio de push notifications
-  mapboxKey: '', // key de mapbox para visualizar el mapa
-  googleMapsKey: '', // key del servicio de google maps para el funcionamiento de la barra de busqueda en la pantalla del mapa
+  mapboxKey: 'PONER KEY AQUI', // key de mapbox para visualizar el mapa
+  googleMapsKey: 'PONER KEY AQUI', // key del servicio de google maps para el funcionamiento de la barra de busqueda en la pantalla del mapa
 };
 ```
