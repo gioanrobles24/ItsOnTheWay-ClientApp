@@ -68,15 +68,14 @@ class LoginClientView extends Component {
           );
           throw new Error(data.error);
         } else {
-          return data;
-          // return request(`${config.pushUrl}/session`, {
-          //   method: 'POST',
-          //   body: JSON.stringify({
-          //     userId: data.response.client_info.id,
-          //     token: this.props.pushToken,
-          //     type: 'client',
-          //   }),
-          // }).then(() => data);
+          return request(`${config.pushUrl}/session`, {
+            method: 'POST',
+            body: JSON.stringify({
+              userId: data.response.client_info.id,
+              token: this.props.pushToken,
+              type: 'client',
+            }),
+          }).then(() => data);
         }
       })
       .then(responseData => {
