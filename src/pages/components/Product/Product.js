@@ -9,6 +9,7 @@ import {ProductPrice} from './ProductPrice';
 import {styles} from './styles';
 import {useDispatch} from 'react-redux';
 import {config} from '../../../config';
+import request from '../../../utils/request';
 
 function getPartner(partnerId) {
   return fetch(`${config.apiUrl}/clients/showPartner/${partnerId}`, {
@@ -62,9 +63,8 @@ function ProductDetail(props) {
   const [comment, setComment] = useState('');
 
   useEffect(() => {
-    fetch(`${config.apiUrl}/api/clients/products_extras/${product.id}`)
-      .then(resp => resp.json())
-      .then(resp => {
+    request(`${config.apiUrl}/clients/products_extras/${product.id}`).then(
+      resp => {
         const extras = [];
         const sizes = [];
         if (!resp.error) {
@@ -78,7 +78,8 @@ function ProductDetail(props) {
           setSizes(sizes);
           setExtras(extras);
         }
-      });
+      },
+    );
   }, [product.id]);
 
   async function onAddPress() {

@@ -2,7 +2,7 @@
  * @format
  */
 
-import {AppRegistry} from 'react-native';
+import {AppRegistry, Platform} from 'react-native';
 import App from './App';
 import {name as appName} from './app.json';
 import MapboxGL from '@react-native-mapbox-gl/maps';
@@ -11,35 +11,39 @@ import PushNotification from 'react-native-push-notification';
 import {config} from './src/config';
 import {store} from './src/redux/store';
 import {setPushToken} from './src/reducers/session';
+import {Actions} from 'react-native-router-flux';
 
 // PushNotification.addEventListener('registrationError', console.log);
 MapboxGL.setAccessToken(config.mapboxKey);
 PushNotification.configure({
-  onRegistrationError: function(err) {
-    console.log(err);
-  },
-
   // (optional) Called when Token is generated (iOS and Android)
   onRegister: function(token) {
-    console.log('ENTRE');
+    console.log(token);
     console.log('TOKEN:', token.token);
     store.dispatch(setPushToken(token.token));
   },
 
   // (required) Called when a remote is received or opened, or local notification is opened
   onNotification: function(notification) {
-    PushNotification.localNotification({
-      ...notification,
-      visibility: 'public',
-      foreground: undefined,
-    });
-    console.log('NOTIFICATION:', notification);
+    if (!notification.userInteraction) {
+      PushNotification.localNotification({
+        ...notification,
+        visibility: 'public',
+        foreground: undefined,
+      });
+      console.log('NOTIFICATION:', notification);
+    } else {
+      Actions.allmyOrders();
+    }
 
     // process the notification
 
     // (required) Called when a remote is received or opened, or local notification is opened
-    notification.finish(PushNotificationIOS.FetchResult.NoData);
+    if (Platform.OS === 'ios')
+      notification.finish(PushNotificationIOS.FetchResult.NoData);
   },
+
+  invokeApp: false,
 
   // (optional) Called when Registered Action is pressed and invokeApp is false, if true onNotification will be called (Android)
   onAction: function(notification) {
