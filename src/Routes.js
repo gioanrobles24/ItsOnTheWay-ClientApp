@@ -29,6 +29,7 @@ import {green} from './colors';
 import {resetPartner} from './reducers/partner';
 import {config} from './config';
 import request from './utils/request';
+import {DeliverymanDetail} from './pages/clients/DeliverymanDetail';
 
 class Routes extends Component {
   constructor() {
@@ -168,6 +169,7 @@ const AuthApp = props => {
             renderBackButton={() => {}}
           />
           <Scene key="partnerView" component={PartnerView} back />
+          <Scene key="deliverymanDetail" component={DeliverymanDetail} />
           <Scene key="promoAndSuges" component={PromoAndSugesClient} />
           <Scene key="verifyPaymentClient" component={VerifyPaymentClient} />
         </Scene>
