@@ -6,7 +6,7 @@ import {config} from '../../../config';
 import request from '../../../utils/request';
 
 export function DeliverymanDetail({deliveryman}) {
-  const [rating, setRating] = useState();
+  const [rating, setRating] = useState(parseInt(deliveryman.ord_dm_rate, 10));
   const [avg, setAvg] = useState();
 
   useEffect(() => {
@@ -82,11 +82,12 @@ export function DeliverymanDetail({deliveryman}) {
               style={{
                 marginTop: 100,
                 alignItems: 'center',
+                marginBottom: 100,
               }}>
               <Text>Calificar</Text>
               <AirbnbRating
                 showRating={false}
-                defaultRating={0}
+                defaultRating={rating}
                 isDisabled={rating != null}
                 size={25}
                 onFinishRating={rating => {

@@ -21,7 +21,7 @@ import {green, inputStyle} from '../../../colors';
 import {config} from '../../../config';
 import Spinner from 'react-native-loading-spinner-overlay';
 
-export function ZellePayment({address, description, price}) {
+export function ZellePayment({address, description, price, deliveryPrice}) {
   const banks = [
     {
       name: 'Zelle',
@@ -63,6 +63,7 @@ export function ZellePayment({address, description, price}) {
         pay_by_zelle: '1',
         zelle_email: email,
         zelle_name: name,
+        order_dm_val: deliveryPrice,
         // bank_name: `${selectedPayment}`,
         ref_pay: ref,
         products: JSON.stringify(

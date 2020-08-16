@@ -132,24 +132,6 @@ export function OrderDetail({orderId, navigation}) {
             />
           </View>
         )}
-        {!!order.ord_time_min && (
-          <View style={style.orderDetailRow}>
-            <Text style={{fontSize: 18}}>Tiempo estimado </Text>
-            <Badge
-              value={`${order.ord_time_min} min.`}
-              badgeStyle={{
-                paddingVertical: 15,
-                paddingHorizontal: 10,
-                backgroundColor: green,
-              }}
-              containerStyle={{
-                marginVertical: 10,
-                alignSelf: 'flex-start',
-              }}
-              textStyle={{fontSize: 16}}
-            />
-          </View>
-        )}
         {!!order.dm_id && (
           <View style={{marginTop: 5}}>
             <Text

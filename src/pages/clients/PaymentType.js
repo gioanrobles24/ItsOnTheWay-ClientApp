@@ -54,6 +54,7 @@ class PaymentTypeClientView extends Component {
       description,
       pedido,
       opType,
+      deliveryPrice: this.state.deliveryPrice,
       price:
         this.state.deliveryPrice +
         (this.getSubTotal() + this.getUsagePrice()) / this.props.dollarPrice,

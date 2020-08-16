@@ -34,7 +34,13 @@ import RNPickerSelect from 'react-native-picker-select';
 import Spinner from 'react-native-loading-spinner-overlay';
 import {config} from '../../../config';
 
-export function BankPayment({address, description, price, ...props}) {
+export function BankPayment({
+  address,
+  description,
+  price,
+  deliveryPrice,
+  ...props
+}) {
   const banks = [
     {
       name: 'Bancaribe',
@@ -87,6 +93,7 @@ export function BankPayment({address, description, price, ...props}) {
         ord_description: description,
         bank_name: selectedPayment,
         bank_id: selectedBank,
+        order_dm_val: deliveryPrice,
         ref_pay: ref,
         products: JSON.stringify(
           cartItems.map(item => ({

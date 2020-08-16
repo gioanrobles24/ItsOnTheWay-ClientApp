@@ -33,7 +33,13 @@ import RNPickerSelect from 'react-native-picker-select';
 import {config} from '../../../config';
 import Spinner from 'react-native-loading-spinner-overlay';
 
-export function MobilePayment({address, description, price, ...props}) {
+export function MobilePayment({
+  address,
+  description,
+  price,
+  deliveryPrice,
+  ...props
+}) {
   const banks = [
     {
       name: 'Bancaribe',
@@ -76,6 +82,7 @@ export function MobilePayment({address, description, price, ...props}) {
         ord_address: address.client_address_id,
         ord_description: description,
         bank_id: selectedBank,
+        order_dm_val: deliveryPrice,
         bank_name: `${selectedPayment} - ${phone}`,
         ref_pay: ref,
         products: JSON.stringify(
