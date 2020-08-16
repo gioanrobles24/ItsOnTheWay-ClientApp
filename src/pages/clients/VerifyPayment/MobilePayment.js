@@ -31,6 +31,7 @@ import {useSelector} from 'react-redux';
 import {inputStyle, green} from '../../../colors';
 import RNPickerSelect from 'react-native-picker-select';
 import {config} from '../../../config';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 export function MobilePayment({address, description, price, ...props}) {
   const banks = [
@@ -131,6 +132,7 @@ export function MobilePayment({address, description, price, ...props}) {
 
   return (
     <View style={styles.container}>
+      <Spinner visible={loading} textContent={'Cargando...'} />
       <RNPickerSelect
         Icon={() => (
           <Icon
@@ -239,24 +241,15 @@ export function MobilePayment({address, description, price, ...props}) {
           </TouchableOpacity>
         ))}
       </ScrollView>
-      {loading && (
-        <ActivityIndicator
-          size="large"
-          color={green}
-          style={{marginBottom: 20}}
-        />
-      )}
 
-      {!loading && (
-        <TouchableHighlight
-          style={[styles.buttonContainer, styles.loginButton]}
-          disabled={loading}
-          onPress={() => {
-            confirmOrder();
-          }}>
-          <Text style={styles.loginText}>Confirmar</Text>
-        </TouchableHighlight>
-      )}
+      <TouchableHighlight
+        style={[styles.buttonContainer, styles.loginButton]}
+        disabled={loading}
+        onPress={() => {
+          confirmOrder();
+        }}>
+        <Text style={styles.loginText}>Confirmar</Text>
+      </TouchableHighlight>
     </View>
   );
 }

@@ -19,6 +19,7 @@ import ImagePicker from 'react-native-image-picker';
 import {useSelector} from 'react-redux';
 import {green, inputStyle} from '../../../colors';
 import {config} from '../../../config';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 export function ZellePayment({address, description, price}) {
   const banks = [
@@ -120,6 +121,7 @@ export function ZellePayment({address, description, price}) {
 
   return (
     <View style={styles.container}>
+      <Spinner visible={loading} textContent={'Cargando...'} />
       <View style={styles.inputContainer}>
         <TextInput
           style={inputStyle}
@@ -203,24 +205,15 @@ export function ZellePayment({address, description, price}) {
           </TouchableOpacity>
         ))}
       </ScrollView>
-      {loading && (
-        <ActivityIndicator
-          size="large"
-          color={green}
-          style={{marginBottom: 20}}
-        />
-      )}
 
-      {!loading && (
-        <TouchableHighlight
-          style={[styles.buttonContainer, styles.loginButton]}
-          disabled={loading}
-          onPress={() => {
-            confirmOrder();
-          }}>
-          <Text style={styles.loginText}>Confirmar</Text>
-        </TouchableHighlight>
-      )}
+      <TouchableHighlight
+        style={[styles.buttonContainer, styles.loginButton]}
+        disabled={loading}
+        onPress={() => {
+          confirmOrder();
+        }}>
+        <Text style={styles.loginText}>Confirmar</Text>
+      </TouchableHighlight>
     </View>
   );
 }
