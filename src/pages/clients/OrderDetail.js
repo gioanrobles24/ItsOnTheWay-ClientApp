@@ -62,6 +62,7 @@ export function OrderDetail({orderId, navigation}) {
         }
       })
       .catch(e => {
+        console.log(e);
         Alert.alert('Error');
         Actions.pop();
       });
@@ -113,7 +114,7 @@ export function OrderDetail({orderId, navigation}) {
             textStyle={{fontSize: 16}}
           />
         </View>
-        {order.ord_time_min && (
+        {!!order.ord_time_min && (
           <View style={style.orderDetailRow}>
             <Text style={{fontSize: 18}}>Tiempo estimado </Text>
             <Badge
@@ -131,7 +132,7 @@ export function OrderDetail({orderId, navigation}) {
             />
           </View>
         )}
-        {order.dm_id && (
+        {!!order.dm_id && (
           <View style={{marginTop: 5}}>
             <Text
               style={{fontSize: 14, color: green}}
@@ -142,7 +143,7 @@ export function OrderDetail({orderId, navigation}) {
             </Text>
           </View>
         )}
-        {order.ord_description && <Text>Nota: {order.ord_description}</Text>}
+        {!!order.ord_description && <Text>Nota: {order.ord_description}</Text>}
         <View style={{flexGrow: 1}}>
           <ProductsInCart
             haveDelete={false}
@@ -169,7 +170,7 @@ export function OrderDetail({orderId, navigation}) {
               // flexDirection: 'column',
               // alignItems: 'flex-start',
             }}>
-            {order.products[0] && (
+            {!!order.products[0] && (
               <Text style={{fontSize: 18, color: green, marginRight: 10}}>
                 Calificar a {order.products[0].p_user}:{' '}
               </Text>
