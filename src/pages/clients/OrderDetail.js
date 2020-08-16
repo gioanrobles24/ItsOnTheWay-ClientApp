@@ -112,31 +112,35 @@ export function OrderDetail({orderId, navigation}) {
           textStyle={{fontSize: 16}}
         />
       </View>
-      <View style={style.orderDetailRow}>
-        <Text style={{fontSize: 18}}>Tiempo estimado </Text>
-        <Badge
-          value={`${order.ord_time_min} min.`}
-          badgeStyle={{
-            paddingVertical: 15,
-            paddingHorizontal: 10,
-            backgroundColor: green,
-          }}
-          containerStyle={{
-            marginVertical: 10,
-            alignSelf: 'flex-start',
-          }}
-          textStyle={{fontSize: 16}}
-        />
-      </View>
-      <View style={{marginTop: 5}}>
-        <Text
-          style={{fontSize: 14, color: green}}
-          onPress={() => {
-            Actions.deliverymanDetail();
-          }}>
-          Ver datos del repartidor
-        </Text>
-      </View>
+      {order.ord_time_min && (
+        <View style={style.orderDetailRow}>
+          <Text style={{fontSize: 18}}>Tiempo estimado </Text>
+          <Badge
+            value={`${order.ord_time_min} min.`}
+            badgeStyle={{
+              paddingVertical: 15,
+              paddingHorizontal: 10,
+              backgroundColor: green,
+            }}
+            containerStyle={{
+              marginVertical: 10,
+              alignSelf: 'flex-start',
+            }}
+            textStyle={{fontSize: 16}}
+          />
+        </View>
+      )}
+      {order.dm_id && (
+        <View style={{marginTop: 5}}>
+          <Text
+            style={{fontSize: 14, color: green}}
+            onPress={() => {
+              Actions.deliverymanDetail({deliveryman: order});
+            }}>
+            Ver datos del repartidor
+          </Text>
+        </View>
+      )}
       <View style={{flexGrow: 1}}>
         <ScrollView contentContainerStyle={{flexGrow: 1}}>
           <ProductsInCart
