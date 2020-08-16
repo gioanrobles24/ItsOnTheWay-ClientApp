@@ -1,18 +1,31 @@
-import React, {useState} from 'react';
-import {Text, View, ScrollView, Alert} from 'react-native';
-import {Avatar, AirbnbRating} from 'react-native-elements';
+import React, {useState, useEffect} from 'react';
+import {Text, View, ScrollView, Alert, StyleSheet} from 'react-native';
+import {Avatar, AirbnbRating, Icon} from 'react-native-elements';
 import {green} from '../../../colors';
 import {config} from '../../../config';
 import request from '../../../utils/request';
 
 export function DeliverymanDetail({deliveryman}) {
   const [rating, setRating] = useState();
+  const [avg, setAvg] = useState();
+
+  useEffect(() => {
+    (async function() {
+      const {response} = await request(
+        `${config.apiUrl}/delivery/dm_rate/${deliveryman.dm_id}`,
+      );
+
+      if (response.status == '200') {
+        setAvg(response.prom);
+      }
+    })();
+  }, [deliveryman.dm_id]);
 
   async function sendRating(rating) {
     try {
       const result = await request(`${config.apiUrl}/clients/rate_dm`, {
         method: 'POST',
-        body: JSON.stringify({ord_id: deliveryman.ord_id, ord_rate: rating}),
+        body: JSON.stringify({ord_id: deliveryman.ord_id, ord_dm_rate: rating}),
       });
       if (result.status !== '200') {
         throw result;
@@ -41,22 +54,30 @@ export function DeliverymanDetail({deliveryman}) {
             // source={image}
           />
           <View>
-            <Text style={{fontSize: 18, marginTop: 20}}>
+            <Text style={{...styles.deliveryDetail, marginTop: 30}}>
               <Text style={{color: green}}>Nombre:</Text> {deliveryman.dm_name}
             </Text>
-            <Text style={{fontSize: 18, marginTop: 5}}>
+            <Text style={styles.deliveryDetail}>
               <Text style={{color: green}}>Cédula:</Text> {deliveryman.dm_dni}
             </Text>
-            <Text style={{fontSize: 18, marginTop: 5}}>
+            <Text style={styles.deliveryDetail}>
               <Text style={{color: green}}>Teléfono:</Text>{' '}
               {deliveryman.dm_phone_1}
             </Text>
-            <Text style={{fontSize: 18, marginTop: 5}}>
+            <Text style={styles.deliveryDetail}>
               <Text style={{color: green}}>Correo:</Text> {deliveryman.dm_email}
             </Text>
-            <Text style={{fontSize: 18, marginTop: 5}}>
-              <Text style={{color: green}}>Nombre:</Text> {deliveryman.dm_name}
-            </Text>
+            <View
+              style={{
+                ...styles.deliveryDetail,
+                flexDirection: 'row',
+                alignItems: 'center',
+              }}>
+              <Text style={{fontSize: 18}}>
+                <Text style={{color: green}}>Rating:</Text> {avg}
+              </Text>
+              <Icon name="star" color="#eded26" />
+            </View>
             <View
               style={{
                 marginTop: 100,
@@ -82,7 +103,7 @@ export function DeliverymanDetail({deliveryman}) {
                         text: 'Si',
                         onPress: () => {
                           setRating(rating);
-                          // sendRating(rating);
+                          sendRating(rating);
                         },
                       },
                     ],
@@ -97,3 +118,7 @@ export function DeliverymanDetail({deliveryman}) {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  deliveryDetail: {fontSize: 18, marginTop: 20},
+});
