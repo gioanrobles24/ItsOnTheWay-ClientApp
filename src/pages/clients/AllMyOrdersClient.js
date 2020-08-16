@@ -60,9 +60,7 @@ export default function AllMyOrdersClientView(props) {
                       flexDirection: 'column',
                       alignItems: 'flex-start',
                     }}>
-                    <Text style={styles.cardOrderSubTitle}>
-                      {order.ord_id} {order.ord_description}
-                    </Text>
+                    <Text style={styles.cardOrderSubTitle}>{order.ord_id}</Text>
                     <Badge
                       value={getStatusText(order.ord_status)}
                       badgeStyle={{paddingVertical: 10, paddingHorizontal: 10}}

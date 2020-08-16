@@ -1,7 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {useState, useEffect} from 'react';
-import {Text, Alert, View} from 'react-native';
+import {Text, Alert, View, StyleSheet} from 'react-native';
 import {
   Avatar,
   Badge,
@@ -89,43 +89,61 @@ export function OrderDetail({orderId, navigation}) {
   });
 
   return (
-    <View
-      style={{
-        flex: 1,
-        padding: 30,
-        flexGrow: 1,
-        justifyContent: 'space-between',
-      }}>
+    <ScrollView>
       <View
         style={{
-          flexDirection: 'row',
-          borderBottomWidth: 1,
-          paddingBottom: 10,
-          borderBottomColor: '#dedede',
-          alignContent: 'center',
-          alignItems: 'center',
+          flex: 1,
+          padding: 30,
+          flexGrow: 1,
           justifyContent: 'space-between',
         }}>
-        <Text style={{fontSize: 18, color: green}}>Estado del pedido</Text>
-        <Badge
-          value={getStatusText(order.ord_status)}
-          badgeStyle={{
-            paddingVertical: 15,
-            paddingHorizontal: 10,
-            backgroundColor: green,
-          }}
-          containerStyle={{
-            marginVertical: 10,
-            alignSelf: 'flex-start',
-          }}
-          textStyle={{fontSize: 16}}
-        />
-      </View>
-      <View style={{marginVertical: 5}}>
-        <Text>Tiempo estimado {order.ord_time_min} min.</Text>
-      </View>
-      <View style={{flexGrow: 1}}>
-        <ScrollView contentContainerStyle={{flexGrow: 1}}>
+        <View style={style.orderDetailRow}>
+          <Text style={{fontSize: 18}}>Estado del pedido</Text>
+          <Badge
+            value={getStatusText(order.ord_status)}
+            badgeStyle={{
+              paddingVertical: 15,
+              paddingHorizontal: 10,
+              backgroundColor: green,
+            }}
+            containerStyle={{
+              marginVertical: 10,
+              alignSelf: 'flex-start',
+            }}
+            textStyle={{fontSize: 16}}
+          />
+        </View>
+        {order.ord_time_min && (
+          <View style={style.orderDetailRow}>
+            <Text style={{fontSize: 18}}>Tiempo estimado </Text>
+            <Badge
+              value={`${order.ord_time_min} min.`}
+              badgeStyle={{
+                paddingVertical: 15,
+                paddingHorizontal: 10,
+                backgroundColor: green,
+              }}
+              containerStyle={{
+                marginVertical: 10,
+                alignSelf: 'flex-start',
+              }}
+              textStyle={{fontSize: 16}}
+            />
+          </View>
+        )}
+        {order.dm_id && (
+          <View style={{marginTop: 5}}>
+            <Text
+              style={{fontSize: 14, color: green}}
+              onPress={() => {
+                Actions.deliverymanDetail({deliveryman: order});
+              }}>
+              Ver datos del repartidor
+            </Text>
+          </View>
+        )}
+        {order.ord_description && <Text>Nota: {order.ord_description}</Text>}
+        <View style={{flexGrow: 1}}>
           <ProductsInCart
             haveDelete={false}
             haveImage={false}
@@ -184,8 +202,20 @@ export function OrderDetail({orderId, navigation}) {
               }}
             />
           </View>
-        </ScrollView>
+        </View>
       </View>
-    </View>
+    </ScrollView>
   );
 }
+
+const style = StyleSheet.create({
+  orderDetailRow: {
+    flexDirection: 'row',
+    borderBottomWidth: 1,
+    paddingBottom: 10,
+    borderBottomColor: '#dedede',
+    alignContent: 'center',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+});
