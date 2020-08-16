@@ -1,7 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {useState, useEffect} from 'react';
-import {Text, Alert, View} from 'react-native';
+import {Text, Alert, View, StyleSheet} from 'react-native';
 import {
   Avatar,
   Badge,
@@ -96,17 +96,8 @@ export function OrderDetail({orderId, navigation}) {
         flexGrow: 1,
         justifyContent: 'space-between',
       }}>
-      <View
-        style={{
-          flexDirection: 'row',
-          borderBottomWidth: 1,
-          paddingBottom: 10,
-          borderBottomColor: '#dedede',
-          alignContent: 'center',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-        }}>
-        <Text style={{fontSize: 18, color: green}}>Estado del pedido</Text>
+      <View style={style.orderDetailRow}>
+        <Text style={{fontSize: 18}}>Estado del pedido</Text>
         <Badge
           value={getStatusText(order.ord_status)}
           badgeStyle={{
@@ -121,8 +112,30 @@ export function OrderDetail({orderId, navigation}) {
           textStyle={{fontSize: 16}}
         />
       </View>
-      <View style={{marginVertical: 5}}>
-        <Text>Tiempo estimado {order.ord_time_min} min.</Text>
+      <View style={style.orderDetailRow}>
+        <Text style={{fontSize: 18}}>Tiempo estimado </Text>
+        <Badge
+          value={`${order.ord_time_min} min.`}
+          badgeStyle={{
+            paddingVertical: 15,
+            paddingHorizontal: 10,
+            backgroundColor: green,
+          }}
+          containerStyle={{
+            marginVertical: 10,
+            alignSelf: 'flex-start',
+          }}
+          textStyle={{fontSize: 16}}
+        />
+      </View>
+      <View style={{marginTop: 5}}>
+        <Text
+          style={{fontSize: 14, color: green}}
+          onPress={() => {
+            Actions.deliverymanDetail();
+          }}>
+          Ver datos del repartidor
+        </Text>
       </View>
       <View style={{flexGrow: 1}}>
         <ScrollView contentContainerStyle={{flexGrow: 1}}>
@@ -189,3 +202,15 @@ export function OrderDetail({orderId, navigation}) {
     </View>
   );
 }
+
+const style = StyleSheet.create({
+  orderDetailRow: {
+    flexDirection: 'row',
+    borderBottomWidth: 1,
+    paddingBottom: 10,
+    borderBottomColor: '#dedede',
+    alignContent: 'center',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+});
