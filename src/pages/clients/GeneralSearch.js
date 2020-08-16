@@ -6,12 +6,14 @@ import {
   TouchableHighlight,
   Alert,
   FlatList,
+  ImageBackground,
 } from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import {Icon, Avatar, Input} from 'react-native-elements';
 import {Card} from 'react-native-shadow-cards';
 import TabMenuIcons from '../components/TabMenuIcons';
 import {config} from '../../config';
+const background = require('../../assets/search-background.jpg');
 
 export default class GeneralSearch extends Component {
   constructor(props) {
@@ -83,36 +85,40 @@ export default class GeneralSearch extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.header}>
-          <Icon name="location" type="evilicon" size={20} color="#a9d046" />
-          <Text style={styles.Title}>Buscar</Text>
-        </View>
-        <View style={styles.header}>
-          <Input
-            placeholder="escribe y pulsa para buscar"
-            value={this.state.param}
-            onChangeText={value => this.setState({param: value})}
-            onEndEditing={() => this.search(this.state.param)}
-            leftIcon={<Icon name="search" type="evilicon" color="black" />}
-            inputContainerStyle={{
-              borderRadius: 10,
-              borderBottomColor: 'transparent',
-              width: 330,
-              height: 35,
-              backgroundColor: '#e3e3e3',
-              marginBottom: 5,
-              justifyContent: 'center',
-            }}
-          />
-        </View>
-        <View style={styles.productscontainer}>
-          <FlatList
-            keyExtractor={this.keyExtractor}
-            data={this.state.partners}
-            renderItem={this.renderItem}
-          />
-        </View>
-        <TabMenuIcons containerStyle={{paddingTop: 100}} />
+        <ImageBackground
+          source={background}
+          style={{flex: 1, resizeMode: 'cover'}}>
+          <View style={styles.header}>
+            <Icon name="location" type="evilicon" size={20} color="#a9d046" />
+            <Text style={styles.Title}>Buscar</Text>
+          </View>
+          <View style={styles.header}>
+            <Input
+              placeholder="escribe y pulsa para buscar"
+              value={this.state.param}
+              onChangeText={value => this.setState({param: value})}
+              onEndEditing={() => this.search(this.state.param)}
+              leftIcon={<Icon name="search" type="evilicon" color="black" />}
+              inputContainerStyle={{
+                borderRadius: 10,
+                borderBottomColor: 'transparent',
+                width: 330,
+                height: 35,
+                backgroundColor: '#e3e3e3',
+                marginBottom: 5,
+                justifyContent: 'center',
+              }}
+            />
+          </View>
+          <View style={styles.productscontainer}>
+            <FlatList
+              keyExtractor={this.keyExtractor}
+              data={this.state.partners}
+              renderItem={this.renderItem}
+            />
+          </View>
+          <TabMenuIcons containerStyle={{paddingTop: 100}} />
+        </ImageBackground>
       </View>
     );
   }

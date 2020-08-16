@@ -92,6 +92,10 @@ export function getStatusText(id) {
       return 'Aprobada por socio';
     case '4':
       return 'Entregada cliente';
+    case '5':
+      return `It's on the way`;
+    case '6':
+      return 'Espera de repartidor';
     default:
       return 'Desconocido';
   }

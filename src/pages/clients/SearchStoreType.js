@@ -16,6 +16,7 @@ import {
   TouchableOpacity,
   ScrollView,
   FlatList,
+  ImageBackground,
 } from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import {Icon, Avatar, Badge, withBadge, Input} from 'react-native-elements';
@@ -28,6 +29,8 @@ import TabMenuIcons from '../components/TabMenuIcons';
 import {config} from '../../config';
 const mainColor = '#bdbfc1';
 const pnkGradient = ['#ffffff', '#ffffff'];
+const background = require('../../assets/search-background.jpg');
+
 export default class SearchStoreTypeView extends Component {
   constructor(props) {
     super(props);
@@ -119,33 +122,37 @@ export default class SearchStoreTypeView extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.header}>
-          <Icon name="location" type="evilicon" size={20} color="#a9d046" />
-          <Text style={styles.Title}>Buscar</Text>
-        </View>
-        <View style={styles.header}>
-          <Input
-            placeholder="escribe y pulsa para buscar"
-            leftIcon={<Icon name="search" type="evilicon" color="black" />}
-            inputContainerStyle={{
-              borderRadius: 10,
-              borderBottomColor: 'transparent',
-              width: 330,
-              height: 35,
-              backgroundColor: '#e3e3e3',
-              marginBottom: 5,
-              justifyContent: 'center',
-            }}
-          />
-        </View>
-        <View style={styles.productscontainer}>
-          <FlatList
-            keyExtractor={this.keyExtractor}
-            data={this.state.partnersByCat}
-            renderItem={this.renderItem}
-          />
-        </View>
-        <TabMenuIcons containerStyle={{paddingTop: 100}} />
+        <ImageBackground
+          source={background}
+          style={{flex: 1, resizeMode: 'cover'}}>
+          <View style={styles.header}>
+            <Icon name="location" type="evilicon" size={20} color="#a9d046" />
+            <Text style={styles.Title}>Buscar</Text>
+          </View>
+          <View style={styles.header}>
+            <Input
+              placeholder="escribe y pulsa para buscar"
+              leftIcon={<Icon name="search" type="evilicon" color="black" />}
+              inputContainerStyle={{
+                borderRadius: 10,
+                borderBottomColor: 'transparent',
+                width: 330,
+                height: 35,
+                backgroundColor: '#e3e3e3',
+                marginBottom: 5,
+                justifyContent: 'center',
+              }}
+            />
+          </View>
+          <View style={styles.productscontainer}>
+            <FlatList
+              keyExtractor={this.keyExtractor}
+              data={this.state.partnersByCat}
+              renderItem={this.renderItem}
+            />
+          </View>
+          <TabMenuIcons containerStyle={{paddingTop: 100}} />
+        </ImageBackground>
       </View>
     );
   }

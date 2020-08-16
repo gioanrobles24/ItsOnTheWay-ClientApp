@@ -121,6 +121,9 @@ export function OrderDetail({orderId, navigation}) {
           textStyle={{fontSize: 16}}
         />
       </View>
+      <View style={{marginVertical: 5}}>
+        <Text>Tiempo estimado {order.ord_time_min} min.</Text>
+      </View>
       <View style={{flexGrow: 1}}>
         <ScrollView contentContainerStyle={{flexGrow: 1}}>
           <ProductsInCart
