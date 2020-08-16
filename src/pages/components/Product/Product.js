@@ -142,15 +142,6 @@ function ProductDetail(props) {
             extras={extras}
             onChange={setSelectedExtras}
           />
-          <View>
-            <Input
-              containerStyle={{paddingHorizontal: 0, marginVertical: 30}}
-              label="Nota"
-              value={comment}
-              onChange={setComment}
-              placeholder="Escribir nota"
-            />
-          </View>
         </View>
       </ScrollView>
       <View style={{marginBottom: 30}}>
