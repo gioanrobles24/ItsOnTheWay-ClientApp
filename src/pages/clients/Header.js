@@ -195,13 +195,12 @@ function SidebarMenu(props) {
         <TouchableHighlight
           style={[styles.salirboton, styles.salirbotonButton]}
           onPress={() => {
-            // request(`${config.pushUrl}/session/${token}`, {
-            //   method: 'DELETE',
-            // }).then(() =>
+            request(`${config.pushUrl}/session/${token}`, {
+              method: 'DELETE',
+            });
             AsyncStorage.removeItem('session').then(() =>
               dispatch(unsetUser()),
             );
-            // );
           }}>
           <Text style={styles.salirbotonText}>Salir</Text>
         </TouchableHighlight>

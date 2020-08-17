@@ -12,15 +12,26 @@ import {config} from './src/config';
 import {store} from './src/redux/store';
 import {setPushToken} from './src/reducers/session';
 import {Actions} from 'react-native-router-flux';
+import request from './src/utils/request';
 
 // PushNotification.addEventListener('registrationError', console.log);
 MapboxGL.setAccessToken(config.mapboxKey);
 PushNotification.configure({
   // (optional) Called when Token is generated (iOS and Android)
   onRegister: function(token) {
-    console.log(token);
-    console.log('TOKEN:', token.token);
     store.dispatch(setPushToken(token.token));
+    const user = store.getState().session.user;
+    if (user) {
+      const clientId = user.response.client_info.id;
+      request(`${config.pushUrl}/session`, {
+        method: 'POST',
+        body: JSON.stringify({
+          userId: clientId,
+          token: token.token,
+          type: 'client',
+        }),
+      });
+    }
   },
 
   // (required) Called when a remote is received or opened, or local notification is opened
