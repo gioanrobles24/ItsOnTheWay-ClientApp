@@ -81,19 +81,19 @@ export default function AllMyOrdersClientView(props) {
 export function getStatusText(id) {
   switch (id) {
     case '0':
-      return 'Entregada a repartidor';
+      return 'Repartidor Asignado';
     case '1':
       return 'Sin Aprobar';
     case '2':
       return 'Aprobada por Admin';
     case '3':
-      return 'Aprobada por socio';
+      return 'Aprobada por Socio';
     case '4':
-      return 'Entregada cliente';
+      return 'Entregada Cliente';
     case '5':
       return `It's on the way`;
     case '6':
-      return 'Espera de repartidor';
+      return 'Espera de Repartidor';
     default:
       return 'Desconocido';
   }
