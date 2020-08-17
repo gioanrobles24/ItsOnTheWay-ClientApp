@@ -43,7 +43,9 @@ class PartnerView extends Component {
           console.log(responseData.response.partner);
           this.setState(
             {
-              partner_products: responseData.response.partner_products,
+              partner_products: responseData.response.partner_products.filter(
+                p => p.prod_aviable,
+              ),
               partner_banner: responseData.response.partner_banner,
               partner: responseData.response.partner,
             },
@@ -56,14 +58,7 @@ class PartnerView extends Component {
         console.error(error);
       });
 
-    fetch(`${config.apiUrl}/working_status`, {
-      method: 'GET',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-    })
-      .then(response => response.json())
+    request(`${config.apiUrl}/working_status`)
       .then(responseData => {
         if (responseData.error) {
           Alert.alert(' por favor intenta nuevamente');
