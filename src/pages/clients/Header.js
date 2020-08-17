@@ -197,10 +197,9 @@ function SidebarMenu(props) {
           onPress={() => {
             request(`${config.pushUrl}/session/${token}`, {
               method: 'DELETE',
-            }).then(() =>
-              AsyncStorage.removeItem('session').then(() =>
-                dispatch(unsetUser()),
-              ),
+            });
+            AsyncStorage.removeItem('session').then(() =>
+              dispatch(unsetUser()),
             );
           }}>
           <Text style={styles.salirbotonText}>Salir</Text>
