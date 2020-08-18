@@ -37,6 +37,7 @@ export default function AllMyOrdersClientView(props) {
           Alert.alert('Error');
         });
     }
+    fetchOrders();
     const interval = setInterval(fetchOrders, 30000);
     return () => clearInterval(interval);
   }, [userId]);
