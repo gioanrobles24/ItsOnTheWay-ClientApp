@@ -23,18 +23,22 @@ export default function AllMyOrdersClientView(props) {
   const [orders, setOrders] = useState([]);
 
   useEffect(() => {
-    fetch(`${config.apiUrl}/clients/orders_client/${userId}`)
-      .then(resp => resp.json())
-      .then(obj => {
-        if (obj.response.error) {
+    function fetchOrders() {
+      return fetch(`${config.apiUrl}/clients/orders_client/${userId}`)
+        .then(resp => resp.json())
+        .then(obj => {
+          if (obj.response.error) {
+            Alert.alert('Error');
+          } else {
+            setOrders(obj.response.orders);
+          }
+        })
+        .catch(e => {
           Alert.alert('Error');
-        } else {
-          setOrders(obj.response.orders);
-        }
-      })
-      .catch(e => {
-        Alert.alert('Error');
-      });
+        });
+    }
+    const interval = setInterval(fetchOrders, 30000);
+    return () => clearInterval(interval);
   }, [userId]);
 
   return (
