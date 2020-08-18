@@ -147,7 +147,6 @@ class PartnerView extends Component {
       rightTitle={`$${item.prod_price_usd}`}
       titleStyle={{
         // fontWeight: 'bold',
-        fontSize: 20,
         ...styles.grayText,
       }}
       leftAvatar={{
