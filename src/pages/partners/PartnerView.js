@@ -251,6 +251,7 @@ class PartnerView extends Component {
                 {segments.map(s => (
                   <Tile
                     title={s.seg_description}
+                    titleStyle={{fontSize: 24}}
                     onPress={() => {
                       this.props.setSelectedSegment(s.id);
                     }}
