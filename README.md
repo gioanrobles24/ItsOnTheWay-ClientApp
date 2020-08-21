@@ -10,7 +10,7 @@ yarn install
 ```
 
 * duplicar el archivo `src/config.example` y renombrar a `src/config.js` cambiar el contenido del mismo con los datos necesarios
-
+* Cambios ios
 ```js
 export const config = {
   apiUrl: 'http://test.itsontheway.com.ve/api', // Url de la api
