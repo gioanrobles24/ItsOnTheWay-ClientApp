@@ -33,11 +33,7 @@ export function OrderDetail({orderId, navigation}) {
     useSelector(state => state.parameters.dollarPrice),
   );
 
-  useEffect(() => {
-    navigation.setParams({
-      title: `Pedido #${orderId}`,
-    });
-
+  function fetchOrderDetail() {
     request(`${config.apiUrl}/clients/orders_detail/${orderId}`)
       .then(obj => {
         console.log(obj);
@@ -66,6 +62,17 @@ export function OrderDetail({orderId, navigation}) {
         Alert.alert('Error');
         Actions.pop();
       });
+  }
+
+  useEffect(() => {
+    navigation.setParams({
+      title: `Pedido #${orderId}`,
+    });
+
+    fetchOrderDetail();
+    const interval = setInterval(fetchOrderDetail, 30000);
+
+    return () => clearInterval(interval);
   }, [orderId]);
 
   async function sendRating(rating) {

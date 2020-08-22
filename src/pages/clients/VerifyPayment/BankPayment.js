@@ -82,8 +82,8 @@ export function BankPayment({
   }
 
   function confirmOrder() {
-    if (!ref || !selectedBank) {
-      Alert.alert('Indique el numero de referencia y el banco');
+    if (!ref) {
+      Alert.alert('Indique el numero de referencia');
     } else if (!selectedPayment) {
       Alert.alert('Seleccione un banco');
     } else {
@@ -92,7 +92,7 @@ export function BankPayment({
         ord_address: address.client_address_id,
         ord_description: description,
         bank_name: selectedPayment,
-        bank_id: selectedBank,
+        // bank_id: selectedBank,
         order_dm_val: deliveryPrice,
         ref_pay: ref,
         products: JSON.stringify(
@@ -149,7 +149,7 @@ export function BankPayment({
   return (
     <View style={styles.container}>
       <Spinner visible={loading} textContent={'Cargando...'} />
-      <RNPickerSelect
+      {/* <RNPickerSelect
         Icon={() => (
           <Icon
             type="font-awesome"
@@ -178,7 +178,7 @@ export function BankPayment({
           },
           // placeholder: {color: 'black'},
         }}
-      />
+      /> */}
 
       <View style={styles.inputContainer}>
         <TextInput

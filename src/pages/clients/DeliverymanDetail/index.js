@@ -37,6 +37,12 @@ export function DeliverymanDetail({deliveryman}) {
     }
   }
 
+  console.log(
+    `${config.imagesUrl}/images/repartidores/${deliveryman.dm_id}/${
+      deliveryman.dm_profile_pic
+    }`,
+  );
+
   return (
     <View style={{flex: 1}}>
       <ScrollView>
@@ -51,7 +57,11 @@ export function DeliverymanDetail({deliveryman}) {
               marginTop: 20,
               backgroundColor: 'white',
             }}
-            // source={image}
+            source={{
+              uri: `${config.imagesUrl}/images/repartidores/${
+                deliveryman.dm_id
+              }/${deliveryman.dm_profile_pic}`,
+            }}
           />
           <View>
             <Text style={{...styles.deliveryDetail, marginTop: 30}}>

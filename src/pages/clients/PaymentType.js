@@ -49,16 +49,18 @@ class PaymentTypeClientView extends Component {
     let description = this.props.description;
     let opType = viewId;
 
-    Actions.verifyPaymentClient({
-      address,
-      description,
-      pedido,
-      opType,
-      deliveryPrice: this.state.deliveryPrice,
-      price:
-        this.state.deliveryPrice +
-        (this.getSubTotal() + this.getUsagePrice()) / this.props.dollarPrice,
-    });
+    if (!this.state.loading) {
+      Actions.verifyPaymentClient({
+        address,
+        description,
+        pedido,
+        opType,
+        deliveryPrice: this.state.deliveryPrice,
+        price:
+          this.state.deliveryPrice +
+          (this.getSubTotal() + this.getUsagePrice()) / this.props.dollarPrice,
+      });
+    }
   };
 
   getProductPrice(item) {
