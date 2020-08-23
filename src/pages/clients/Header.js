@@ -138,6 +138,38 @@ function SidebarMenu(props) {
         <TouchableOpacity
           style={styles.menubarItemContainer}
           onPress={() => {
+            Actions.userDetail();
+          }}>
+          <Icon
+            name="user"
+            type="evilicon"
+            color="#bdbfc1"
+            iconStyle={styles.menubarIconLeft}
+            onPress={() => {
+              Actions.userDetail();
+            }}
+          />
+          <Text
+            style={styles.menubarItemText}
+            onPress={() => {
+              Actions.userDetail();
+            }}>
+            Mi Perfil
+          </Text>
+          <Icon
+            name="chevron-right"
+            type="evilicon"
+            color="#bdbfc1"
+            iconStyle={styles.menubarIconRight}
+            onPress={() => {
+              Actions.userDetail();
+            }}
+          />
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.menubarItemContainer}
+          onPress={() => {
             Actions.allmyOrders();
           }}>
           <Icon
@@ -240,8 +272,9 @@ const styles = StyleSheet.create({
   },
   MenubarContainer: {
     flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
+    marginTop: 50,
+    // alignItems: 't',
+    // justifyC ontent: 'center',
     flex: 1,
   },
 
