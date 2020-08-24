@@ -71,7 +71,6 @@ export function OrderDetail({orderId, navigation}) {
 
     fetchOrderDetail();
     const interval = setInterval(fetchOrderDetail, 30000);
-
     return () => clearInterval(interval);
   }, [orderId]);
 
@@ -95,6 +94,10 @@ export function OrderDetail({orderId, navigation}) {
   order.products.forEach(item => {
     subTotal += getProductPrice(item);
   });
+
+  let deliveryPrice = parseFloat(order.order_dm_val);
+  let usagePrice = (subTotal * parseFloat(order.order_use_percent)) / 100;
+  let total = subTotal + deliveryPrice + usagePrice;
 
   return (
     <ScrollView>
@@ -165,9 +168,45 @@ export function OrderDetail({orderId, navigation}) {
                 alignSelf: 'flex-end',
                 marginTop: 10,
               }}>
-              <Text style={{fontWeight: 'bold'}}>Total: </Text>
+              <Text style={{fontWeight: 'bold'}}>Subtotal: </Text>
               Bs {(subTotal * dollarPrice).toLocaleString()} ($
               {subTotal.toLocaleString()})
+            </Text>
+          </View>
+          <View>
+            <Text
+              style={{
+                fontSize: 16,
+                alignSelf: 'flex-end',
+                marginTop: 10,
+              }}>
+              <Text style={{fontWeight: 'bold'}}>Servicio: </Text>
+              Bs {(usagePrice * dollarPrice).toLocaleString()} ($
+              {usagePrice.toLocaleString()})
+            </Text>
+          </View>
+          <View>
+            <Text
+              style={{
+                fontSize: 16,
+                alignSelf: 'flex-end',
+                marginTop: 10,
+              }}>
+              <Text style={{fontWeight: 'bold'}}>Delivery: </Text>
+              Bs {(deliveryPrice * dollarPrice).toLocaleString()} ($
+              {deliveryPrice.toLocaleString()})
+            </Text>
+          </View>
+          <View>
+            <Text
+              style={{
+                fontSize: 16,
+                alignSelf: 'flex-end',
+                marginTop: 10,
+              }}>
+              <Text style={{fontWeight: 'bold'}}>Total: </Text>
+              Bs {(total * dollarPrice).toLocaleString()} ($
+              {total.toLocaleString()})
             </Text>
           </View>
           <View

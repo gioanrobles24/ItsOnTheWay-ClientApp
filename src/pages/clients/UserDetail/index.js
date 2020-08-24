@@ -11,15 +11,30 @@ import {Avatar, AirbnbRating, Icon, Input} from 'react-native-elements';
 import {green} from '../../../colors';
 import {config} from '../../../config';
 import request from '../../../utils/request';
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import {Actions} from 'react-native-router-flux';
+import {setUser as setStoreUser} from '../../../reducers/session';
 
 export function UserDetail() {
-  const [user, setUser] = useState(
-    useSelector(state => state.session.user.response.client_info),
-  );
+  const storeSession = useSelector(state => state.session.user);
+  const storeUser = storeSession.response.client_info;
+  console.log(storeUser);
+  const [user, setUser] = useState({
+    // ...storeUser,
+    cl_id: storeUser.id,
+    cl_name: storeUser.cl_name,
+    cl_email: storeUser.cl_email,
+    cl_phone_1: storeUser.cl_phone_1,
+    password: storeUser.password,
+    cl_last_name: storeUser.cl_last_name,
+    new_cl_email: storeUser.cl_email,
+  });
+
+  const dispatch = useDispatch();
 
   function confirmUpdate() {
+    console.log(JSON.stringify(user, undefined, 2));
+    console.log(Object.keys(user));
     if (Object.keys(user).some(k => !user[k])) {
       Alert.alert('Error', 'No puede haber campos vacios');
       return;
@@ -44,6 +59,11 @@ export function UserDetail() {
                 if (resp.response.error) {
                   throw new Error(resp.response.error);
                 }
+                const newSession = JSON.parse(JSON.stringify(storeSession));
+                newSession.response.client_info = user;
+                newSession.response.client_info.cl_email = user.new_cl_email;
+                newSession.response.client_info.id = user.cl_id;
+                dispatch(setStoreUser({...newSession}));
                 Alert.alert('Actualización Exitosa');
                 Actions.pop();
               })
@@ -92,26 +112,33 @@ export function UserDetail() {
             <Input
               containerStyle={styles.inputText}
               inputStyle={{padding: 0}}
-              value={user.cl_email}
+              value={user.new_cl_email}
               keyboardType="email-address"
-              onChangeText={value => setUser({...user, cl_email: value})}
+              onChangeText={value => setUser({...user, new_cl_email: value})}
             />
           </View>
-        </View>
+          <TouchableOpacity
+            onPress={() => confirmUpdate()}
+            style={{
+              alignSelf: 'center',
+              backgroundColor: green,
+              height: 45,
+              borderRadius: 5,
+              width: 270,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <Text style={{color: 'white'}}>Actualizar</Text>
+          </TouchableOpacity>
 
-        <TouchableOpacity
-          onPress={() => confirmUpdate()}
-          style={{
-            alignSelf: 'center',
-            backgroundColor: green,
-            height: 45,
-            borderRadius: 5,
-            width: 270,
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-          <Text style={{color: 'white'}}>Actualizar</Text>
-        </TouchableOpacity>
+          <View style={{marginTop: 100}}>
+            <Text style={{color: green, fontWeight: 'bold', fontSize: 18}}>
+              Contacta a It's on the way.
+            </Text>
+            <Text>soporte@itsontheway.net</Text>
+            <Text>+58 0412 4249061</Text>
+          </View>
+        </View>
       </ScrollView>
     </View>
   );

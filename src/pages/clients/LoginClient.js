@@ -80,6 +80,7 @@ class LoginClientView extends Component {
         }
       })
       .then(responseData => {
+        responseData.response.client_info.password = this.state.password;
         return AsyncStorage.setItem(
           'session',
           JSON.stringify(responseData),
@@ -90,7 +91,7 @@ class LoginClientView extends Component {
         Actions.homeClient({responseData: data});
       })
       .catch(error => {
-        Alert.alert(error);
+        Alert.alert(error.message);
         // console.log(error);
         // console.error(error);
       })
