@@ -18,7 +18,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import {green} from '../../colors';
 import {config} from '../../config';
 import request from '../../utils/request';
-const image = {uri: `${config.apiUrl}/simgBlanca`};
+const image = {uri: `${config.apiUrl}/imgVerdePerfil`};
 
 export function Header(props) {
   const [open, setOpen] = useState(false);
@@ -212,7 +212,7 @@ function SidebarMenu(props) {
               Actions.addressClient();
             }}
           />
-          <Text style={styles.menubarItemText}>Mis direcciónes</Text>
+          <Text style={styles.menubarItemText}>Mis Direcciones</Text>
           <Icon
             name="chevron-right"
             type="evilicon"

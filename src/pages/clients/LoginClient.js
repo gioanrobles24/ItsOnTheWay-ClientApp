@@ -52,10 +52,6 @@ class LoginClientView extends Component {
     this.setState({loading: true});
     request(`${config.apiUrl}/clients/login`, {
       method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
       body: JSON.stringify({
         cl_email: this.state.email,
         password: this.state.password,
@@ -63,10 +59,9 @@ class LoginClientView extends Component {
     })
       .then(data => {
         if (data.error) {
-          Alert.alert(
+          throw new Error(
             'Usuario o contraseña incorrectos, por favor intenta nuevamente',
           );
-          throw new Error(data.error);
         } else {
           request(`${config.pushUrl}/session`, {
             method: 'POST',
@@ -91,9 +86,12 @@ class LoginClientView extends Component {
         Actions.homeClient({responseData: data});
       })
       .catch(error => {
-        Alert.alert(error.message);
-        // console.log(error);
-        // console.error(error);
+        if (error.body) {
+          Alert.alert(error.body.error);
+        } else {
+          Alert.alert(error.message);
+        }
+        console.log(error);
       })
       .finally(() => this.setState({loading: false}));
   };
