@@ -8,6 +8,7 @@ import request from '../../../utils/request';
 export function DeliverymanDetail({deliveryman}) {
   const [rating, setRating] = useState(parseInt(deliveryman.ord_dm_rate, 10));
   const [avg, setAvg] = useState();
+  console.log(rating);
 
   useEffect(() => {
     (async function() {
@@ -98,7 +99,7 @@ export function DeliverymanDetail({deliveryman}) {
               <AirbnbRating
                 showRating={false}
                 defaultRating={rating}
-                isDisabled={rating != null}
+                isDisabled={rating != null && !isNaN(rating)}
                 size={25}
                 onFinishRating={rating => {
                   Alert.alert(

@@ -29,12 +29,17 @@ import {MobilePayment} from './MobilePayment';
 import {ZellePayment} from './ZellePayment';
 import {connect} from 'react-redux';
 import {config} from '../../../config';
+import request from '../../../utils/request';
 
 class VerifyPaymentClientView extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      banks: [],
+      banks: {
+        transferencia: [],
+        pago_movil: [],
+        zelle: [],
+      },
     };
     props.navigation.setParams({
       title: 'Verificacion de pago',
@@ -42,20 +47,25 @@ class VerifyPaymentClientView extends Component {
   }
 
   componentDidMount() {
-    fetch(`${config.apiUrl}/its_banks`)
-      .then(resp => resp.json())
+    request(`${config.apiUrl}/banks_platforms`)
       .then(resp => {
+        if (resp.response.error) {
+          throw new Error(resp.response.error);
+        }
+
         this.setState({banks: resp.response.banks});
-      });
+      })
+      .catch(e => Alert.alert('Error', e.message));
   }
   render() {
+    console.log(this.state.banks.pago_movil);
     switch (this.props.opType) {
       case 'P1': {
         return (
           <MobilePayment
             {...this.props}
             price={this.props.price * this.props.dollarPrice}
-            banks={this.state.banks}
+            banks={this.state.banks.pago_movil}
           />
         );
       }
@@ -64,13 +74,17 @@ class VerifyPaymentClientView extends Component {
           <BankPayment
             {...this.props}
             price={this.props.price * this.props.dollarPrice}
-            banks={this.state.banks}
+            banks={this.state.banks.transferencia}
           />
         );
       }
       case 'P3': {
         return (
-          <ZellePayment {...this.props} price={this.props.price.toFixed(2)} />
+          <ZellePayment
+            {...this.props}
+            price={this.props.price.toFixed(2)}
+            banks={this.state.banks.zelle}
+          />
         );
       }
     }

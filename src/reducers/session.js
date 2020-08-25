@@ -9,6 +9,8 @@ const scope = '[Session]';
 export const SET_USER = `${scope} SET USER`;
 export const UNSET_USER = `${scope} UNSET USER`;
 
+export const SET_HOME_PRODUCTS = `${scope} SET HOME PRODUCTS`;
+
 export const SET_TOKEN = `${scope} SET TOKEN`;
 
 const defaultState = {
@@ -27,6 +29,11 @@ const sessionReducer = (state = defaultState, action) =>
         draft.user = null;
         break;
       }
+      case SET_HOME_PRODUCTS: {
+        draft.user.response.all_products = action.products;
+        draft.user.response.partners_home = action.partners;
+        break;
+      }
       case SET_TOKEN: {
         draft.pushToken = action.payload;
         break;
@@ -40,6 +47,13 @@ export const setUser = user => {
   return {
     type: SET_USER,
     payload: user,
+  };
+};
+
+export const setHomeProducts = ({products, partners}) => {
+  return {
+    type: SET_HOME_PRODUCTS,
+    payload: {products, partners},
   };
 };
 

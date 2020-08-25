@@ -21,14 +21,27 @@ import {green, inputStyle} from '../../../colors';
 import {config} from '../../../config';
 import Spinner from 'react-native-loading-spinner-overlay';
 
-export function ZellePayment({address, description, price, deliveryPrice}) {
-  const banks = [
-    {
-      name: 'Zelle',
-      description: 'Its for delivery corp.',
-      email: 'pagos@itsontheway.net',
-    },
-  ];
+export function ZellePayment({
+  address,
+  description,
+  price,
+  deliveryPrice,
+  ...props
+}) {
+  // const banks = [
+  //   {
+  //     name: 'Zelle',
+  //     description: 'Its for delivery corp.',
+  //     email: 'pagos@itsontheway.net',
+  //   },
+  // ];
+  const banks = props.banks.map(b => ({
+    name: b.bank_name,
+    email: b.bank_account,
+    description: b.bank_person,
+    // qr: b.qr,
+    // titular: ,
+  }));
   const [selectedPayment, setSelectedPayment] = useState('Zelle');
   const [photo, setPhoto] = useState();
   const [ref, setRef] = useState();

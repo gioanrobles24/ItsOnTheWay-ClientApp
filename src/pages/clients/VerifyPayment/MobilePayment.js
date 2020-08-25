@@ -32,6 +32,7 @@ import {inputStyle, green} from '../../../colors';
 import RNPickerSelect from 'react-native-picker-select';
 import {config} from '../../../config';
 import Spinner from 'react-native-loading-spinner-overlay';
+import AutoHeightImage from 'react-native-auto-height-image';
 
 export function MobilePayment({
   address,
@@ -40,18 +41,12 @@ export function MobilePayment({
   deliveryPrice,
   ...props
 }) {
-  const banks = [
-    {
-      name: 'Bancaribe',
-      phone: '04144537395',
-      ci: '13115089',
-    },
-    {
-      name: 'Provincial',
-      phone: '04144537395',
-      ci: '13115089',
-    },
-  ];
+  const banks = props.banks.map(b => ({
+    name: b.bank_name,
+    phone: b.bank_account,
+    ci: b.bank_dni,
+    qr: b.qr,
+  }));
   const [selectedPayment, setSelectedPayment] = useState(null);
   const [selectedBank, setSelectedBank] = useState(null);
   const [photo, setPhoto] = useState();
@@ -72,8 +67,8 @@ export function MobilePayment({
   }
 
   function confirmOrder() {
-    if (!ref || !phone || !selectedBank) {
-      Alert.alert('Indique el numero de referencia, el banco y el telefono');
+    if (!ref || !phone) {
+      Alert.alert('Indique el numero de referencia y el telefono');
     } else if (!selectedPayment) {
       Alert.alert('Seleccione un banco');
     } else {
@@ -81,7 +76,7 @@ export function MobilePayment({
       const body = {
         ord_address: address.client_address_id,
         ord_description: description,
-        bank_id: selectedBank,
+        // bank_id: selectedBank,
         order_dm_val: deliveryPrice,
         bank_name: `${selectedPayment} - ${phone}`,
         ref_pay: ref,
@@ -140,36 +135,6 @@ export function MobilePayment({
   return (
     <View style={styles.container}>
       <Spinner visible={loading} textContent={'Cargando...'} />
-      <RNPickerSelect
-        Icon={() => (
-          <Icon
-            type="font-awesome"
-            name="chevron-down"
-            color={green}
-            style={{textAlignVertical: 'center'}}
-          />
-        )}
-        placeholder={{
-          label: 'Seleciona el banco emisor',
-          color: 'black',
-        }}
-        items={props.banks.map(bank => ({
-          label: bank.bank_name,
-          value: bank.id,
-        }))}
-        onValueChange={value => {
-          setSelectedBank(value);
-        }}
-        useNativeAndroidPickerStyle={false}
-        style={{
-          inputAndroid: inputStyle,
-          iconContainer: {
-            top: 20,
-            right: 12,
-          },
-          // placeholder: {color: 'black'},
-        }}
-      />
 
       <View style={styles.inputContainer}>
         <TextInput
@@ -226,8 +191,10 @@ export function MobilePayment({
       </Text>
       <ScrollView style={{flexDirection: 'column'}}>
         {banks.map(bank => (
-          <TouchableOpacity onPress={() => setSelectedPayment(bank.name)}>
-            <Card style={{alignItems: 'center', width: 200}}>
+          <TouchableOpacity
+            onPress={() => setSelectedPayment(bank.name)}
+            key={bank.bank_dni}>
+            <Card style={{width: 200}}>
               <Text style={styles.loginSubTitle2} h1>
                 Banco: {bank.name}
               </Text>
@@ -237,6 +204,17 @@ export function MobilePayment({
               <Text style={styles.loginSubTitle2} h1>
                 N° Cédula: {bank.ci}
               </Text>
+              {!!bank.qr && (
+                <Image
+                  source={{uri: `${config.imagesUrl}/appImgs/${bank.qr}`}}
+                  style={{
+                    width: 150,
+                    height: 150,
+                    alignSelf: 'center',
+                    marginTop: 20,
+                  }}
+                />
+              )}
               <CheckBox
                 onPress={() => setSelectedPayment(bank.name)}
                 checkedIcon="dot-circle-o"

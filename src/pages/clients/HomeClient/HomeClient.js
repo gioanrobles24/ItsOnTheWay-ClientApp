@@ -13,7 +13,7 @@ import {
 import {connect} from 'react-redux';
 import Recomedantions from '../../components/ProductHorizontalCarousel';
 import TabMenuIcons from '../../components/TabMenuIcons';
-import {unsetUser} from '../../../reducers/session';
+import {unsetUser, setHomeProducts} from '../../../reducers/session';
 import {Header} from '../Header';
 import {HomeSection} from './HomeSection';
 import {Actions} from 'react-native-router-flux';
@@ -30,13 +30,14 @@ class HomeClientView extends Component {
       activeIndex: 0,
       open: false,
       data: this.props.user.response.client_info,
-      products: this.props.user.response.all_products,
-      partners: this.props.user.response.partners_home,
+      products: [],
+      partners: [],
     };
   }
 
   componentDidMount() {
     this.fetchSegmentations();
+    this.fetchHomeProducts();
   }
 
   fetchSegmentations() {
@@ -45,6 +46,26 @@ class HomeClientView extends Component {
         this.props.setSegments(resp.response.segmentos);
       })
       .catch(e => Alert.alert(e.message));
+  }
+
+  fetchHomeProducts() {
+    return request(`${config.apiUrl}/clients/refresh_home`)
+      .then(resp => {
+        if (resp.error) {
+          throw new Error(resp.error);
+        }
+        this.props.setHomeProducts({
+          partners: resp.response.partners_home,
+          products: resp.response.all_products,
+        });
+        this.setState({
+          partners: resp.response.partners_home,
+          products: resp.response.all_products,
+        });
+      })
+      .catch(e => {
+        Alert.alert('Error', e.message);
+      });
   }
 
   render() {
@@ -150,6 +171,7 @@ const mapDispatchToProps = dispatch => {
       dispatch({type: 'ADD_USER_INFO', payload: client_info}),
     logout: () => dispatch(unsetUser()),
     setSegments: segments => dispatch(changeSegments(segments)),
+    setHomeProducts: obj => dispatch(setHomeProducts(obj)),
     clearCart: () => dispatch({type: 'CLEAR_CART'}),
   };
 };

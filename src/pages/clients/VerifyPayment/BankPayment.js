@@ -41,29 +41,38 @@ export function BankPayment({
   deliveryPrice,
   ...props
 }) {
-  const banks = [
-    {
-      name: 'Bancaribe',
-      cta: '01140205462050035290',
-      type: 'Corriente',
-      titular: 'Luis Emilio Hernandez',
-      ci: '13115089',
-    },
-    {
-      name: 'Mercantil',
-      cta: '0105 0190 380190 133554',
-      type: 'Ahorro',
-      titular: 'Luisa Hernández',
-      ci: '11.987.613',
-    },
-    {
-      name: 'Provincial',
-      cta: '01080157560100055621',
-      type: 'Corriente',
-      titular: 'Carlos Valero Morales',
-      ci: '11.735.524',
-    },
-  ];
+  // const banks = [
+  //   {
+  //     name: 'Bancaribe',
+  //     cta: '01140205462050035290',
+  //     type: 'Corriente',
+  //     titular: 'Luis Emilio Hernandez',
+  //     ci: '13115089',
+  //   },
+  //   {
+  //     name: 'Mercantil',
+  //     cta: '0105 0190 380190 133554',
+  //     type: 'Ahorro',
+  //     titular: 'Luisa Hernández',
+  //     ci: '11.987.613',
+  //   },
+  //   {
+  //     name: 'Provincial',
+  //     cta: '01080157560100055621',
+  //     type: 'Corriente',
+  //     titular: 'Carlos Valero Morales',
+  //     ci: '11.735.524',
+  //   },
+  // ];
+  const banks = props.banks.map(b => ({
+    name: b.bank_name,
+    cta: b.bank_account,
+    ci: b.bank_dni,
+    qr: b.qr,
+    titular: b.bank_person,
+    type: b.account_type,
+  }));
+
   const [selectedPayment, setSelectedPayment] = useState(null);
   const [selectedBank, setSelectedBank] = useState(null);
   const [photo, setPhoto] = useState();
@@ -221,7 +230,7 @@ export function BankPayment({
       </View>
 
       <Text style={styles.loginSubTitle} h1>
-        Bancos
+        *Solo se aceptan transferencias del mismo banco
       </Text>
       <ScrollView style={{flexDirection: 'column'}}>
         {banks.map(bank => (
@@ -327,7 +336,7 @@ const styles = StyleSheet.create({
   },
 
   loginSubTitle: {
-    fontSize: 16,
+    fontSize: 18,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
