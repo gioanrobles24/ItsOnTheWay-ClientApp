@@ -202,7 +202,7 @@ export function MobilePayment({
                 Telefono: {bank.phone}
               </Text>
               <Text style={styles.loginSubTitle2} h1>
-                N° Cédula: {bank.ci}
+                Rif: {bank.ci}
               </Text>
               {!!bank.qr && (
                 <Image
