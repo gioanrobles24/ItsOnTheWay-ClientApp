@@ -30,6 +30,13 @@
             {
               "client_id": "623967559694-a3hv0fifplkdftf121mv2tjidsfqfh4v.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "623967559694-8mpd98ckvaq5mthagj44alg72c8pv13v.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.reactjs.native.example.ItsOnTheWay"
+              }
             }
           ]
         }
@@ -59,6 +66,13 @@
             {
               "client_id": "623967559694-a3hv0fifplkdftf121mv2tjidsfqfh4v.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "623967559694-8mpd98ckvaq5mthagj44alg72c8pv13v.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.reactjs.native.example.ItsOnTheWay"
+              }
             }
           ]
         }
@@ -88,6 +102,13 @@
             {
               "client_id": "623967559694-a3hv0fifplkdftf121mv2tjidsfqfh4v.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "623967559694-8mpd98ckvaq5mthagj44alg72c8pv13v.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.reactjs.native.example.ItsOnTheWay"
+              }
             }
           ]
         }
