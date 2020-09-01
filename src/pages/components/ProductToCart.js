@@ -6,7 +6,7 @@ import {gray, green} from '../../colors';
 import {config} from '../../config';
 
 class ProductsInCart extends Component {
-  confirmRemoveProduct(product) {
+  confirmRemoveProduct(index) {
     Alert.alert(
       'Eliminar Producto',
       '¿Seguro quieres eliminar el producto de tu pedido?',
@@ -19,7 +19,7 @@ class ProductsInCart extends Component {
         {
           text: 'Si',
           onPress: () => {
-            this.props.removeProduct(product);
+            this.props.removeProduct(index);
           },
         },
       ],
@@ -36,7 +36,7 @@ class ProductsInCart extends Component {
   }
 
   renderProducts(products) {
-    return products.map(item => {
+    return products.map((item, index) => {
       const presentation = item.extras.find(extra => extra.extra_type === '1');
       const extras = item.extras
         .filter(extra => extra.extra_type !== '1')
@@ -71,7 +71,7 @@ class ProductsInCart extends Component {
                   type: 'font-awesome',
                   name: 'times',
                   color: 'red',
-                  onPress: () => this.confirmRemoveProduct(item),
+                  onPress: () => this.confirmRemoveProduct(index),
                 }
               : undefined
           }
@@ -110,8 +110,8 @@ ProductsInCart.defaultProps = {
 
 const mapDispatchToProps = dispatch => {
   return {
-    removeProduct: product =>
-      dispatch({type: 'REMOVE_FROM_CART', payload: product}),
+    removeProduct: index =>
+      dispatch({type: 'REMOVE_FROM_CART', payload: index}),
   };
 };
 

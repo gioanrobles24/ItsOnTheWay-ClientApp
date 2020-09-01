@@ -30,6 +30,7 @@ import {resetPartner} from './reducers/partner';
 import {config} from './config';
 import request from './utils/request';
 import {DeliverymanDetail} from './pages/clients/DeliverymanDetail';
+import {UserDetail} from './pages/clients/UserDetail';
 
 class Routes extends Component {
   constructor() {
@@ -170,6 +171,7 @@ const AuthApp = props => {
           />
           <Scene key="partnerView" component={PartnerView} back />
           <Scene key="deliverymanDetail" component={DeliverymanDetail} />
+          <Scene key="userDetail" component={UserDetail} title="Mi Perfil" />
           <Scene key="promoAndSuges" component={PromoAndSugesClient} />
           <Scene key="verifyPaymentClient" component={VerifyPaymentClient} />
         </Scene>

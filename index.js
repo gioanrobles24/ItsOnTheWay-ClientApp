@@ -21,6 +21,7 @@ PushNotification.configure({
   onRegister: function(token) {
     store.dispatch(setPushToken(token.token));
     const user = store.getState().session.user;
+    console.log(token.token);
     if (user) {
       const clientId = user.response.client_info.id;
       request(`${config.pushUrl}/session`, {

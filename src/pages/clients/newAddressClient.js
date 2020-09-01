@@ -121,7 +121,7 @@ class NewAddressClientView extends Component {
         }))
         .find(zone => isPointInPolygon(coordinate, zone.coordinates));
       if (!zone) {
-        Alert.alert('No enviamos a esta dirección');
+        Alert.alert('Momentaneamente no enviamos a esta dirección');
         return;
       }
     }

@@ -8,6 +8,7 @@ import request from '../../../utils/request';
 export function DeliverymanDetail({deliveryman}) {
   const [rating, setRating] = useState(parseInt(deliveryman.ord_dm_rate, 10));
   const [avg, setAvg] = useState();
+  console.log(rating);
 
   useEffect(() => {
     (async function() {
@@ -37,6 +38,12 @@ export function DeliverymanDetail({deliveryman}) {
     }
   }
 
+  console.log(
+    `${config.imagesUrl}/images/repartidores/${deliveryman.dm_id}/${
+      deliveryman.dm_profile_pic
+    }`,
+  );
+
   return (
     <View style={{flex: 1}}>
       <ScrollView>
@@ -51,7 +58,11 @@ export function DeliverymanDetail({deliveryman}) {
               marginTop: 20,
               backgroundColor: 'white',
             }}
-            // source={image}
+            source={{
+              uri: `${config.imagesUrl}/images/repartidores/${
+                deliveryman.dm_id
+              }/${deliveryman.dm_profile_pic}`,
+            }}
           />
           <View>
             <Text style={{...styles.deliveryDetail, marginTop: 30}}>
@@ -88,7 +99,7 @@ export function DeliverymanDetail({deliveryman}) {
               <AirbnbRating
                 showRating={false}
                 defaultRating={rating}
-                isDisabled={rating != null}
+                isDisabled={rating != null && !isNaN(rating)}
                 size={25}
                 onFinishRating={rating => {
                   Alert.alert(

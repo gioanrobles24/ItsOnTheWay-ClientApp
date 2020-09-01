@@ -14,7 +14,7 @@ import RNPickerSelect from 'react-native-picker-select';
 import {Card} from 'react-native-shadow-cards';
 import {useSelector} from 'react-redux';
 import {config} from '../../config';
-const image = {uri: `${config.apiUrl}/imgBlanca`};
+const image = {uri: `${config.apiUrl}/imgVerdePerfil`};
 
 export default function AllMyOrdersClientView(props) {
   const userId = useSelector(

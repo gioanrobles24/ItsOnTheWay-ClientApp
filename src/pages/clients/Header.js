@@ -18,7 +18,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import {green} from '../../colors';
 import {config} from '../../config';
 import request from '../../utils/request';
-const image = { uri: `${config.apiUrl}/imgBlanca`};
+const image = {uri: `${config.apiUrl}/imgVerdePerfil`};
 
 export function Header(props) {
   const [open, setOpen] = useState(false);
@@ -138,6 +138,38 @@ function SidebarMenu(props) {
         <TouchableOpacity
           style={styles.menubarItemContainer}
           onPress={() => {
+            Actions.userDetail();
+          }}>
+          <Icon
+            name="user"
+            type="evilicon"
+            color="#bdbfc1"
+            iconStyle={styles.menubarIconLeft}
+            onPress={() => {
+              Actions.userDetail();
+            }}
+          />
+          <Text
+            style={styles.menubarItemText}
+            onPress={() => {
+              Actions.userDetail();
+            }}>
+            Mi Perfil
+          </Text>
+          <Icon
+            name="chevron-right"
+            type="evilicon"
+            color="#bdbfc1"
+            iconStyle={styles.menubarIconRight}
+            onPress={() => {
+              Actions.userDetail();
+            }}
+          />
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.menubarItemContainer}
+          onPress={() => {
             Actions.allmyOrders();
           }}>
           <Icon
@@ -180,7 +212,7 @@ function SidebarMenu(props) {
               Actions.addressClient();
             }}
           />
-          <Text style={styles.menubarItemText}>Mis direcciónes</Text>
+          <Text style={styles.menubarItemText}>Mis Direcciones</Text>
           <Icon
             name="chevron-right"
             type="evilicon"
@@ -240,8 +272,9 @@ const styles = StyleSheet.create({
   },
   MenubarContainer: {
     flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
+    marginTop: 50,
+    // alignItems: 't',
+    // justifyC ontent: 'center',
     flex: 1,
   },
 

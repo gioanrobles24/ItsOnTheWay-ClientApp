@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View, Alert} from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import {CheckBox, ListItem} from 'react-native-elements';
 import {connect} from 'react-redux';
@@ -49,16 +49,18 @@ class PaymentTypeClientView extends Component {
     let description = this.props.description;
     let opType = viewId;
 
-    Actions.verifyPaymentClient({
-      address,
-      description,
-      pedido,
-      opType,
-      deliveryPrice: this.state.deliveryPrice,
-      price:
-        this.state.deliveryPrice +
-        (this.getSubTotal() + this.getUsagePrice()) / this.props.dollarPrice,
-    });
+    if (!this.state.loading) {
+      Actions.verifyPaymentClient({
+        address,
+        description,
+        pedido,
+        opType,
+        deliveryPrice: this.state.deliveryPrice,
+        price:
+          this.state.deliveryPrice +
+          (this.getSubTotal() + this.getUsagePrice()) / this.props.dollarPrice,
+      });
+    }
   };
 
   getProductPrice(item) {
@@ -89,9 +91,6 @@ class PaymentTypeClientView extends Component {
   render() {
     return (
       <View style={styles.container}>
-        {/* <View style={styles.header}>
-          <Text style={styles.Title}>Método de pago</Text>
-        </View> */}
         <ScrollView>
           <View>
             <View style={{maxHeight: 200}}>
