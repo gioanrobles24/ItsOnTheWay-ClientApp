@@ -1,6 +1,5 @@
-platform :ios, '9.0'
+platform :ios, '11.0'
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
-
 def add_flipper_pods!(versions = {})
   versions['Flipper'] ||= '~> 0.33.1'
   versions['DoubleConversion'] ||= '1.1.7'
@@ -78,7 +77,8 @@ target 'ItsClients' do
   pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
 
   pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
-
+  # add pods for any other desired Firebase products
+  pod 'Firebase/Messaging'
   target 'ItsClientsTests' do
     inherit! :complete
     # Pods for testing

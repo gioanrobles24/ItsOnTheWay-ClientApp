@@ -14,6 +14,8 @@ import {
   BackHandler,
   Picker,
   TouchableOpacity,
+  KeyboardAvoidingView,
+  Platform
 } from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import RNPickerSelect from 'react-native-picker-select';
@@ -89,7 +91,13 @@ class NewAddressClientView extends Component {
         const {code, message} = error;
       });
   }
-
+  // onKeyPress = ({ nativeEvent }) => {
+  //   // alert("Enter"+nativeEvent)
+  //   if (nativeEvent.key === 'Enter') {
+  //     // submit code 
+  //     alert("ENTER ACCES"+nativeEvent.key)
+  //   }
+  // };
   newAddress = viewId => {
     const {description} = this.state;
     let zone;
@@ -216,10 +224,13 @@ class NewAddressClientView extends Component {
 
     const debouncedSearch = AwesomeDebouncePromise(searchPlace, 1000);
     return (
+      <KeyboardAvoidingView
+        style={{ flex: 1 }}
+        behavior={Platform.OS == "ios" ? "padding" : "height"}
+        keyboardVerticalOffset={Platform.select({ ios: 75})}>
       <View style={styles.container}>
         <View style={styles.autocompleteContainer}>
-          <Autocomplete
-            containerStyle={{width: '95%', alignSelf: 'center'}}
+          <Autocomplete containerStyle={{width: '95%', alignSelf: 'center'}}
             inputContainerStyle={{padding: 5, backgroundColor: 'white'}}
             placeholder="Busca una dirección"
             data={this.state.searchOptions}
@@ -289,7 +300,11 @@ class NewAddressClientView extends Component {
           </MapboxGL.ShapeSource>
         </MapboxGL.MapView>
         <View style={styles.inputContainer}>
+          {/* <KeyboardAvoidingView behavior={Platform.OS == "ios" ? "padding" : "height"}
+            keyboardVerticalOffset={Platform.OS == "ios" ? 0 : 200}
+            enabled={Platform.OS === "ios"}> */}
           <TextInput
+            contextMenuHidden={false}
             numberOfLines={4}
             multiline
             style={styles.inputs}
@@ -298,6 +313,7 @@ class NewAddressClientView extends Component {
             onChangeText={description => this.setState({description})}
             value={this.state.description}
           />
+          {/* </KeyboardAvoidingView> */}
         </View>
 
         <TouchableHighlight
@@ -308,6 +324,7 @@ class NewAddressClientView extends Component {
           <Text style={styles.loginText}>Agregar</Text>
         </TouchableHighlight>
       </View>
+      </KeyboardAvoidingView>
     );
   }
 }
@@ -373,6 +390,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     borderColor: green,
     borderWidth: 2,
+    height: Platform.select({ ios: 50, android: 55 }),
+    color: 'black'
   },
   buttonContainer: {
     height: 45,
@@ -394,7 +413,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   loginText: {
-    fontFamily: 'QUICKSAND-LIGHT',
+    fontFamily: '[z] Arista Light',
     color: 'white',
   },
 });

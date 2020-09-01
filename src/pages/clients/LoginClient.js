@@ -118,6 +118,7 @@ class LoginClientView extends Component {
               <TextInput
                 style={styles.inputs}
                 placeholder="Correo"
+                placeholderTextColor="gray"
                 keyboardType="email-address"
                 underlineColorAndroid="transparent"
                 onChangeText={email => this.setState({email})}
@@ -227,6 +228,8 @@ const styles = StyleSheet.create({
     borderColor: green,
     borderWidth: 2,
     flex: 1,
+    height: Platform.select({ios: 50, android: 55}),
+    color:'black'
   },
 
   inputContainer: {
@@ -235,7 +238,6 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     borderBottomWidth: 1,
     width: 350,
-    height: 55,
     marginBottom: 20,
     flexDirection: 'row',
     alignItems: 'center',
@@ -271,7 +273,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#a9d046',
   },
   loginText: {
-    fontFamily: 'QUICKSAND-LIGHT',
+    fontFamily: '[z] Arista Light',
     color: 'white',
   },
 

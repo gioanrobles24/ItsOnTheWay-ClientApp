@@ -68,7 +68,7 @@ export default function AllMyOrdersClientView(props) {
                     <Text style={styles.cardOrderSubTitle}>{order.ord_id}</Text>
                     <Badge
                       value={getStatusText(order.ord_status)}
-                      badgeStyle={{paddingVertical: 10, paddingHorizontal: 10}}
+                      badgeStyle={{paddingVertical: 0, paddingHorizontal: 0}}
                       containerStyle={{marginVertical: 10, marginLeft: 10}}
                       textStyle={{fontSize: 14}}
                     />

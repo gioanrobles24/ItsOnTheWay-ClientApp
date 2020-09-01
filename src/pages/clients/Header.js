@@ -116,7 +116,7 @@ function SidebarMenu(props) {
             marginLeft: 10,
             flexDirection: 'column',
             alignSelf: 'flex-start',
-            marginTop: 20,
+            marginTop: 50,
           }}
         />
       </TouchableOpacity>
@@ -317,7 +317,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#a9d046',
   },
   salirbotonText: {
-    fontFamily: 'QUICKSAND-LIGHT',
+    fontFamily: '[z] Arista Light',
     color: 'white',
   },
 });

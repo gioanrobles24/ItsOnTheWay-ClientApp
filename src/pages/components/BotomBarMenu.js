@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   loginText: {
-    fontFamily: 'QUICKSAND-LIGHT',
+    fontFamily: '[z] Arista Light',
     color: 'white',
   },
 

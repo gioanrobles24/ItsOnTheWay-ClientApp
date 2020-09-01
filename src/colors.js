@@ -7,4 +7,6 @@ export const inputStyle = {
   paddingHorizontal: 10,
   borderColor: green,
   borderWidth: 2,
+  height: Platform.select({ ios: 50, android: 55 }),
+  color: 'black'
 };

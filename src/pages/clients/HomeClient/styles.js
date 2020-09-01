@@ -4,7 +4,7 @@ export const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'white',
-    fontFamily: 'QUICKSAND-LIGHT',
+    fontFamily: '[z] Arista Light',
   },
   container1Title: {
     fontSize: 15,
