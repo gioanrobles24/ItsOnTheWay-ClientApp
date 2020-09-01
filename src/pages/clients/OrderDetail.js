@@ -29,16 +29,14 @@ function getProductPrice(item) {
 export function OrderDetail({orderId, navigation}) {
   const [order, setOrder] = useState({products: []});
   const [rating, setRating] = useState(null);
-  const dollarPrice = parseFloat(
-    useSelector(state => state.parameters.dollarPrice),
-  );
+  const dollarPrice = parseFloat(order.current_ex_price);
 
   function fetchOrderDetail() {
     request(`${config.apiUrl}/clients/orders_detail/${orderId}`)
       .then(obj => {
         console.log(obj);
         if (obj.response.error) {
-          Alert.alert('Error');
+          Alert.alert('Error', obj.response.error);
           Actions.pop();
         } else {
           setRating(parseInt(obj.response.order.ord_rate, 10));
@@ -58,8 +56,7 @@ export function OrderDetail({orderId, navigation}) {
         }
       })
       .catch(e => {
-        console.log(e);
-        Alert.alert('Error');
+        Alert.alert('Error', e.message);
         Actions.pop();
       });
   }
