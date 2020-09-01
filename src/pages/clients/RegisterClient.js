@@ -233,6 +233,8 @@ const styles = StyleSheet.create({
     borderColor: green,
     borderWidth: 2,
     flex: 1,
+    height: Platform.select({ ios: 50, android: 55 }),
+    color:'black'
   },
   inputIcon: {
     width: 30,
@@ -259,7 +261,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#a9d046',
   },
   loginText: {
-    fontFamily: 'QUICKSAND-LIGHT',
+    fontFamily: '[z] Arista Light',
     color: 'white',
   },
 

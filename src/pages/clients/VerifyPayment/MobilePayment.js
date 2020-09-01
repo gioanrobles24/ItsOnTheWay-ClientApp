@@ -163,6 +163,7 @@ export function MobilePayment({
         useNativeAndroidPickerStyle={false}
         style={{
           inputAndroid: inputStyle,
+          inputIOS:inputStyle,
           iconContainer: {
             top: 20,
             right: 12,
@@ -310,7 +311,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   loginText: {
-    fontFamily: 'QUICKSAND-LIGHT',
+    fontFamily: '[z] Arista Light',
     color: 'white',
   },
 

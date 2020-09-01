@@ -172,6 +172,7 @@ export function BankPayment({
         useNativeAndroidPickerStyle={false}
         style={{
           inputAndroid: inputStyle,
+          inputIOS:inputStyle,
           iconContainer: {
             top: 20,
             right: 12,
@@ -322,8 +323,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#a9d046',
   },
   loginText: {
-    fontFamily: 'QUICKSAND-LIGHT',
+    fontFamily: '[z] Arista Light',
     color: 'white',
+    fontWeight:'600',
   },
 
   loginSubTitle: {

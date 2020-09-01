@@ -55,6 +55,7 @@ class TabMenuIcons extends Component {
           ...Platform.select({
             ios: {
               right: 16,
+              top:4
             },
             android: {
               right: 8,
@@ -141,6 +142,7 @@ class TabMenuIcons extends Component {
           ...Platform.select({
             ios: {
               left: 16,
+              top:4
             },
             android: {
               left: 8,

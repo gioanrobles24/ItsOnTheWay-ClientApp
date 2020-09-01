@@ -18,7 +18,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import {green} from '../../colors';
 import {config} from '../../config';
 import request from '../../utils/request';
-const image = {uri: `${config.apiUrl}/simgBlanca`};
+const image = { uri: `${config.apiUrl}/imgBlanca`};
 
 export function Header(props) {
   const [open, setOpen] = useState(false);
@@ -116,7 +116,7 @@ function SidebarMenu(props) {
             marginLeft: 10,
             flexDirection: 'column',
             alignSelf: 'flex-start',
-            marginTop: 20,
+            marginTop: 50,
           }}
         />
       </TouchableOpacity>
@@ -284,7 +284,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#a9d046',
   },
   salirbotonText: {
-    fontFamily: 'QUICKSAND-LIGHT',
+    fontFamily: '[z] Arista Light',
     color: 'white',
   },
 });

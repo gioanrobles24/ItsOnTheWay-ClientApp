@@ -22,13 +22,13 @@ export function ProductDetailHeader({title, product}) {
           <View
             style={{
               position: 'absolute',
-              top: 20,
+              paddingTop:50,
               left: 20,
               zIndex: 2,
             }}>
             <Icon
               name="close"
-              color="white"
+              color="red"
               onPress={() => setImageVisible(false)}
             />
           </View>

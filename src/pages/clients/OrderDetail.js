@@ -103,8 +103,8 @@ export function OrderDetail({orderId, navigation}) {
           <Badge
             value={getStatusText(order.ord_status)}
             badgeStyle={{
-              paddingVertical: 15,
-              paddingHorizontal: 10,
+              paddingVertical: 0,
+              paddingHorizontal: 0,
               backgroundColor: green,
             }}
             containerStyle={{
