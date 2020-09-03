@@ -132,8 +132,8 @@ android {
         applicationId "com.itsclients"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
+        versionCode 3145743
+        versionName "2.8"
         multiDexEnabled true
     }
     splits {
