@@ -21,6 +21,7 @@ import request from '../../utils/request';
 const image = {uri: `${config.apiUrl}/imgVerdePerfil`};
 
 export function Header(props) {
+  // alert(props)
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState('');
 

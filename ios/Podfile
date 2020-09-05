@@ -78,7 +78,7 @@ target 'ItsClients' do
   pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
 
   pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
-
+  pod 'Firebase/Messaging'
   target 'ItsClientsTests' do
     inherit! :complete
     # Pods for testing

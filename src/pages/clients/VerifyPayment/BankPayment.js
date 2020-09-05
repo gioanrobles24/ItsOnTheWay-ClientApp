@@ -81,13 +81,15 @@ export function BankPayment({
   const cartItems = useSelector(state => state.cart);
 
   function selectRef() {
-    ImagePicker.showImagePicker({}, res => {
-      if (res.error) {
-        Alert.alert(res.error);
-      } else if (!res.didCancel) {
-        setPhoto(res);
-      }
-    });
+    ImagePicker.showImagePicker({},res => {
+        console.log('RES', res.uri);
+        if (res.error) {
+          Alert.alert(res.error);
+        } else if (!res.didCancel) {
+          setPhoto(res);
+        }
+      },
+    );
   }
 
   function confirmOrder() {
@@ -114,20 +116,21 @@ export function BankPayment({
       };
       if (photo) {
         data.append('ref_pay_image', {
-          name: photo.fileName,
+          name: 'photo.fileName',
           type: photo.type,
           uri:
-            Platform.OS === 'android'
-              ? photo.uri
-              : photo.uri.replace('file://', ''),
+          Platform.OS === 'android'
+          ? photo.uri
+          : photo.uri.replace('file://', ''),
         });
+        // console.log('photo.uri', photo.uri);
+        // console.log("DATA ENVIADA", JSON.stringify(photo));
       }
       Object.keys(body).forEach(key => {
         if (body[key] !== undefined) {
           data.append(key, body[key]);
         }
       });
-
       setLoading(true);
       fetch(`${config.apiUrl}/clients/neworder`, {
         method: 'POST',
@@ -141,6 +144,7 @@ export function BankPayment({
           return resp.json();
         })
         .then(resp => {
+          // console.log('RESULT', JSON.stringify(resp));
           if (resp.error) {
             Alert.alert(resp.error);
           } else {

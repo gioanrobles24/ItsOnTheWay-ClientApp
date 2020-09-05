@@ -33,7 +33,7 @@ export default class GeneralSearch extends Component {
       .then(response => response.json())
       .then(responseData => {
         if (responseData.error) {
-          Alert.alert(responseData.error);
+          // Alert.alert(responseData.error);
           this.setState({partners: []});
         } else {
           const result = [];

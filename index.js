@@ -37,6 +37,7 @@ PushNotification.configure({
 
   // (required) Called when a remote is received or opened, or local notification is opened
   onNotification: function(notification) {
+    alert("ENTRE", notification);
     if (!notification.userInteraction) {
       PushNotification.localNotification({
         ...notification,
@@ -51,8 +52,7 @@ PushNotification.configure({
     // process the notification
 
     // (required) Called when a remote is received or opened, or local notification is opened
-    if (Platform.OS === 'ios')
-      notification.finish(PushNotificationIOS.FetchResult.NoData);
+     notification.finish(PushNotificationIOS.FetchResult.NoData);
   },
 
   invokeApp: false,
