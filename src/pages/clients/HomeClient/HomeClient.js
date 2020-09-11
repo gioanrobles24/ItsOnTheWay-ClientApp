@@ -29,7 +29,6 @@ class HomeClientView extends Component {
     this.state = {
       activeIndex: 0,
       open: false,
-      data: this.props.user.response.client_info,
       products: [],
       partners: [],
     };
@@ -87,7 +86,7 @@ class HomeClientView extends Component {
                         marginTop: -30,
                       }}>
                       <Recomedantions
-                        items={this.state.products.filter(
+                        items={this.props.products.filter(
                           p => p.prod_recome === '1',
                         )}
                         onPress={product => {
@@ -112,7 +111,7 @@ class HomeClientView extends Component {
                         marginTop: -30,
                       }}>
                       <Recomedantions
-                        items={this.state.products.filter(
+                        items={this.props.products.filter(
                           p => p.prod_suges === '1',
                         )}
                         onPress={product => {
@@ -138,7 +137,7 @@ class HomeClientView extends Component {
                         marginBottom: 100,
                       }}>
                       <Recomedantions
-                        items={this.state.partners.map(p => ({
+                        items={this.props.partners.map(p => ({
                           prod_image: p.profile_pic,
                           prod_partner_id: p.p_id,
                           prod_name: p.p_user,
@@ -176,8 +175,11 @@ const mapDispatchToProps = dispatch => {
   };
 };
 const mapStateToProps = (state, ownProps) => {
+  console.log(state.session);
   return {
     user: state.session.user,
+    products: state.session.all_products,
+    partners: state.session.partners_home,
   };
 };
 
