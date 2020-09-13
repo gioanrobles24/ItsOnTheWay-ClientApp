@@ -187,7 +187,15 @@ class OrderViewClient extends Component {
                   </View>
                 </>
               ) : (
-                <LoginMenu />
+                <TouchableOpacity
+                  onPress={() => Actions.loginClient()}
+                  style={[
+                    styles.buttonContainer,
+                    styles.loginButton,
+                    {marginTop: 50},
+                  ]}>
+                  <Text style={styles.loginText}>Continuar con la compra</Text>
+                </TouchableOpacity>
               )}
             </View>
           </View>

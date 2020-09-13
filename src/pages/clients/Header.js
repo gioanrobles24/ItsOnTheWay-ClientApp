@@ -102,6 +102,8 @@ export function Header(props) {
 
 function SidebarMenu(props) {
   const user = useSelector(state => state.session.user);
+  const dispatch = useDispatch();
+  const token = useSelector(state => state.session.pushToken);
 
   return (
     <View style={styles.animatedMenuBox}>
@@ -134,15 +136,26 @@ function SidebarMenu(props) {
         }}
         source={image}
       />
-      {!user ? <LoginMenu /> : <UserMenu />}
+      {!user ? (
+        <LoginMenu />
+      ) : (
+        <UserMenu
+          onExitClick={() => {
+            request(`${config.pushUrl}/session/${token}`, {
+              method: 'DELETE',
+            });
+            AsyncStorage.removeItem('session').then(() =>
+              dispatch(unsetUser()),
+            );
+            props.toggle();
+          }}
+        />
+      )}
     </View>
   );
 }
 
-function UserMenu() {
-  const dispatch = useDispatch();
-  const token = useSelector(state => state.session.pushToken);
-
+function UserMenu({onExitClick}) {
   return (
     <View style={styles.MenubarContainer}>
       <TouchableOpacity
@@ -237,10 +250,7 @@ function UserMenu() {
       <TouchableHighlight
         style={[styles.salirboton, styles.salirbotonButton]}
         onPress={() => {
-          request(`${config.pushUrl}/session/${token}`, {
-            method: 'DELETE',
-          });
-          AsyncStorage.removeItem('session').then(() => dispatch(unsetUser()));
+          onExitClick();
         }}>
         <Text style={styles.salirbotonText}>Salir</Text>
       </TouchableHighlight>

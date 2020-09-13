@@ -175,7 +175,6 @@ const mapDispatchToProps = dispatch => {
   };
 };
 const mapStateToProps = (state, ownProps) => {
-  console.log(state.session);
   return {
     user: state.session.user,
     products: state.session.all_products,

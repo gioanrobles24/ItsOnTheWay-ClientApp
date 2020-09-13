@@ -147,14 +147,8 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-const mapStateToProps = (state, ownProps) => {
-  return {
-    isAuth: !!state.session.user,
-  };
-};
-
 export default connect(
-  mapStateToProps,
+  undefined,
   mapDispatchToProps,
 )(Routes);
 
