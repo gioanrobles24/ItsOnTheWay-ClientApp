@@ -18,6 +18,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import {green} from '../../colors';
 import {config} from '../../config';
 import request from '../../utils/request';
+import {LoginMenu} from '../components/LoginMenu';
 const image = {uri: `${config.apiUrl}/imgVerdePerfil`};
 
 export function Header(props) {
@@ -100,8 +101,10 @@ export function Header(props) {
 }
 
 function SidebarMenu(props) {
+  const user = useSelector(state => state.session.user);
   const dispatch = useDispatch();
   const token = useSelector(state => state.session.pushToken);
+
   return (
     <View style={styles.animatedMenuBox}>
       <TouchableOpacity
@@ -133,110 +136,124 @@ function SidebarMenu(props) {
         }}
         source={image}
       />
-
-      <View style={styles.MenubarContainer}>
-        <TouchableOpacity
-          style={styles.menubarItemContainer}
-          onPress={() => {
-            Actions.userDetail();
-          }}>
-          <Icon
-            name="user"
-            type="evilicon"
-            color="#bdbfc1"
-            iconStyle={styles.menubarIconLeft}
-            onPress={() => {
-              Actions.userDetail();
-            }}
-          />
-          <Text
-            style={styles.menubarItemText}
-            onPress={() => {
-              Actions.userDetail();
-            }}>
-            Mi Perfil
-          </Text>
-          <Icon
-            name="chevron-right"
-            type="evilicon"
-            color="#bdbfc1"
-            iconStyle={styles.menubarIconRight}
-            onPress={() => {
-              Actions.userDetail();
-            }}
-          />
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={styles.menubarItemContainer}
-          onPress={() => {
-            Actions.allmyOrders();
-          }}>
-          <Icon
-            name="credit-card"
-            type="evilicon"
-            color="#bdbfc1"
-            iconStyle={styles.menubarIconLeft}
-            onPress={() => {
-              Actions.allmyOrders();
-            }}
-          />
-          <Text
-            style={styles.menubarItemText}
-            onPress={() => {
-              Actions.allmyOrders();
-            }}>
-            Mis pedidos
-          </Text>
-          <Icon
-            name="chevron-right"
-            type="evilicon"
-            color="#bdbfc1"
-            iconStyle={styles.menubarIconRight}
-            onPress={() => {
-              Actions.allmyOrders();
-            }}
-          />
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.menubarItemContainer}
-          onPress={() => {
-            Actions.addressClient();
-          }}>
-          <Icon
-            type="font-awesome"
-            name="map-marker"
-            color="#bdbfc1"
-            iconStyle={styles.menubarIconRight}
-            onPress={() => {
-              Actions.addressClient();
-            }}
-          />
-          <Text style={styles.menubarItemText}>Mis Direcciones</Text>
-          <Icon
-            name="chevron-right"
-            type="evilicon"
-            color="#bdbfc1"
-            iconStyle={styles.menubarIconRight}
-            onPress={() => {
-              Actions.addressClient();
-            }}
-          />
-        </TouchableOpacity>
-
-        <TouchableHighlight
-          style={[styles.salirboton, styles.salirbotonButton]}
-          onPress={() => {
+      {!user ? (
+        <LoginMenu />
+      ) : (
+        <UserMenu
+          onExitClick={() => {
             request(`${config.pushUrl}/session/${token}`, {
               method: 'DELETE',
             });
             AsyncStorage.removeItem('session').then(() =>
               dispatch(unsetUser()),
             );
+            props.toggle();
+          }}
+        />
+      )}
+    </View>
+  );
+}
+
+function UserMenu({onExitClick}) {
+  return (
+    <View style={styles.MenubarContainer}>
+      <TouchableOpacity
+        style={styles.menubarItemContainer}
+        onPress={() => {
+          Actions.userDetail();
+        }}>
+        <Icon
+          name="user"
+          type="evilicon"
+          color="#bdbfc1"
+          iconStyle={styles.menubarIconLeft}
+          onPress={() => {
+            Actions.userDetail();
+          }}
+        />
+        <Text
+          style={styles.menubarItemText}
+          onPress={() => {
+            Actions.userDetail();
           }}>
-          <Text style={styles.salirbotonText}>Salir</Text>
-        </TouchableHighlight>
-      </View>
+          Mi Perfil
+        </Text>
+        <Icon
+          name="chevron-right"
+          type="evilicon"
+          color="#bdbfc1"
+          iconStyle={styles.menubarIconRight}
+          onPress={() => {
+            Actions.userDetail();
+          }}
+        />
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        style={styles.menubarItemContainer}
+        onPress={() => {
+          Actions.allmyOrders();
+        }}>
+        <Icon
+          name="credit-card"
+          type="evilicon"
+          color="#bdbfc1"
+          iconStyle={styles.menubarIconLeft}
+          onPress={() => {
+            Actions.allmyOrders();
+          }}
+        />
+        <Text
+          style={styles.menubarItemText}
+          onPress={() => {
+            Actions.allmyOrders();
+          }}>
+          Mis pedidos
+        </Text>
+        <Icon
+          name="chevron-right"
+          type="evilicon"
+          color="#bdbfc1"
+          iconStyle={styles.menubarIconRight}
+          onPress={() => {
+            Actions.allmyOrders();
+          }}
+        />
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.menubarItemContainer}
+        onPress={() => {
+          Actions.addressClient();
+        }}>
+        <Icon
+          type="font-awesome"
+          name="map-marker"
+          color="#bdbfc1"
+          iconStyle={styles.menubarIconRight}
+          onPress={() => {
+            Actions.addressClient();
+          }}
+        />
+        <Text style={styles.menubarItemText}>Mis Direcciones</Text>
+        <Icon
+          name="chevron-right"
+          type="evilicon"
+          color="#bdbfc1"
+          iconStyle={styles.menubarIconRight}
+          onPress={() => {
+            Actions.addressClient();
+          }}
+        />
+      </TouchableOpacity>
+
+      <TouchableHighlight
+        style={[styles.salirboton, styles.salirbotonButton]}
+        onPress={() => {
+          onExitClick();
+        }}>
+        <Text style={styles.salirbotonText}>Salir</Text>
+      </TouchableHighlight>
     </View>
   );
 }

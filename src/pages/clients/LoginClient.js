@@ -83,7 +83,7 @@ class LoginClientView extends Component {
       })
       .then(data => {
         this.props.login(data);
-        Actions.homeClient({responseData: data});
+        Actions.pop();
       })
       .catch(error => {
         if (error.body) {
