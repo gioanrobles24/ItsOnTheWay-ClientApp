@@ -252,6 +252,10 @@ class PartnerView extends Component {
                   <Tile
                     title={s.seg_description}
                     titleStyle={{fontSize: 24}}
+                    overlayContainerStyle={{
+                      paddingLeft: 0,
+                      paddingRight: 0,
+                    }}
                     onPress={() => {
                       this.props.setSelectedSegment(s.id);
                     }}
