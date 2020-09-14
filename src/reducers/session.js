@@ -16,6 +16,8 @@ export const SET_TOKEN = `${scope} SET TOKEN`;
 const defaultState = {
   user: null,
   pushToken: null,
+  all_products: [],
+  partners_home: [],
 };
 
 const sessionReducer = (state = defaultState, action) =>
@@ -30,8 +32,8 @@ const sessionReducer = (state = defaultState, action) =>
         break;
       }
       case SET_HOME_PRODUCTS: {
-        draft.user.response.all_products = action.products;
-        draft.user.response.partners_home = action.partners;
+        draft.all_products = action.payload.products;
+        draft.partners_home = action.payload.partners;
         break;
       }
       case SET_TOKEN: {

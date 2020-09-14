@@ -18,6 +18,8 @@ import ProductsInCart from '../components/ProductToCart';
 import {gray, green} from '../../colors';
 import {setAddresses} from '../../reducers/addresses';
 import {config} from '../../config';
+import request from '../../utils/request';
+import {LoginMenu} from '../components/LoginMenu';
 
 class OrderViewClient extends Component {
   constructor(props) {
@@ -27,15 +29,15 @@ class OrderViewClient extends Component {
     };
   }
   componentDidMount() {
-    fetch(
-      `${config.apiUrl}/clients/address_client/${
-        this.props.client_info.user.response.client_info.id
-      }`,
-    )
-      .then(resp => resp.json())
-      .then(resp => {
+    if (this.props.client_info.user) {
+      request(
+        `${config.apiUrl}/clients/address_client/${
+          this.props.client_info.user.response.client_info.id
+        }`,
+      ).then(resp => {
         this.props.setAddresses(resp.response.address_client);
       });
+    }
   }
 
   ratingCompleted(rating) {}
@@ -97,91 +99,104 @@ class OrderViewClient extends Component {
                 Bs {(subTotal * this.props.dollarPrice).toLocaleString()} ($
                 {subTotal.toLocaleString()})
               </Text>
-              <Text style={styles.SubTitle}>Nota de pedido:</Text>
-              <TextInput
-                numberOfLines={4}
-                multiline
-                style={styles.inputs}
-                placeholder="Coloca una Nota(opcional)"
-                underlineColorAndroid="transparent"
-                onChangeText={ord_description =>
-                  this.setState({ord_description})
-                }
-              />
-              <Text style={styles.SubTitle} h1>
-                Dirección Existente:
-              </Text>
-              <View>
-                <RNPickerSelect
-                  Icon={() => (
-                    <Icon
-                      type="font-awesome"
-                      name="chevron-down"
-                      color={green}
-                      style={{textAlignVertical: 'center'}}
-                    />
-                  )}
-                  placeholder={{
-                    label: 'Seleciona una dirección existente',
-                    color: 'black',
-                  }}
-                  items={this.props.addresses.map(z => ({
-                    label: `${z.zone_name} ${z.description}`,
-                    value: z.client_address_id,
-                  }))}
-                  onValueChange={value => {
-                    this.setState({
-                      address: value,
-                    });
-                  }}
-                  useNativeAndroidPickerStyle={false}
-                  style={{
-                    inputAndroid: styles.select,
-                    inputIOS: styles.select,
-                    iconContainer: {
-                      top: 20,
-                      right: 12,
-                    },
-                    // placeholder: {color: 'black'},
-                  }}
-                />
-              </View>
-              <View style={styles.SubTitle}>
-                <TouchableOpacity
-                  style={{flexDirection: 'row'}}
-                  onPress={() => {
-                    Actions.push('newAddressClient');
-                  }}>
-                  <Icon
-                    name="plus"
-                    type="evilicon"
-                    color="#a9d046"
-                    size={28}
-                    onPress={() => {
-                      Actions.push('newAddressClient');
-                    }}
+              {this.props.client_info.user ? (
+                <>
+                  <Text style={styles.SubTitle}>Nota de pedido:</Text>
+                  <TextInput
+                    numberOfLines={4}
+                    multiline
+                    style={styles.inputs}
+                    placeholder="Coloca una Nota(opcional)"
+                    underlineColorAndroid="transparent"
+                    onChangeText={ord_description =>
+                      this.setState({ord_description})
+                    }
                   />
-
-                  <Text
-                    style={{
-                      marginLeft: 10,
-                      color: green,
-                      fontSize: 16,
-                      fontWeight: 'bold',
-                    }}>
-                    Enviar a una nueva dirección
+                  <Text style={styles.SubTitle} h1>
+                    Dirección Existente:
                   </Text>
-                </TouchableOpacity>
-              </View>
-              <View>
+                  <View>
+                    <RNPickerSelect
+                      Icon={() => (
+                        <Icon
+                          type="font-awesome"
+                          name="chevron-down"
+                          color={green}
+                          style={{textAlignVertical: 'center'}}
+                        />
+                      )}
+                      placeholder={{
+                        label: 'Seleciona una dirección existente`',
+                        color: 'black',
+                      }}
+                      items={this.props.addresses.map(z => ({
+                        label: `${z.zone_name} ${z.description}`,
+                        value: z.client_address_id,
+                      }))}
+                      onValueChange={value => {
+                        this.setState({
+                          address: value,
+                        });
+                      }}
+                      useNativeAndroidPickerStyle={false}
+                      style={{
+                        inputAndroid: styles.select,
+                        iconContainer: {
+                          top: 20,
+                          right: 12,
+                        },
+                        // placeholder: {color: 'black'},
+                      }}
+                    />
+                  </View>
+                  <View style={styles.SubTitle}>
+                    <TouchableOpacity
+                      style={{flexDirection: 'row'}}
+                      onPress={() => {
+                        Actions.push('newAddressClient');
+                      }}>
+                      <Icon
+                        name="plus"
+                        type="evilicon"
+                        color="#a9d046"
+                        size={28}
+                        onPress={() => {
+                          Actions.push('newAddressClient');
+                        }}
+                      />
+
+                      <Text
+                        style={{
+                          marginLeft: 10,
+                          color: green,
+                          fontSize: 16,
+                          fontWeight: 'bold',
+                        }}>
+                        Enviar a una nueva dirección
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                  <View>
+                    <TouchableOpacity
+                      style={[styles.buttonContainer, styles.loginButton]}
+                      onPress={() => {
+                        this.goTypePayment();
+                      }}>
+                      <Text style={styles.loginText}>Pagar</Text>
+                    </TouchableOpacity>
+                  </View>
+                </>
+              ) : (
                 <TouchableOpacity
-                  style={[styles.buttonContainer, styles.loginButton]}
-                  onPress={() => {
-                    this.goTypePayment();
-                  }}>
-                  <Text style={styles.loginText}>Pagar</Text>
+                  onPress={() => Actions.loginClient()}
+                  style={[
+                    styles.buttonContainer,
+                    styles.loginButton,
+                    {marginTop: 50},
+                  ]}>
+                  <Text style={styles.loginText}>Continuar con la compra</Text>
                 </TouchableOpacity>
-              </View>
+              )}
             </View>
           </View>
         </ScrollView>

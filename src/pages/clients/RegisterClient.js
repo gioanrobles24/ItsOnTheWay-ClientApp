@@ -89,7 +89,7 @@ export default class RegisterClientView extends Component {
             {cancelable: false},
           );
         } else {
-          Actions.verifyClient({responseData});
+          Actions.replace('verifyClient', {responseData});
         }
       })
       .catch(error => {

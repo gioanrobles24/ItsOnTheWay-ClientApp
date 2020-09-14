@@ -67,74 +67,24 @@ class Routes extends Component {
      */
     if (this.state.loadingUser) return null;
 
-    return this.props.isAuth ? <AuthApp /> : <UnauthApp />;
-  }
-}
-const mapDispatchToProps = dispatch => {
-  return {
-    login: user => dispatch(setUser(user)),
-  };
-};
-
-const mapStateToProps = (state, ownProps) => {
-  return {
-    isAuth: !!state.session.user,
-  };
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(Routes);
-
-function backAction(params) {
-  if (Actions.state.index === 0) {
-    BackHandler.exitApp();
-    return false;
-  }
-  Actions.pop();
-  return true;
-}
-
-const UnauthApp = props => {
-  return (
-    <Router navBarButtonColor="#a9d046" backAndroidHandler={backAction}>
-      <Scene key="root">
-        <Scene key="loginClient" hideNavBar={true} component={LoginClient} />
-        <Scene key="verifyClient" component={VerifyClient} />
-        <Scene key="registerClient" component={RegisterClient} />
-        <Scene key="resetPasswordClient" component={ResetPasswordClient} />
-      </Scene>
-    </Router>
-  );
-};
-
-const AuthApp = props => {
-  const dispatch = useDispatch();
-
-  return (
-    <>
-      <StatusBar backgroundColor={green} />
-
-      <Router navBarButtonColor="#a9d06" backAndroidHandler={backAction}>
+    return (
+      <Router navBarButtonColor="#a9d046" backAndroidHandler={backAction}>
         <Scene key="root" headerLayoutPreset="center">
           <Scene
             key="homeClient"
             hideNavBar
             component={HomeClient}
             onEnter={() => {
-              dispatch(resetPartner());
-              dispatch({type: 'CLEAR_CART'});
-              fetch(`${config.apiUrl}/currency_value`)
-                .then(response => response.json())
-                .then(dollar => {
-                  dispatch(
-                    changeDollarPrice(dollar.response.c_price.cur_value),
-                  );
-                });
+              this.props.dispatch(resetPartner());
+              this.props.dispatch({type: 'CLEAR_CART'});
+              request(`${config.apiUrl}/currency_value`).then(dollar => {
+                this.props.dispatch(
+                  changeDollarPrice(dollar.response.c_price.cur_value),
+                );
+              });
 
               request(`${config.apiUrl}/percent_app`).then(resp => {
-                dispatch(
+                this.props.dispatch(
                   changeUsagePercentage(
                     parseFloat(resp.response.app_percentage.use_percentage),
                   ),
@@ -147,6 +97,9 @@ const AuthApp = props => {
             component={SearchStoreType}
             renderBackButton={() => {}}
           />
+          <Scene key="generalSearch" component={GeneralSearch} />
+
+          {/* User profile */}
           <Scene
             key="addressClient"
             component={AddressClient}
@@ -154,28 +107,56 @@ const AuthApp = props => {
               AddressClient.onEnter();
             }}
           />
-          <Scene key="generalSearch" component={GeneralSearch} />
           <Scene key="newAddressClient" component={NewAddressClient} />
           <Scene key="allmyOrders" component={AllMyOrders} />
           <Scene key="orderDetail" component={OrderDetail} />
-          <Scene key="orderClient" component={OrderClient} title="Tu Pedido" />
-          <Scene
-            key="paymentType"
-            component={PaymentTypeClient}
-            title="Método de pago"
-          />
+          <Scene key="deliverymanDetail" component={DeliverymanDetail} />
+          <Scene key="userDetail" component={UserDetail} title="Mi Perfil" />
+
+          {/* Partner */}
           <Scene
             key="productView"
             component={ProductClientView}
             renderBackButton={() => {}}
           />
           <Scene key="partnerView" component={PartnerView} back />
-          <Scene key="deliverymanDetail" component={DeliverymanDetail} />
-          <Scene key="userDetail" component={UserDetail} title="Mi Perfil" />
-          <Scene key="promoAndSuges" component={PromoAndSugesClient} />
+
+          {/* Payment */}
+          <Scene key="orderClient" component={OrderClient} title="Tu Pedido" />
+          <Scene
+            key="paymentType"
+            component={PaymentTypeClient}
+            title="Método de pago"
+          />
           <Scene key="verifyPaymentClient" component={VerifyPaymentClient} />
+
+          {/* Auth */}
+          <Scene key="loginClient" hideNavBar={true} component={LoginClient} />
+          <Scene key="verifyClient" component={VerifyClient} />
+          <Scene key="registerClient" component={RegisterClient} />
+          <Scene key="resetPasswordClient" component={ResetPasswordClient} />
         </Scene>
       </Router>
-    </>
-  );
+    );
+  }
+}
+const mapDispatchToProps = dispatch => {
+  return {
+    login: user => dispatch(setUser(user)),
+    dispatch,
+  };
 };
+
+export default connect(
+  undefined,
+  mapDispatchToProps,
+)(Routes);
+
+function backAction(params) {
+  if (Actions.state.index === 0) {
+    BackHandler.exitApp();
+    return false;
+  }
+  Actions.pop();
+  return true;
+}

@@ -19,6 +19,7 @@ import {Icon, Avatar, Badge, withBadge} from 'react-native-elements';
 import {createStackNavigator} from 'react-navigation';
 import {green} from '../../colors';
 import {config} from '../../config';
+import request from '../../utils/request';
 const background = require('../../assets/background.png');
 
 export default class VerifyClientView extends Component {
@@ -28,14 +29,13 @@ export default class VerifyClientView extends Component {
   }
 
   register = viewId => {
-    fetch(`${config.apiUrl}/clients/register/verify/${this.state.code}`, {
+    request(`${config.apiUrl}/clients/register/verify/${this.state.code}`, {
       method: 'GET',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
     })
-      .then(response => response.json())
       .then(responseData => {
         if (responseData.error) {
           alert('Codigo incorrecto, Intente nuevamente');
@@ -49,7 +49,7 @@ export default class VerifyClientView extends Component {
                 onPress: () => {},
                 style: 'cancel',
               },
-              {text: 'OK', onPress: () => Actions.loginClient()},
+              {text: 'OK', onPress: () => Actions.pop()},
             ],
           );
         }
