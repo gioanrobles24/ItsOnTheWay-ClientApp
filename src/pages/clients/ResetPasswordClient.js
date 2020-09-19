@@ -12,6 +12,7 @@ import {Actions} from 'react-native-router-flux';
 import {Avatar} from 'react-native-elements';
 import {green} from '../../colors';
 import {config} from '../../config';
+import request from '../../utils/request';
 const background = require('../../assets/background.png');
 
 export default class RegisterClientView extends Component {
@@ -20,12 +21,7 @@ export default class RegisterClientView extends Component {
   }
 
   sendResetPasswd = viewId => {
-    // onClickListener = (viewId) =>
-    // {
-
-    //      alert( "Button pressed "+ 'correo:' +this.state.email+ 'password'+ this.state.password)
-
-    fetch(`${config.apiUrl}/clients/resetPassword`, {
+    request(`${config.apiUrl}/clients/reset_pass`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -35,30 +31,27 @@ export default class RegisterClientView extends Component {
         cl_email: this.state.email,
       }),
     })
-      .then(response => response.json())
       .then(responseData => {
         if (responseData.error) {
-          alert(
-            'Usuario o contraseña incorrectos, por favor intenta nuevamente',
-          );
+          Alert.alert(responseData.error);
         } else {
           Alert.alert(
             'Te hemos enviado un codigo a tu correo',
-            'Que deseas hacer?',
+            '¿Que deseas hacer?',
             [
               {
                 text: 'Log in',
                 onPress: () => Actions.pop(),
                 style: 'cancel',
               },
-              {text: 're enviar codigo', onPress: () => Actions.refresh()},
+              {text: 're enviar codigo', onPress: () => this.sendResetPasswd()},
             ],
             {cancelable: false},
           );
         }
       })
       .catch(error => {
-        console.error(error);
+        Alert.alert('Error', error.message);
       });
   };
 
