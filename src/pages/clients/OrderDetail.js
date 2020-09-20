@@ -123,13 +123,14 @@ export function OrderDetail({orderId, navigation}) {
         </View>
         {!!order.ord_time_min && (
           <View style={style.orderDetailRow}>
-            <Text style={{fontSize: 18}}>Tiempo estimado </Text>
+            <Text style={{fontSize: 18}}>Tiempo estado </Text>
             <Badge
               value={`${order.ord_time_min} min.`}
               badgeStyle={{
-                paddingVertical: 15,
-                paddingHorizontal: 10,
+                width:80,
+                height:30,
                 backgroundColor: green,
+                color:'red'
               }}
               containerStyle={{
                 marginVertical: 10,

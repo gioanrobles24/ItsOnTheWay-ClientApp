@@ -79,6 +79,7 @@ export default class RegisterClientView extends Component {
               <TextInput
                 style={styles.inputs}
                 placeholder="Correo"
+                placeholderTextColor="gray"
                 keyboardType="email-address"
                 underlineColorAndroid="transparent"
                 onChangeText={email => this.setState({email})}

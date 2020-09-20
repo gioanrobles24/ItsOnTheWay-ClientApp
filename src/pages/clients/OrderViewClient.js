@@ -126,7 +126,7 @@ class OrderViewClient extends Component {
                         />
                       )}
                       placeholder={{
-                        label: 'Seleciona una dirección existente`',
+                        label: 'Seleciona una dirección existente',
                         color: 'black',
                       }}
                       items={this.props.addresses.map(z => ({
@@ -141,6 +141,7 @@ class OrderViewClient extends Component {
                       useNativeAndroidPickerStyle={false}
                       style={{
                         inputAndroid: styles.select,
+                        inputIOS: styles.select,
                         iconContainer: {
                           top: 20,
                           right: 12,

@@ -225,105 +225,107 @@ class NewAddressClientView extends Component {
     const debouncedSearch = AwesomeDebouncePromise(searchPlace, 1000);
     return (
       <KeyboardAvoidingView
-        style={{ flex: 1 }}
-        behavior={Platform.OS == "ios" ? "padding" : "height"}
-        keyboardVerticalOffset={Platform.select({ ios: 75})}>
-      <View style={styles.container}>
-        <View style={styles.autocompleteContainer}>
-          <Autocomplete containerStyle={{width: '95%', alignSelf: 'center'}}
-            inputContainerStyle={{padding: 5, backgroundColor: 'white'}}
-            placeholder="Busca una dirección"
-            data={this.state.searchOptions}
-            onEndEditing={() => {
-              this.setState({
-                searchOptions: [],
-              });
-            }}
-            renderItem={({index, item}) => {
-              const {lat, lng} = item.geometry.location;
-              return (
-                <TouchableOpacity
-                  onPress={() => {
-                    this.setState({
-                      coordinates: [lng, lat],
-                      searchOptions: [],
-                    });
-                  }}
-                  style={{
-                    paddingHorizontal: 15,
-                    paddingVertical: 10,
-                    borderBottomWidth: 1,
-                    borderBottomColor: green,
-                  }}>
-                  <Text>{item.formatted_address}</Text>
-                </TouchableOpacity>
-              );
-            }}
-            onChangeText={async text => {
-              const result = await debouncedSearch(text);
-              if (result) {
-                console.log(result);
-                this.setState({searchOptions: result.results});
-              }
-            }}
-          />
-        </View>
-        <MapboxGL.MapView
-          style={{flex: 1, flexGrow: 1}}
-          onPress={e => {
-            if (e.type === 'Feature') {
-              this.setState({coordinates: e.geometry.coordinates});
-            }
-          }}>
-          {/* <MapboxGL.UserLocation visible={true} /> */}
-          <MapboxGL.Camera
-            zoomLevel={16}
-            centerCoordinate={this.state.coordinates}
-            // followUserMode="normal"
-            // followUserLocation
-          />
-          <MapboxGL.ShapeSource
-            id="marker"
-            shape={marker}
-            key={JSON.stringify(this.state.coordinates)}>
-            {/* <MapboxGL.CircleLayer id="marker" /> */}
-
-            <MapboxGL.SymbolLayer
-              id="marker"
-              style={{
-                iconImage: markerIcon,
-                iconColor: green,
-                iconSize: 1,
-                iconAllowOverlap: true,
+        style={{flex: 1}}
+        behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
+        keyboardVerticalOffset={Platform.select({ios: 75})}>
+        <View style={styles.container}>
+          <View style={styles.autocompleteContainer}>
+            <Autocomplete
+              containerStyle={{width: '95%', alignSelf: 'center'}}
+              inputContainerStyle={{padding: 5, backgroundColor: 'white', color:'black'}}
+              placeholder="Busca una dirección"
+              placeholderTextColor="black"
+              data={this.state.searchOptions}
+              onEndEditing={() => {
+                this.setState({
+                  searchOptions: [],
+                });
+              }}
+              renderItem={({index, item}) => {
+                const {lat, lng} = item.geometry.location;
+                return (
+                  <TouchableOpacity
+                    onPress={() => {
+                      this.setState({
+                        coordinates: [lng, lat],
+                        searchOptions: [],
+                      });
+                    }}
+                    style={{
+                      paddingHorizontal: 15,
+                      paddingVertical: 10,
+                      borderBottomWidth: 1,
+                      borderBottomColor: green,
+                    }}>
+                    <Text>{item.formatted_address}</Text>
+                  </TouchableOpacity>
+                );
+              }}
+              onChangeText={async text => {
+                const result = await debouncedSearch(text);
+                if (result) {
+                  console.log(result);
+                  this.setState({searchOptions: result.results});
+                }
               }}
             />
-          </MapboxGL.ShapeSource>
-        </MapboxGL.MapView>
-        <View style={styles.inputContainer}>
-          {/* <KeyboardAvoidingView behavior={Platform.OS == "ios" ? "padding" : "height"}
+          </View>
+          <MapboxGL.MapView
+            style={{flex: 1, flexGrow: 1}}
+            onPress={e => {
+              if (e.type === 'Feature') {
+                this.setState({coordinates: e.geometry.coordinates});
+              }
+            }}>
+            {/* <MapboxGL.UserLocation visible={true} /> */}
+            <MapboxGL.Camera
+              zoomLevel={16}
+              centerCoordinate={this.state.coordinates}
+              // followUserMode="normal"
+              // followUserLocation
+            />
+            <MapboxGL.ShapeSource
+              id="marker"
+              shape={marker}
+              key={JSON.stringify(this.state.coordinates)}>
+              {/* <MapboxGL.CircleLayer id="marker" /> */}
+
+              <MapboxGL.SymbolLayer
+                id="marker"
+                style={{
+                  iconImage: markerIcon,
+                  iconColor: green,
+                  iconSize: 1,
+                  iconAllowOverlap: true,
+                }}
+              />
+            </MapboxGL.ShapeSource>
+          </MapboxGL.MapView>
+          <View style={styles.inputContainer}>
+            {/* <KeyboardAvoidingView behavior={Platform.OS == "ios" ? "padding" : "height"}
             keyboardVerticalOffset={Platform.OS == "ios" ? 0 : 200}
             enabled={Platform.OS === "ios"}> */}
-          <TextInput
-            contextMenuHidden={false}
-            numberOfLines={4}
-            multiline
-            style={styles.inputs}
-            placeholder="Edificio, Casa, Calle, Referencia, etc."
-            underlineColorAndroid="transparent"
-            onChangeText={description => this.setState({description})}
-            value={this.state.description}
-          />
-          {/* </KeyboardAvoidingView> */}
-        </View>
+            <TextInput
+              contextMenuHidden={false}
+              numberOfLines={4}
+              multiline
+              style={styles.inputs}
+              placeholder="Edificio, Casa, Calle, Referencia, etc."
+              underlineColorAndroid="transparent"
+              onChangeText={description => this.setState({description})}
+              value={this.state.description}
+            />
+            {/* </KeyboardAvoidingView> */}
+          </View>
 
-        <TouchableHighlight
-          style={[styles.buttonContainer, styles.loginButton]}
-          onPress={() => {
-            this.newAddress();
-          }}>
-          <Text style={styles.loginText}>Agregar</Text>
-        </TouchableHighlight>
-      </View>
+          <TouchableHighlight
+            style={[styles.buttonContainer, styles.loginButton]}
+            onPress={() => {
+              this.newAddress();
+            }}>
+            <Text style={styles.loginText}>Agregar</Text>
+          </TouchableHighlight>
+        </View>
       </KeyboardAvoidingView>
     );
   }

@@ -37,6 +37,8 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>Its requiere acceso a la biblioteca de fotos para funcionar correctamente.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Its requiere obtener su ubicación mientras esta aplicación solo se ejecuta.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
@@ -83,4 +85,3 @@
 	<false/>
 </dict>
 </plist>
-

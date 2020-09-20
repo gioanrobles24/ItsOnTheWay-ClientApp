@@ -141,9 +141,10 @@ export function ZellePayment({
           style={inputStyle}
           value={ref}
           onChangeText={setRef}
-          placeholder="ingrese el numero referencia"
+          placeholder="Ingrese el numero referencia"
           keyboardType="phone-pad"
           underlineColorAndroid="transparent"
+          placeholderTextColor="black"
         />
       </View>
       <View style={styles.inputContainer}>
@@ -152,6 +153,7 @@ export function ZellePayment({
           value={email}
           onChangeText={setEmail}
           placeholder="Correo que envia el pago"
+          placeholderTextColor="black"
         />
       </View>
       <View style={styles.inputContainer}>
@@ -160,10 +162,12 @@ export function ZellePayment({
           value={name}
           onChangeText={setName}
           placeholder="Nombre de la persona que envia el pago"
+          placeholderTextColor="black"
         />
       </View>
 
-      <View style={{flexDirection: 'row', marginTop: 20, alignSelf: 'center'}}>
+      <View
+        style={{flexDirection: 'row', marginTop: 20, alignSelf: 'center'}}>
         <TouchableOpacity
           style={[styles.buttonContainer, styles.loginButton, {flex: 0.7}]}
           onPress={() => {

@@ -199,7 +199,8 @@ export function BankPayment({
           style={inputStyle}
           value={ref}
           onChangeText={setRef}
-          placeholder="ingrese el numero referencia"
+          placeholderTextColor="black"
+          placeholder="Ingrese el numero referencia"
           keyboardType="phone-pad"
           underlineColorAndroid="transparent"
         />

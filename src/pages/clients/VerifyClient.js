@@ -76,6 +76,7 @@ export default class VerifyClientView extends Component {
                 <TextInput
                   style={styles.inputs}
                   placeholder="Inserta el codigo enviado a tu Email"
+                  placeholderTextColor="gray"
                   keyboardType="default"
                   underlineColorAndroid="transparent"
                   onChangeText={code => this.setState({code})}
@@ -143,7 +144,8 @@ const styles = StyleSheet.create({
     borderColor: green,
     borderWidth: 2,
     flex: 1,
-    height: Platform.select({ ios: 50, android: 55 })
+    height: Platform.select({ ios: 50, android: 55 }),
+    color:"black"
   },
   inputIcon: {
     width: 30,

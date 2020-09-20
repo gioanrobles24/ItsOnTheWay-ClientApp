@@ -118,6 +118,7 @@ export default class RegisterClientView extends Component {
               <View style={styles.inputContainer}>
                 <TextInput
                   style={styles.inputs}
+                  placeholderTextColor="gray"
                   placeholder="Nombre"
                   keyboardType="default"
                   underlineColorAndroid="transparent"
@@ -127,6 +128,7 @@ export default class RegisterClientView extends Component {
               <View style={styles.inputContainer}>
                 <TextInput
                   style={styles.inputs}
+                  placeholderTextColor="gray"
                   placeholder="Apellido"
                   keyboardType="default"
                   underlineColorAndroid="transparent"
@@ -137,6 +139,7 @@ export default class RegisterClientView extends Component {
               <View style={styles.inputContainer}>
                 <TextInput
                   style={styles.inputs}
+                  placeholderTextColor="gray"
                   placeholder="Teléfono"
                   keyboardType="phone-pad"
                   underlineColorAndroid="transparent"
@@ -146,6 +149,7 @@ export default class RegisterClientView extends Component {
               <View style={styles.inputContainer}>
                 <TextInput
                   style={styles.inputs}
+                  placeholderTextColor="gray"
                   placeholder="Email"
                   keyboardType="email-address"
                   underlineColorAndroid="transparent"

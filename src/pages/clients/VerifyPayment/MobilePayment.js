@@ -141,7 +141,8 @@ export function MobilePayment({
           style={inputStyle}
           value={ref}
           onChangeText={setRef}
-          placeholder="ingrese el numero referencia"
+          placeholder="Ingrese el numero referencia"
+          placeholderTextColor="black"
           keyboardType="phone-pad"
           underlineColorAndroid="transparent"
         />
@@ -151,13 +152,15 @@ export function MobilePayment({
           style={inputStyle}
           value={phone}
           onChangeText={setPhone}
-          placeholder="ingrese el numero de telefono"
+          placeholder="Ingrese el numero de telefono"
+          placeholderTextColor="black"
           keyboardType="phone-pad"
           underlineColorAndroid="transparent"
         />
       </View>
 
-      <View style={{flexDirection: 'row', alignSelf: 'center', marginTop: 20}}>
+      <View
+        style={{flexDirection: 'row', alignSelf: 'center', marginTop: 20}}>
         <TouchableHighlight
           style={[styles.buttonContainer, styles.loginButton, {flex: 0.7}]}
           onPress={() => {
