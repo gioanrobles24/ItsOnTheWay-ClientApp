@@ -108,13 +108,18 @@ class AllmyOrdersClientView extends Component {
               <ListItem
                 title={addr.zone_name}
                 subtitle={addr.description}
-                onPress={() => {
-                  Actions.newAddressClient({address: addr});
+                leftIcon={{
+                  type: 'font-awesome',
+                  name: 'edit',
+                  color: 'green',
+                  fontSize: 16,
+                  onPress: () => Actions.newAddressClient({ address: addr }),
                 }}
                 rightIcon={{
                   type: 'font-awesome',
                   name: 'times',
                   color: 'red',
+                  fontSize:16,
                   onPress: () => this.confirmDeleteAddress(addr),
                 }}
               />

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, Alert} from 'react-native';
+import {StyleSheet, Text, View, Alert, TouchableHighlight} from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import {CheckBox, ListItem} from 'react-native-elements';
 import {connect} from 'react-redux';
@@ -153,7 +153,7 @@ class PaymentTypeClientView extends Component {
           </View>
 
           <View style={styles.platformsContainer}>
-            <View style={styles.platformName}>
+            {/* <View style={styles.platformName}>
               <Text>1. Transferencia</Text>
               <Text style={styles.platformNamePrice2}>
                 {this.props.pedido[0].prod_price_bs} Bs.
@@ -164,29 +164,61 @@ class PaymentTypeClientView extends Component {
                 checked={this.state.transfchecked}
                 onPress={() => this.VerifyPaymentClient('P2')}
               />
-            </View>
-            <View style={styles.platformName}>
-              <Text>2. Pago móvil</Text>
-              <Text style={styles.platformNamePrice3}>
-                {this.props.pedido[0].prod_price_bs} Bs.
+            </View> */}
+            <TouchableHighlight
+              underlayColor='transparent'
+              style={styles.platformContent}
+              onPress={() => {
+                this.VerifyPaymentClient('P2')
+              }}
+            >
+              <View style={styles.platformName}>
+                <Text>1. Transferencia</Text>
+                <Text style={styles.platformNamePrice2}>
+                  {this.props.pedido[0].prod_price_bs} Bs.
               </Text>
-              <CheckBox
-                checkedIcon="dot-circle-o"
-                uncheckedIcon="circle-o"
-                checked={this.state.pagomchecked}
-                onPress={() => this.VerifyPaymentClient('P1')}
-              />
-            </View>
-            <View style={styles.platformName}>
-              <Text>3. Zelle</Text>
-              <Text style={styles.platformNamePrice4}>----</Text>
-              <CheckBox
-                checkedIcon="dot-circle-o"
-                uncheckedIcon="circle-o"
-                checked={this.state.zellechecked}
-                onPress={() => this.VerifyPaymentClient('P3')}
-              />
-            </View>
+                <CheckBox
+                  checkedIcon="dot-circle-o"
+                  uncheckedIcon="circle-o"
+                  checked={this.state.transfchecked}
+                  onPress={() => this.VerifyPaymentClient('P2')}
+                />
+              </View>
+            </TouchableHighlight>
+            <TouchableHighlight
+              underlayColor='transparent'
+              style={styles.platformContent}
+              onPress={() => this.VerifyPaymentClient('P1')}
+            >
+              <View style={styles.platformName}>
+                <Text>2. Pago móvil</Text>
+                <Text style={styles.platformNamePrice3}>
+                  {this.props.pedido[0].prod_price_bs} Bs.
+                </Text>
+                <CheckBox
+                  checkedIcon="dot-circle-o"
+                  uncheckedIcon="circle-o"
+                  checked={this.state.pagomchecked}
+                  
+                  />
+              </View>
+            </TouchableHighlight>
+            <TouchableHighlight
+              underlayColor='transparent'
+              style={styles.platformContent}
+              onPress={() => this.VerifyPaymentClient('P3')}
+            >
+              <View style={styles.platformName}>
+                <Text>3. Zelle</Text>
+                <Text style={styles.platformNamePrice4}>----</Text>
+                <CheckBox
+                  checkedIcon="dot-circle-o"
+                  uncheckedIcon="circle-o"
+                  checked={this.state.zellechecked}
+                  
+                  />
+              </View>
+            </TouchableHighlight>
           </View>
         </ScrollView>
       </View>

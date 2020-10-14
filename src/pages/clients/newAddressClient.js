@@ -231,8 +231,20 @@ class NewAddressClientView extends Component {
         <View style={styles.container}>
           <View style={styles.autocompleteContainer}>
             <Autocomplete
-              containerStyle={{width: '95%', alignSelf: 'center'}}
-              inputContainerStyle={{padding: 5, backgroundColor: 'white', color:'black'}}
+              containerStyle={{width: '90%', alignSelf: 'center'}}
+              inputContainerStyle={{padding: 0}}
+              style={{
+                backgroundColor: "#FFFFFF",
+                color: "#000000",
+                borderBottomColor:green,
+                alignItems: "center",
+                ...Platform.select({
+                  ios: {
+                    height: 47,
+                    padding:10
+                  }
+                }),
+              }}
               placeholder="Busca una dirección"
               placeholderTextColor="black"
               data={this.state.searchOptions}

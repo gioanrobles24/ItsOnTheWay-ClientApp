@@ -40,7 +40,7 @@
 	<key>NSCameraUsageDescription</key>
 	<string>Its requiere acceso a la biblioteca de fotos para funcionar correctamente.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Its requiere obtener su ubicación mientras esta aplicación solo se ejecuta.</string>
+	<string>Its requiere obtener su ubicación, para encontrar restaurantes cerca de tu ubicación.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Its requiere acceso a la biblioteca de fotos para funcionar correctamente.</string>
 	<key>UIAppFonts</key>
