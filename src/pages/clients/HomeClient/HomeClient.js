@@ -22,6 +22,9 @@ import {styles} from './styles';
 import {config} from '../../../config';
 import request from '../../../utils/request';
 import {changeSegments} from '../../../reducers/segments';
+// chequear la version de la app
+import { Linking } from 'react-native';
+import VersionCheck from 'react-native-version-check';
 
 class HomeClientView extends Component {
   constructor(props) {
@@ -37,11 +40,32 @@ class HomeClientView extends Component {
   componentDidMount() {
     this.fetchSegmentations();
     this.fetchHomeProducts();
+    VersionCheck.getCountry().then(country => console.log(country));          // KR
+    VersionCheck.getLatestVersion({
+      forceUpdate: true,
+    }).then(latestVersion => {
+      // Alert.alert("latestVersion " + latestVersion, "getCurrentVersion " + parseFloat(VersionCheck.getCurrentVersion()))
+      if (parseFloat(VersionCheck.getCurrentVersion()) < parseFloat(latestVersion)){
+        Alert.alert("", "Hay una actualización disponible", [
+          {
+            text: "Actualizar",
+            onPress: () => {
+              Linking.openURL("market://details?id=com.itsclients");
+            }
+          },
+          {
+            text: "Cerrar",
+            onPress: () => {
+
+            }
+          }
+        ]);
+      }
+    });
   }
 
   fetchSegmentations() {
-    return request(`${config.apiUrl}/clients/segmentatios`)
-      .then(resp => {
+    return request(`${config.apiUrl}/clients/segmentatios`).then(resp => {
         this.props.setSegments(resp.response.segmentos);
       })
       .catch(e => Alert.alert(e.message));
