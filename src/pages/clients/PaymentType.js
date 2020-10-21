@@ -187,6 +187,16 @@ class PaymentTypeClientView extends Component {
                 onPress={() => this.VerifyPaymentClient('P3')}
               />
             </View>
+            <View style={styles.platformName}>
+              <Text>4. Efectivo</Text>
+              <Text style={styles.platformNamePrice4}>----</Text>
+              <CheckBox
+                checkedIcon="dot-circle-o"
+                uncheckedIcon="circle-o"
+                // checked={this.state.zellechecked}
+                onPress={() => this.VerifyPaymentClient('P4')}
+              />
+            </View>
           </View>
         </ScrollView>
       </View>

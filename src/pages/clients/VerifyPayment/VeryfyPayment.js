@@ -30,6 +30,7 @@ import {ZellePayment} from './ZellePayment';
 import {connect} from 'react-redux';
 import {config} from '../../../config';
 import request from '../../../utils/request';
+import {CashPayment} from './CashPayment';
 
 class VerifyPaymentClientView extends Component {
   constructor(props) {
@@ -81,6 +82,16 @@ class VerifyPaymentClientView extends Component {
       case 'P3': {
         return (
           <ZellePayment
+            {...this.props}
+            price={this.props.price.toFixed(2)}
+            banks={this.state.banks.zelle}
+          />
+        );
+      }
+
+      case 'P4': {
+        return (
+          <CashPayment
             {...this.props}
             price={this.props.price.toFixed(2)}
             banks={this.state.banks.zelle}
